@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.5
+ * @version 3.1.6
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -221,13 +221,55 @@ body {
     height: max-content;
 }
 
-/* Full sized gif picker */
-[class*='layerContainer_'] [class*='positionLayer__'] {
-    height: 100% !important;
-    [class*='drawerSizingWrapper__'] {
-        top: 3.5em !important;
-        height: calc(100% - 9em);
-    }
+/* Keep Discord's measured popup position and size. The expression picker
+   owns its glass, clipping and scrolling, not the full-screen portal. */
+.contentWrapper__08434 {
+    min-width: 0;
+    max-width: 100%;
+    max-height: 100%;
+    grid-template-rows: auto minmax(0, 1fr);
+    overflow: hidden;
+}
+.positionContainerOnlyEmoji__08434 .contentWrapper__08434 {
+    grid-template-rows: minmax(0, 1fr);
+}
+.drawerSizingWrapper__08434 {
+    min-width: 0;
+    max-width: 100%;
+    max-height: 100%;
+}
+.nav__08434 {
+    min-width: 0;
+}
+.navList__08434 {
+    min-width: 0;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+.contentWrapper__08434 #gif-transfer-buttons {
+    flex: 1 0 100%;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    box-sizing: border-box;
+    min-width: 0;
+    max-width: 100%;
+    margin-left: 0;
+    padding-right: 0;
+}
+.contentWrapper__08434 > :not(.nav__08434) {
+    min-width: 0;
+    min-height: 0;
+    max-width: 100%;
+}
+.contentWrapper__08434 :is(.container_fed6d3, .wrapper__14245, .emojiPicker_c0e32c) {
+    min-width: 0;
+    min-height: 0;
+    max-width: 100%;
+    width: 100%;
+}
+.contentWrapper__08434 .emojiPicker_c0e32c {
+    grid-template-columns: 48px minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) auto;
 }
 
 /* Hide voice settings menu buttons next to mute/deafen + tighten gap */
@@ -436,7 +478,6 @@ body {
 
 :is(
     [role="menu"],
-    [role="dialog"]:not(.custom-user-profile-theme),
     [data-mana-component="popover"],
     [data-mana-component="context-menu"],
     [data-mana-component="select-content"],
@@ -455,10 +496,9 @@ body {
     [class*="Popout_"],
     [class*="popoutContainer_"],
     [class*="popoutContentWrapper_"],
-    [class*="layerContainer_"] [class*="contentWrapper_"],
-    [class*="layerContainer_"] [role="listbox"],
+    .contentWrapper__08434,
     .container__55c99,
-    .root__49fc1,
+    .root__49fc1:not(.custom-user-profile-theme),
     .selectDropdown__0edde,
     .picker__09f65,
     .react-datepicker,
@@ -470,19 +510,19 @@ body {
     .baselayer__518a0,
     .nowPlayingNotificationAnimationWrapper__81a05,
     [class*="popoutContent_"],
-    [class$="-tooltip"], [class*="-tooltip "],
-    [class$="-modal-root"], [class*="-modal-root "],
-    [class$="-dialog-card"], [class*="-dialog-card "],
+    .vc-class-highlight-tooltip,
+    .vc-cal-modal-root, .vc-deepsearch-modal-root,
+    .vc-cal-dialog-card,
     [class*="toast_"],
     [class*="customToast_"],
     [class*="errorNotificationContainer_"],
     .vc-notification-root,
     .vc-toast-notifications-notification-root,
-    [class$="-popover"], [class*="-popover "],
-    [class$="-popout"], [class*="-popout "],
-    [class$="-dropdown-menu"], [class*="-dropdown-menu "],
-    [class$="-select-menu"], [class*="-select-menu "],
-    [class$="-tools-menu"], [class*="-tools-menu "]
+    .vc-cal-picker-popover, .vc-cal-tool-popover, .gc-popover,
+    .fakedm-popout, .vc-clickableroles-popout,
+    .vc-presets-merge-dropdown-menu, .vc-cal-search-dropdown,
+    .vc-cal-custom-select-menu, .ps-custom-select-menu,
+    .vc-cal-tools-menu
 ) {
     background: var(--mochacord-acrylic-background) !important;
     -webkit-backdrop-filter: var(--mochacord-acrylic-filter) !important;
@@ -505,7 +545,6 @@ body {
    Context submenus are independent surfaces, handled by their own skin below. */
 :is(
     [role="menu"],
-    [role="dialog"]:not(.custom-user-profile-theme),
     [data-mana-component="popover"],
     [data-mana-component="context-menu"],
     [data-mana-component="select-content"],
@@ -524,10 +563,9 @@ body {
     [class*="Popout_"],
     [class*="popoutContainer_"],
     [class*="popoutContentWrapper_"],
-    [class*="layerContainer_"] [class*="contentWrapper_"],
-    [class*="layerContainer_"] [role="listbox"],
+    .contentWrapper__08434,
     .container__55c99,
-    .root__49fc1,
+    .root__49fc1:not(.custom-user-profile-theme),
     .selectDropdown__0edde,
     .picker__09f65,
     .react-datepicker,
@@ -539,22 +577,21 @@ body {
     .baselayer__518a0,
     .nowPlayingNotificationAnimationWrapper__81a05,
     [class*="popoutContent_"],
-    [class$="-tooltip"], [class*="-tooltip "],
-    [class$="-modal-root"], [class*="-modal-root "],
-    [class$="-dialog-card"], [class*="-dialog-card "],
+    .vc-class-highlight-tooltip,
+    .vc-cal-modal-root, .vc-deepsearch-modal-root,
+    .vc-cal-dialog-card,
     [class*="toast_"],
     [class*="customToast_"],
     [class*="errorNotificationContainer_"],
     .vc-notification-root,
     .vc-toast-notifications-notification-root,
-    [class$="-popover"], [class*="-popover "],
-    [class$="-popout"], [class*="-popout "],
-    [class$="-dropdown-menu"], [class*="-dropdown-menu "],
-    [class$="-select-menu"], [class*="-select-menu "],
-    [class$="-tools-menu"], [class*="-tools-menu "]
+    .vc-cal-picker-popover, .vc-cal-tool-popover, .gc-popover,
+    .fakedm-popout, .vc-clickableroles-popout,
+    .vc-presets-merge-dropdown-menu, .vc-cal-search-dropdown,
+    .vc-cal-custom-select-menu, .ps-custom-select-menu,
+    .vc-cal-tools-menu
 ) :is(
     [role="menu"],
-    [role="dialog"]:not(.custom-user-profile-theme),
     [data-mana-component="popover"],
     [data-mana-component="context-menu"],
     [data-mana-component="select-content"],
@@ -573,10 +610,9 @@ body {
     [class*="Popout_"],
     [class*="popoutContainer_"],
     [class*="popoutContentWrapper_"],
-    [class*="layerContainer_"] [class*="contentWrapper_"],
-    [class*="layerContainer_"] [role="listbox"],
+    .contentWrapper__08434,
     .container__55c99,
-    .root__49fc1,
+    .root__49fc1:not(.custom-user-profile-theme),
     .selectDropdown__0edde,
     .picker__09f65,
     .react-datepicker,
@@ -588,19 +624,19 @@ body {
     .baselayer__518a0,
     .nowPlayingNotificationAnimationWrapper__81a05,
     [class*="popoutContent_"],
-    [class$="-tooltip"], [class*="-tooltip "],
-    [class$="-modal-root"], [class*="-modal-root "],
-    [class$="-dialog-card"], [class*="-dialog-card "],
+    .vc-class-highlight-tooltip,
+    .vc-cal-modal-root, .vc-deepsearch-modal-root,
+    .vc-cal-dialog-card,
     [class*="toast_"],
     [class*="customToast_"],
     [class*="errorNotificationContainer_"],
     .vc-notification-root,
     .vc-toast-notifications-notification-root,
-    [class$="-popover"], [class*="-popover "],
-    [class$="-popout"], [class*="-popout "],
-    [class$="-dropdown-menu"], [class*="-dropdown-menu "],
-    [class$="-select-menu"], [class*="-select-menu "],
-    [class$="-tools-menu"], [class*="-tools-menu "]
+    .vc-cal-picker-popover, .vc-cal-tool-popover, .gc-popover,
+    .fakedm-popout, .vc-clickableroles-popout,
+    .vc-presets-merge-dropdown-menu, .vc-cal-search-dropdown,
+    .vc-cal-custom-select-menu, .ps-custom-select-menu,
+    .vc-cal-tools-menu
 ):not([role="menu"], .menu_c1e9c4) {
     background: transparent !important;
     -webkit-backdrop-filter: none !important;
@@ -636,7 +672,7 @@ body {
    Preserve its transform animation without isolating the popup's backdrop. */
 .layer__59d0d,
 .layerContainer__59d0d,
-:is(.layer__59d0d, .layerContainer__59d0d) [class*="animator"] {
+.animatorTop_faf9c0, .animatorBottom_faf9c0, .animatorLeft_faf9c0, .animatorRight_faf9c0 {
     will-change: auto !important;
 }
 .tooltip_c36707 {
@@ -677,7 +713,6 @@ body {
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
     :is(
     [role="menu"],
-    [role="dialog"]:not(.custom-user-profile-theme),
     [data-mana-component="popover"],
     [data-mana-component="context-menu"],
     [data-mana-component="select-content"],
@@ -696,10 +731,9 @@ body {
     [class*="Popout_"],
     [class*="popoutContainer_"],
     [class*="popoutContentWrapper_"],
-    [class*="layerContainer_"] [class*="contentWrapper_"],
-    [class*="layerContainer_"] [role="listbox"],
+    .contentWrapper__08434,
     .container__55c99,
-    .root__49fc1,
+    .root__49fc1:not(.custom-user-profile-theme),
     .selectDropdown__0edde,
     .picker__09f65,
     .react-datepicker,
@@ -711,19 +745,19 @@ body {
     .baselayer__518a0,
     .nowPlayingNotificationAnimationWrapper__81a05,
     [class*="popoutContent_"],
-    [class$="-tooltip"], [class*="-tooltip "],
-    [class$="-modal-root"], [class*="-modal-root "],
-    [class$="-dialog-card"], [class*="-dialog-card "],
+    .vc-class-highlight-tooltip,
+    .vc-cal-modal-root, .vc-deepsearch-modal-root,
+    .vc-cal-dialog-card,
     [class*="toast_"],
     [class*="customToast_"],
     [class*="errorNotificationContainer_"],
     .vc-notification-root,
     .vc-toast-notifications-notification-root,
-    [class$="-popover"], [class*="-popover "],
-    [class$="-popout"], [class*="-popout "],
-    [class$="-dropdown-menu"], [class*="-dropdown-menu "],
-    [class$="-select-menu"], [class*="-select-menu "],
-    [class$="-tools-menu"], [class*="-tools-menu "]
+    .vc-cal-picker-popover, .vc-cal-tool-popover, .gc-popover,
+    .fakedm-popout, .vc-clickableroles-popout,
+    .vc-presets-merge-dropdown-menu, .vc-cal-search-dropdown,
+    .vc-cal-custom-select-menu, .ps-custom-select-menu,
+    .vc-cal-tools-menu
 ),
     .menu_c1e9c4::before {
         background: var(--bg-floating) !important;
@@ -798,10 +832,13 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
     --notice-text-critical: var(--text-1);
 }
 
-/* Restore the bottom edge of standalone thread and voice-chat headers.
+/* Restore the bottom edge of standalone thread, Friends and home headers.
    Midnight removes it from titlebars, leaving the rounded panel open.
    Keep the current border color so the gray and blue hover edges match. */
 #app-mount .container__01ae2 > .container__9293f,
+#app-mount .container__133bf > .container__9293f,
+#app-mount .container_f391e3 > .container__9293f,
+#app-mount .homeWrapper__0920e > .container__9293f,
 #app-mount .container_fb64c9 > .container__9293f {
     border-bottom-width: var(--border-thickness);
     border-bottom-style: solid;
@@ -809,6 +846,20 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
 }
 
 #app-mount .container__01ae2 > .container__9293f:hover,
+#app-mount .container__133bf > .container__9293f:hover,
+#app-mount .container_f391e3 > .container__9293f:hover,
+#app-mount .homeWrapper__0920e > .container__9293f:hover,
 #app-mount .container_fb64c9 > .container__9293f:hover {
     border-bottom-color: var(--border-hover);
+}
+
+/* The imported username bubble belongs only to message headers. Gradient
+   names elsewhere must not paint an absolute rectangle behind the row. */
+.convenienceGlowGradient_e5de78:not(.username_c19a55)::before {
+    content: none !important;
+}
+
+/* Profile artwork and inner sheets share the outer rounded outline. */
+.outer_c0bea0.user-profile-modal-v2 {
+    overflow: hidden;
 }

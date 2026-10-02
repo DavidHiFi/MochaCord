@@ -14,7 +14,8 @@ works on Vencord and Equicord too.
   including tile grids, focused cameras, and fullscreen streams.
 - FiraCode Nerd Font loaded from your local Windows install, with no webfont
   download.
-- Small fixes kept from the live setup: full-size GIF picker, reordered
+- Small fixes kept from the live setup: bounded GIF picker with wrapping
+  Export, Import, and Verify controls, reordered
   expression picker (GIF | Sticker | Emoji), bubble usernames, centered
   notification bell, auto-height bio textarea.
 
