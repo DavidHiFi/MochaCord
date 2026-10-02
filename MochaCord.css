@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.4
+ * @version 3.1.5
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -254,8 +254,12 @@ div.container__37e49 > div.buttons__37e49 {
     justify-content: center !important;
     flex-shrink: 0 !important;
 }
-.iconContainer__2ea32 path {
-    transform: translate(15%, 15%) scale(0.75) !important;
+/* Scale the complete glyph around its center, including multi-path icons. */
+.iconContainer__2ea32 svg {
+    display: block;
+    flex-shrink: 0;
+    transform: scale(0.75) !important;
+    transform-origin: center;
 }
 
 /* ===== Custom Window Controls ===== */
@@ -423,55 +427,307 @@ top: 215px;
     background-color: transparent !important;
 }
 
-/* Frosted acrylic for transient floating UI.
-   These selectors stay on popouts and notices so chat and media do not blur. */
+/* Shared acrylic for floating UI. Tint the background rather than fading text.
+   Keep the blur on popup surfaces, never on portal containers or call video. */
 body {
-    --mochacord-acrylic-background: color-mix(in srgb, var(--bg-floating) 64%, transparent);
-    --mochacord-acrylic-filter: blur(calc(var(--blur-amount) + 16px)) saturate(160%) contrast(105%);
+    --mochacord-acrylic-background: color-mix(in srgb, var(--bg-floating) 76%, transparent);
+    --mochacord-acrylic-filter: blur(24px) saturate(140%) contrast(105%);
 }
 
 :is(
+    [role="menu"],
+    [role="dialog"]:not(.custom-user-profile-theme),
+    [data-mana-component="popover"],
+    [data-mana-component="context-menu"],
+    [data-mana-component="select-content"],
+    [data-mana-component="tooltip"],
     [class*="tooltip_"],
+    [class*="Tooltip_"],
+    [class*="popover_"],
+    [class*="Popover_"],
     [class*="popoverReactionHoverBar_"],
     [class*="autocomplete_"],
     [class*="messagesPopoutWrap_"],
     [class*="recentMentionsPopout_"],
     [class*="quickSelectPopout_"],
     [class*="user-profile-popout"]:not(.custom-theme-background),
+    [class*="popout_"]:not(.popout__0bd4a),
+    [class*="Popout_"],
+    [class*="popoutContainer_"],
+    [class*="popoutContentWrapper_"],
     [class*="layerContainer_"] [class*="contentWrapper_"],
-    [class*="layerContainer_"] [role="menu"],
-    [class*="popout_"]
+    [class*="layerContainer_"] [role="listbox"],
+    .container__55c99,
+    .root__49fc1,
+    .selectDropdown__0edde,
+    .picker__09f65,
+    .react-datepicker,
+    .customColorPicker__459fb,
+    .statusPickerModal_ce8328,
+    .recentChannelsMenu__711d3,
+    .languageSelector__4d95d,
+    .layer__95d7b,
+    .baselayer__518a0,
+    .nowPlayingNotificationAnimationWrapper__81a05,
+    [class*="popoutContent_"],
+    [class$="-tooltip"], [class*="-tooltip "],
+    [class$="-modal-root"], [class*="-modal-root "],
+    [class$="-dialog-card"], [class*="-dialog-card "],
+    [class*="toast_"],
+    [class*="customToast_"],
+    [class*="errorNotificationContainer_"],
+    .vc-notification-root,
+    .vc-toast-notifications-notification-root,
+    [class$="-popover"], [class*="-popover "],
+    [class$="-popout"], [class*="-popout "],
+    [class$="-dropdown-menu"], [class*="-dropdown-menu "],
+    [class$="-select-menu"], [class*="-select-menu "],
+    [class$="-tools-menu"], [class*="-tools-menu "]
 ) {
-    background-color: var(--mochacord-acrylic-background) !important;
+    background: var(--mochacord-acrylic-background) !important;
     -webkit-backdrop-filter: var(--mochacord-acrylic-filter) !important;
     backdrop-filter: var(--mochacord-acrylic-filter) !important;
+    /* Structural headers, footers and scrollers share the outer glass. */
+    --background-base-low: transparent;
+    --background-base-lower: transparent;
+    --background-base-lowest: transparent;
+    --background-surface-high: transparent;
+    --background-surface-higher: transparent;
+    --background-surface-highest: transparent;
+    --background-primary: transparent;
+    --background-secondary: transparent;
+    --background-secondary-alt: transparent;
+    --modal-background: transparent;
+    --modal-footer-background: transparent;
 }
 
-/* TestCord notifications live in fixed overlay containers. The
-   backdrop-filter must sit on the toast root itself: v3.0.7 put it on a
-   ::before inside an isolated/transformed parent, which samples only the
-   transparent parent and renders as flat see-through tint, not frost. */
+/* A nested popup section uses the outer glass instead of another GPU blur.
+   Context submenus are independent surfaces, handled by their own skin below. */
 :is(
+    [role="menu"],
+    [role="dialog"]:not(.custom-user-profile-theme),
+    [data-mana-component="popover"],
+    [data-mana-component="context-menu"],
+    [data-mana-component="select-content"],
+    [data-mana-component="tooltip"],
+    [class*="tooltip_"],
+    [class*="Tooltip_"],
+    [class*="popover_"],
+    [class*="Popover_"],
+    [class*="popoverReactionHoverBar_"],
+    [class*="autocomplete_"],
+    [class*="messagesPopoutWrap_"],
+    [class*="recentMentionsPopout_"],
+    [class*="quickSelectPopout_"],
+    [class*="user-profile-popout"]:not(.custom-theme-background),
+    [class*="popout_"]:not(.popout__0bd4a),
+    [class*="Popout_"],
+    [class*="popoutContainer_"],
+    [class*="popoutContentWrapper_"],
+    [class*="layerContainer_"] [class*="contentWrapper_"],
+    [class*="layerContainer_"] [role="listbox"],
+    .container__55c99,
+    .root__49fc1,
+    .selectDropdown__0edde,
+    .picker__09f65,
+    .react-datepicker,
+    .customColorPicker__459fb,
+    .statusPickerModal_ce8328,
+    .recentChannelsMenu__711d3,
+    .languageSelector__4d95d,
+    .layer__95d7b,
+    .baselayer__518a0,
+    .nowPlayingNotificationAnimationWrapper__81a05,
+    [class*="popoutContent_"],
+    [class$="-tooltip"], [class*="-tooltip "],
+    [class$="-modal-root"], [class*="-modal-root "],
+    [class$="-dialog-card"], [class*="-dialog-card "],
+    [class*="toast_"],
+    [class*="customToast_"],
+    [class*="errorNotificationContainer_"],
     .vc-notification-root,
-    .vc-toast-notifications-notification-root
-) {
-    background-color: var(--mochacord-acrylic-background) !important;
+    .vc-toast-notifications-notification-root,
+    [class$="-popover"], [class*="-popover "],
+    [class$="-popout"], [class*="-popout "],
+    [class$="-dropdown-menu"], [class*="-dropdown-menu "],
+    [class$="-select-menu"], [class*="-select-menu "],
+    [class$="-tools-menu"], [class*="-tools-menu "]
+) :is(
+    [role="menu"],
+    [role="dialog"]:not(.custom-user-profile-theme),
+    [data-mana-component="popover"],
+    [data-mana-component="context-menu"],
+    [data-mana-component="select-content"],
+    [data-mana-component="tooltip"],
+    [class*="tooltip_"],
+    [class*="Tooltip_"],
+    [class*="popover_"],
+    [class*="Popover_"],
+    [class*="popoverReactionHoverBar_"],
+    [class*="autocomplete_"],
+    [class*="messagesPopoutWrap_"],
+    [class*="recentMentionsPopout_"],
+    [class*="quickSelectPopout_"],
+    [class*="user-profile-popout"]:not(.custom-theme-background),
+    [class*="popout_"]:not(.popout__0bd4a),
+    [class*="Popout_"],
+    [class*="popoutContainer_"],
+    [class*="popoutContentWrapper_"],
+    [class*="layerContainer_"] [class*="contentWrapper_"],
+    [class*="layerContainer_"] [role="listbox"],
+    .container__55c99,
+    .root__49fc1,
+    .selectDropdown__0edde,
+    .picker__09f65,
+    .react-datepicker,
+    .customColorPicker__459fb,
+    .statusPickerModal_ce8328,
+    .recentChannelsMenu__711d3,
+    .languageSelector__4d95d,
+    .layer__95d7b,
+    .baselayer__518a0,
+    .nowPlayingNotificationAnimationWrapper__81a05,
+    [class*="popoutContent_"],
+    [class$="-tooltip"], [class*="-tooltip "],
+    [class$="-modal-root"], [class*="-modal-root "],
+    [class$="-dialog-card"], [class*="-dialog-card "],
+    [class*="toast_"],
+    [class*="customToast_"],
+    [class*="errorNotificationContainer_"],
+    .vc-notification-root,
+    .vc-toast-notifications-notification-root,
+    [class$="-popover"], [class*="-popover "],
+    [class$="-popout"], [class*="-popout "],
+    [class$="-dropdown-menu"], [class*="-dropdown-menu "],
+    [class$="-select-menu"], [class*="-select-menu "],
+    [class$="-tools-menu"], [class*="-tools-menu "]
+):not([role="menu"], .menu_c1e9c4) {
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* A filtered menu root blocks a submenu from sampling pixels outside it.
+   Put the glass on a sibling ::before layer so every submenu can frost the
+   page behind it. This replaces Midnight's second, unpositioned blur layer. */
+:root .menu_c1e9c4 {
+    position: relative;
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+.menu_c1e9c4::before,
+.submenuPaddingContainer_c1e9c4 > .menu_c1e9c4::before,
+.submenuPaddingContainer_ce8328 > .menu_c1e9c4::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: auto;
+    height: auto;
+    border-radius: inherit;
+    background: var(--mochacord-acrylic-background) !important;
     -webkit-backdrop-filter: var(--mochacord-acrylic-filter) !important;
     backdrop-filter: var(--mochacord-acrylic-filter) !important;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Opacity promotion makes a portal a backdrop root even after a fade ends.
+   Preserve its transform animation without isolating the popup's backdrop. */
+.layer__59d0d,
+.layerContainer__59d0d,
+:is(.layer__59d0d, .layerContainer__59d0d) [class*="animator"] {
+    will-change: auto !important;
+}
+.tooltip_c36707 {
+    will-change: auto !important;
+}
+
+/* The expression picker's opaque inner sheets otherwise cover the glass. */
+.contentWrapper__08434 :is(.emojiPicker_c0e32c, .wrapper__14245, .container_fed6d3),
+.messagesPopoutWrap__432f4 > .header__432f4 {
+    background: transparent !important;
+}
+
+/* Keep toast text readable and match tooltip arrows to the glass. */
+:is([class*="toast_"], [class*="customToast_"], [class*="errorNotificationContainer_"]) {
+    color: var(--text-1);
+}
+.tooltipPointer_c36707 {
+    border-top-color: var(--mochacord-acrylic-background) !important;
+}
+
+:is(.vc-notification-root, .vc-toast-notifications-notification-root) {
     border: 1px solid rgba(255, 255, 255, 0.09) !important;
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.12),
         0 12px 32px rgba(0, 0, 0, 0.35) !important;
 }
 
-/* The persistent notification log is a docked list, not a floating toast:
-   keep it solid and unblurred. */
+/* The persistent notification history shares its containing modal's glass. */
 .vc-notification-log-wrapper .vc-notification-root {
-    background-color: var(--bg-floating) !important;
+    background: transparent !important;
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
     border: none !important;
     box-shadow: none !important;
+}
+
+/* Browsers without backdrop filtering retain a readable Mocha background. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    :is(
+    [role="menu"],
+    [role="dialog"]:not(.custom-user-profile-theme),
+    [data-mana-component="popover"],
+    [data-mana-component="context-menu"],
+    [data-mana-component="select-content"],
+    [data-mana-component="tooltip"],
+    [class*="tooltip_"],
+    [class*="Tooltip_"],
+    [class*="popover_"],
+    [class*="Popover_"],
+    [class*="popoverReactionHoverBar_"],
+    [class*="autocomplete_"],
+    [class*="messagesPopoutWrap_"],
+    [class*="recentMentionsPopout_"],
+    [class*="quickSelectPopout_"],
+    [class*="user-profile-popout"]:not(.custom-theme-background),
+    [class*="popout_"]:not(.popout__0bd4a),
+    [class*="Popout_"],
+    [class*="popoutContainer_"],
+    [class*="popoutContentWrapper_"],
+    [class*="layerContainer_"] [class*="contentWrapper_"],
+    [class*="layerContainer_"] [role="listbox"],
+    .container__55c99,
+    .root__49fc1,
+    .selectDropdown__0edde,
+    .picker__09f65,
+    .react-datepicker,
+    .customColorPicker__459fb,
+    .statusPickerModal_ce8328,
+    .recentChannelsMenu__711d3,
+    .languageSelector__4d95d,
+    .layer__95d7b,
+    .baselayer__518a0,
+    .nowPlayingNotificationAnimationWrapper__81a05,
+    [class*="popoutContent_"],
+    [class$="-tooltip"], [class*="-tooltip "],
+    [class$="-modal-root"], [class*="-modal-root "],
+    [class$="-dialog-card"], [class*="-dialog-card "],
+    [class*="toast_"],
+    [class*="customToast_"],
+    [class*="errorNotificationContainer_"],
+    .vc-notification-root,
+    .vc-toast-notifications-notification-root,
+    [class$="-popover"], [class*="-popover "],
+    [class$="-popout"], [class*="-popout "],
+    [class$="-dropdown-menu"], [class*="-dropdown-menu "],
+    [class$="-select-menu"], [class*="-select-menu "],
+    [class$="-tools-menu"], [class*="-tools-menu "]
+),
+    .menu_c1e9c4::before {
+        background: var(--bg-floating) !important;
+    }
 }
 
 /* ===== Voice call: seamless frosted stage, every view =====

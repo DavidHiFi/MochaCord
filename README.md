@@ -8,9 +8,10 @@ works on Vencord and Equicord too.
 
 - Catppuccin Mocha palette over Midnight's layout: rounded panels, custom
   window controls, separated chatbar, compact search.
-- Frosted acrylic (real `backdrop-filter` blur) on notifications, menus,
-  tooltips, popouts, and the voice call stage. The call matches the panels in
-  every view: tile grid, focused/enlarged camera, and fullscreen stream.
+- Frosted glass on context menus and submenus, dropdowns, notifications,
+  tooltips, pickers, profile popouts, and dialogs. Popup text stays sharp.
+  The voice call stage uses the window's acrylic material in every view,
+  including tile grids, focused cameras, and fullscreen streams.
 - FiraCode Nerd Font loaded from your local Windows install, with no webfont
   download.
 - Small fixes kept from the live setup: full-size GIF picker, reordered
