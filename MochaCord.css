@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.0
+ * @version 3.1.2
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -489,8 +489,8 @@ body {
    behind the call view, the fullscreen wrapper, the UA ::backdrop used by
    the fullscreen/focused camera views, and the wrappers it draws around
    video (tile letterbox, enlarged camera, fullscreen stream frame). Clear
-   them and give the stage the exact recipe midnight uses for every other
-   panel: bg-4 + backdrop blur. */
+   them and tint the stage with bg-4, the same tint midnight gives every
+   other panel. The frost itself comes from the window's Windows acrylic. */
 :has([class*="callContainer"]),
 :has([class*="fullScreen"][class*="wrapper"]),
 :has([class*="wrapper"][class*="fullScreen"]) {
@@ -509,8 +509,21 @@ body {
 }
 [class*="videoGrid"] {
     background-color: var(--bg-4) !important;
-    -webkit-backdrop-filter: blur(var(--blur-amount)) !important;
-    backdrop-filter: blur(var(--blur-amount)) !important;
+}
+/* No CSS backdrop blur anywhere on the stage (v3.1.1). Every layer behind it
+   is transparent down to the acrylic window, so the blur has nothing to
+   frost. Video repaints the stage constantly, and the blur, redrawn one
+   rectangle at a time, smeared tile pixels into the gaps: dark smudges with
+   hard edges that flashed around the tiles. midnight's panel rule puts the
+   same blur on the call container, so clear it there too. */
+:is(
+    [class*="callContainer"],
+    [class*="videoGrid"],
+    [class*="fullScreen"][class*="wrapper"],
+    [class*="wrapper"][class*="fullScreen"]
+) {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
 }
 :is([class*="callContainer"], [class*="fullScreen"]) :is(
     [class*="videoWrapper"],
@@ -526,4 +539,15 @@ body {
 }
 :is([class*="callContainer"], [class*="fullScreen"]) div:has(video) {
     background-color: transparent !important;
+}
+
+/* MochaCord header margin repair. Midnight's #app-mount titlebar rule also
+   matches the row inside the bordered header. Keep spacing on the outer panel. */
+#app-mount .subtitleContainer_f75fb0 > .title_f75fb0.container__9293f {
+    margin-bottom: 0 !important;
+}
+
+/* Discord toast text must contrast with Midnight's dark notice backgrounds. */
+body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
+    --notice-text-critical: var(--text-1);
 }
