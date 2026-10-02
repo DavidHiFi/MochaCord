@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.2
+ * @version 3.1.3
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -550,4 +550,19 @@ body {
 /* Discord toast text must contrast with Midnight's dark notice backgrounds. */
 body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
     --notice-text-critical: var(--text-1);
+}
+
+/* Restore the bottom edge of standalone thread and voice-chat headers.
+   Midnight removes it from titlebars, leaving the rounded panel open.
+   Keep the current border color so the gray and blue hover edges match. */
+#app-mount .container__01ae2 > .container__9293f,
+#app-mount .container_fb64c9 > .container__9293f {
+    border-bottom-width: var(--border-thickness);
+    border-bottom-style: solid;
+    border-bottom-color: var(--border-subtle);
+}
+
+#app-mount .container__01ae2 > .container__9293f:hover,
+#app-mount .container_fb64c9 > .container__9293f:hover {
+    border-bottom-color: var(--border-hover);
 }
