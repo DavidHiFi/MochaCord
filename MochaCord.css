@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.6
+ * @version 3.1.7
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -469,7 +469,9 @@ top: 215px;
     background-color: transparent !important;
 }
 
-/* Shared acrylic for floating UI. Tint the background rather than fading text.
+/* Shared acrylic for floating UI. Tooltip triggers such as overflowTooltip
+   and noTooltip are inline labels, not popup roots. Match tooltip_ only.
+   Tint the background rather than fading text.
    Keep the blur on popup surfaces, never on portal containers or call video. */
 body {
     --mochacord-acrylic-background: color-mix(in srgb, var(--bg-floating) 76%, transparent);
@@ -483,7 +485,6 @@ body {
     [data-mana-component="select-content"],
     [data-mana-component="tooltip"],
     [class*="tooltip_"],
-    [class*="Tooltip_"],
     [class*="popover_"],
     [class*="Popover_"],
     [class*="popoverReactionHoverBar_"],
@@ -550,7 +551,6 @@ body {
     [data-mana-component="select-content"],
     [data-mana-component="tooltip"],
     [class*="tooltip_"],
-    [class*="Tooltip_"],
     [class*="popover_"],
     [class*="Popover_"],
     [class*="popoverReactionHoverBar_"],
@@ -597,7 +597,6 @@ body {
     [data-mana-component="select-content"],
     [data-mana-component="tooltip"],
     [class*="tooltip_"],
-    [class*="Tooltip_"],
     [class*="popover_"],
     [class*="Popover_"],
     [class*="popoverReactionHoverBar_"],
@@ -718,7 +717,6 @@ body {
     [data-mana-component="select-content"],
     [data-mana-component="tooltip"],
     [class*="tooltip_"],
-    [class*="Tooltip_"],
     [class*="popover_"],
     [class*="Popover_"],
     [class*="popoverReactionHoverBar_"],
