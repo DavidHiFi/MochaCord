@@ -9,7 +9,8 @@ works on Vencord and Equicord too.
 - Catppuccin Mocha palette over Midnight's layout: rounded panels, custom
   window controls, separated chatbar, compact search.
 - Frosted glass on context menus and submenus, dropdowns, notifications,
-  tooltips, pickers, profile popouts, and dialogs. Popup text stays sharp.
+  tooltips, pickers, profile popouts, dialogs, and the image viewer backdrop.
+  Popup text and images stay sharp.
   The voice call stage uses the window's acrylic material in every view,
   including tile grids, focused cameras, and fullscreen streams.
 - FiraCode Nerd Font loaded from your local Windows install, with no webfont
@@ -18,6 +19,9 @@ works on Vencord and Equicord too.
   Export, Import, and Verify controls, reordered
   expression picker (GIF | Sticker | Emoji), bubble usernames, centered
   notification bell, auto-height bio textarea.
+- Search expands within narrow headers. Server banners stay inside rounded
+  outlines, typing rows share the chat background, and server palettes do not
+  override Mocha colors in chat or the composer.
 
 ## Install
 

@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.7
+ * @version 3.1.8
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -860,4 +860,226 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
 /* Profile artwork and inner sheets share the outer rounded outline. */
 .outer_c0bea0.user-profile-modal-v2 {
     overflow: hidden;
+}
+
+/* Frost the lightbox scrim once. Keep its image and controls sharp. */
+#app-mount .scrim__40128.lightbox__40128 {
+    background: color-mix(in srgb, var(--bg-floating) 55%, transparent) !important;
+    -webkit-backdrop-filter: var(--mochacord-acrylic-filter) !important;
+    backdrop-filter: var(--mochacord-acrylic-filter) !important;
+}
+#app-mount .carouselModal_d3a6f0 {
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+}
+
+/* The compact search import leaves Discord's 244px flex basis in place.
+   Size its wrapper too, and let the expanded input shrink with the header. */
+#app-mount .toolbar__9293f {
+    min-width: 0;
+    flex-shrink: 1;
+}
+#app-mount .search__49676 {
+    flex: 0 1 32px;
+    min-width: 32px;
+    max-width: 244px;
+    width: 32px !important;
+}
+#app-mount .search__49676:has(.open_c322aa) {
+    flex-basis: 244px;
+    width: 244px !important;
+}
+#app-mount .search_c322aa {
+    min-width: 0;
+    width: 100%;
+}
+#app-mount .search_c322aa > .searchBar_c322aa,
+#app-mount .search_c322aa.open_c322aa > .searchBar_c322aa {
+    width: 100% !important;
+    min-width: 0;
+    max-width: 100%;
+}
+
+/* Keep banner artwork inside the channel panel's rounded border. */
+#app-mount .sidebarList__5e434 {
+    overflow: hidden;
+}
+#app-mount .sidebarList__5e434 .bannerVisible_f37cb1 .header_f37cb1 {
+    border-top: none;
+}
+
+/* Reserve the typing row without a second translucent fill. Clip scrolling
+   messages above the row so their text cannot overlap the typing indicator. */
+#app-mount .chatContent_f75fb0:has(> .form_f75fb0 > .typing_b88801) .messagesWrapper__36d07::before {
+    background: transparent !important;
+}
+#app-mount .chatContent_f75fb0:has(> .form_f75fb0 > .typing_b88801) .scroller__36d07 {
+    mask: linear-gradient(to bottom, #000 calc(100% - 26px), transparent calc(100% - 26px));
+}
+#app-mount .chatContent_f75fb0:has(> .form_f75fb0 > .typing_b88801) .chatGradientBase__36d07 {
+    background: transparent !important;
+}
+
+/* Keep server palettes out of the chat and composer. Custom profile artwork
+   retains its separate profile palette. */
+#app-mount .custom-theme-background:not(.custom-user-profile-theme) {
+    --background-gradient-chat: initial !important;
+    --background-gradient-low: initial !important;
+    --background-gradient-lower: initial !important;
+    --background-gradient-lowest: initial !important;
+    --background-gradient-high: initial !important;
+    --background-gradient-higher: initial !important;
+    --background-gradient-highest: initial !important;
+    --background-base-low: var(--bg-4) !important;
+    --background-base-lower: var(--bg-4) !important;
+    --background-base-lowest: var(--bg-4) !important;
+    --input-background-default: var(--bg-3) !important;
+    --channeltextarea-background: var(--bg-3) !important;
+}
+
+/* Replace unfinished Midnight color tokens with the Mocha palette. */
+body,
+.theme-dark:not(.custom-user-profile-theme),
+.theme-light:not(.custom-user-profile-theme) {
+    --button-danger-background-disabled: var(--red-5);
+    --button-outline-brand-background-hover: var(--accent-4);
+    --button-outline-brand-border-active: var(--accent-3);
+    --card-primary-pressed-bg: var(--bg-2);
+    --card-secondary-bg: var(--bg-3);
+    --card-secondary-pressed-bg: var(--bg-2);
+    --chat-background: var(--bg-4);
+    --chat-border: var(--border);
+    --checkbox-background-active: var(--accent-3);
+    --chip-blurple-dark-background: color-mix(in srgb, var(--blue-2) 18%, var(--bg-3));
+    --chip-blurple-dark-text: var(--blue-2);
+    --chip-blurple-light-background: color-mix(in srgb, var(--blue-2) 18%, var(--bg-3));
+    --chip-blurple-light-text: var(--blue-2);
+    --chip-blurple-medium-background: color-mix(in srgb, var(--blue-2) 18%, var(--bg-3));
+    --chip-blurple-medium-text: var(--blue-2);
+    --chip-gray-dark-background: var(--bg-2);
+    --chip-gray-dark-text: var(--text-2);
+    --chip-gray-light-background: var(--bg-2);
+    --chip-gray-light-text: var(--text-2);
+    --chip-gray-medium-background: var(--bg-2);
+    --chip-gray-medium-text: var(--text-2);
+    --chip-green-dark-background: color-mix(in srgb, var(--green-2) 18%, var(--bg-3));
+    --chip-green-dark-text: var(--green-2);
+    --chip-green-light-background: color-mix(in srgb, var(--green-2) 18%, var(--bg-3));
+    --chip-green-light-text: var(--green-2);
+    --chip-green-medium-background: color-mix(in srgb, var(--green-2) 18%, var(--bg-3));
+    --chip-green-medium-text: var(--green-2);
+    --chip-orange-dark-background: color-mix(in srgb, var(--yellow-2) 18%, var(--bg-3));
+    --chip-orange-dark-text: var(--yellow-2);
+    --chip-orange-light-background: color-mix(in srgb, var(--yellow-2) 18%, var(--bg-3));
+    --chip-orange-light-text: var(--yellow-2);
+    --chip-orange-medium-background: color-mix(in srgb, var(--yellow-2) 18%, var(--bg-3));
+    --chip-orange-medium-text: var(--yellow-2);
+    --chip-pink-dark-background: color-mix(in srgb, var(--red-2) 18%, var(--bg-3));
+    --chip-pink-dark-text: var(--red-2);
+    --chip-pink-light-background: color-mix(in srgb, var(--red-2) 18%, var(--bg-3));
+    --chip-pink-light-text: var(--red-2);
+    --chip-pink-medium-background: color-mix(in srgb, var(--red-2) 18%, var(--bg-3));
+    --chip-pink-medium-text: var(--red-2);
+    --chip-purple-dark-background: color-mix(in srgb, var(--purple-2) 18%, var(--bg-3));
+    --chip-purple-dark-text: var(--purple-2);
+    --chip-purple-light-background: color-mix(in srgb, var(--purple-2) 18%, var(--bg-3));
+    --chip-purple-light-text: var(--purple-2);
+    --chip-purple-medium-background: color-mix(in srgb, var(--purple-2) 18%, var(--bg-3));
+    --chip-purple-medium-text: var(--purple-2);
+    --chip-red-dark-background: color-mix(in srgb, var(--red-2) 18%, var(--bg-3));
+    --chip-red-dark-text: var(--red-2);
+    --chip-red-light-background: color-mix(in srgb, var(--red-2) 18%, var(--bg-3));
+    --chip-red-light-text: var(--red-2);
+    --chip-red-medium-background: color-mix(in srgb, var(--red-2) 18%, var(--bg-3));
+    --chip-red-medium-text: var(--red-2);
+    --chip-yellow-dark-background: color-mix(in srgb, var(--yellow-2) 18%, var(--bg-3));
+    --chip-yellow-dark-text: var(--yellow-2);
+    --chip-yellow-light-background: color-mix(in srgb, var(--yellow-2) 18%, var(--bg-3));
+    --chip-yellow-light-text: var(--yellow-2);
+    --chip-yellow-medium-background: color-mix(in srgb, var(--yellow-2) 18%, var(--bg-3));
+    --chip-yellow-medium-text: var(--yellow-2);
+    --context-menu-backdrop-background: transparent;
+    --control-brand-foreground-new: var(--accent-2);
+    --creator-revenue-icon-gradient-end: var(--accent-2);
+    --creator-revenue-icon-gradient-start: var(--accent-2);
+    --creator-revenue-info-box-background: var(--bg-3);
+    --creator-revenue-info-box-border: var(--border);
+    --creator-revenue-locked-channel-icon: var(--accent-2);
+    --creator-revenue-progress-bar: var(--accent-2);
+    --embed-background: var(--bg-3);
+    --embed-background-alternate: var(--bg-3);
+    --experimental-avatar-embed-bg: var(--bg-3);
+    --icon-invert: var(--text-0);
+    --icon-transparent: transparent;
+    --input-border-error-hover: var(--red-3);
+    --input-border-readonly: var(--border);
+    --input-foreground-placeholder: var(--text-5);
+    --input-icon-default: var(--text-4);
+    --logo-primary: var(--text-1);
+    --message-automod-background-default: color-mix(in srgb, var(--red-2) 12%, transparent);
+    --message-automod-background-hover: color-mix(in srgb, var(--red-2) 12%, transparent);
+    --mobile-background-scrim-opaque: var(--bg-3);
+    --mobile-expression-picker-background-default: var(--bg-3);
+    --mobile-text-heading-primary: var(--text-1);
+    --navigator-header-tint: var(--bg-4);
+    --overlay-backdrop-lightbox: color-mix(in srgb, var(--bg-3) 55%, transparent);
+    --panel-bg: var(--bg-4);
+    --polls-normal-image-background: var(--bg-3);
+    --profile-gradient-note-background: var(--bg-3);
+    --profile-gradient-overlay: color-mix(in srgb, var(--bg-3) 60%, transparent);
+    --profile-gradient-overlay-synced-with-user-theme: color-mix(in srgb, var(--bg-3) 60%, transparent);
+    --profile-gradient-role-pill-background: var(--bg-3);
+    --profile-gradient-role-pill-border: var(--border);
+    --profile-gradient-section-box: var(--bg-3);
+    --radio-foreground-active: var(--accent-3);
+    --radio-foreground-default: var(--text-4);
+    --radio-foreground-hover: var(--text-2);
+    --redesign-button-active-background: var(--accent-2);
+    --redesign-button-active-pressed-background: var(--accent-3);
+    --redesign-button-active-text: var(--text-0);
+    --redesign-button-danger-background: var(--red-2);
+    --redesign-button-destructive-background: var(--red-2);
+    --redesign-button-destructive-pressed-background: var(--red-3);
+    --redesign-button-destructive-text: var(--text-0);
+    --redesign-button-positive-background: var(--green-2);
+    --redesign-button-premium-primary-pink-for-gradient: var(--red-2);
+    --redesign-button-premium-primary-pressed-background: var(--purple-2);
+    --redesign-button-premium-primary-purple-for-gradient: var(--purple-2);
+    --redesign-button-premium-primary-purple-for-gradient-2: var(--purple-2);
+    --redesign-button-primary-alt-border: var(--border);
+    --redesign-button-primary-background: var(--accent-2);
+    --redesign-button-primary-overlay-background: var(--accent-2);
+    --redesign-button-primary-overlay-pressed-background: var(--accent-3);
+    --redesign-button-primary-overlay-text: var(--text-0);
+    --redesign-button-primary-pressed-background: var(--accent-3);
+    --redesign-button-primary-text: var(--text-0);
+    --redesign-button-secondary-border: var(--border);
+    --redesign-button-secondary-overlay-background: var(--bg-2);
+    --redesign-button-secondary-overlay-pressed-background: var(--bg-1);
+    --redesign-button-secondary-overlay-text: var(--text-2);
+    --redesign-button-secondary-pressed-border: var(--border);
+    --redesign-button-selected-background: var(--accent-2);
+    --redesign-button-selected-pressed-background: var(--accent-3);
+    --redesign-button-selected-text: var(--text-0);
+    --redesign-button-tertiary-background: transparent;
+    --redesign-button-tertiary-pressed-background: var(--hover);
+    --redesign-button-tertiary-pressed-text: var(--text-2);
+    --redesign-button-tertiary-text: var(--text-2);
+    --scrollbar-auto-scrollbar-color-thumb: var(--bg-1);
+    --scrollbar-auto-scrollbar-color-track: transparent;
+    --spoiler-hidden-background: var(--bg-2);
+    --spoiler-hidden-background-hover: var(--bg-2);
+    --spoiler-revealed-background: var(--bg-2);
+    --status-positive-text: var(--text-0);
+    --status-warning-background: var(--yellow-2);
+    --status-warning-text: var(--text-0);
+    --switch-background-active: var(--accent-3);
+    --switch-thumb-icon-active: var(--text-0);
+    --switch-thumb-icon-default: var(--text-4);
+    --text-invert: var(--text-0);
+    --text-overlay-dark: var(--text-0);
+    --thread-channel-spine: var(--text-5);
+    --user-profile-activity-toolbar-background: var(--bg-3);
 }
