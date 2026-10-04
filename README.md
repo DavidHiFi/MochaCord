@@ -44,7 +44,9 @@ to `acrylic` (TestCord settings -> Windows material).
   Keep that folder beside `MochaCord.css`. The bundled base removes an
   ancestor selector that caused repeated style recalculation during calls.
   Its upstream source and MIT notice are in the stylesheet header.
-- Floating UI uses 48px backdrop blur. Profile artwork clips at the inner
+- Floating UI uses an embedded SVG filter with a 48px Gaussian blur.
+  The filter fills sampled alpha before blurring, which prevents sharp text
+  bleeding through translucent panels in Discord's transparent window. Profile artwork clips at the inner
   sheet, and voice speaking borders follow the saved RoundedVCPFP radius.
 - FiraCode Nerd Font must be installed locally for the font section to apply;
   otherwise Discord falls back to Fira Code / monospace.
@@ -52,9 +54,11 @@ to `acrylic` (TestCord settings -> Windows material).
 ## Popup regression checks
 
 Open `tests/acrylic.html` in Chromium after changing popup CSS. The page checks
-48 popup types, changed portal class hashes, nested menus and transparent inner
+54 popup types, changed portal class hashes, nested menus and transparent inner
 sections, profile clipping and speaking border radii. Its title reports the result; `window.acrylicResults` contains details.
-The striped background also makes failed backdrop sampling visible. Background
+The striped background also makes failed backdrop sampling visible.
+The live regression test also uses white text over a translucent sidebar.
+An opaque background alone cannot reproduce that failure. Background
 stripes should blur while popup labels remain sharp. Keep opacity promotion off
 the portal wrappers and keep nested menus on their own glass pseudo-elements.
 These fixture checks do not establish coverage of every live plugin or a measured

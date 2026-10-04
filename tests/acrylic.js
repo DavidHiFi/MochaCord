@@ -19,6 +19,9 @@ window.addEventListener("load", () => {
         ['plugin-gif-modal', 'vc-gif-collections-modal'], ['plugin-github', 'vc-github-repos-modal'], ['plugin-mds', 'vc-mds-modal'],
         ['plugin-editor-toast', 'vc-testcord-tab-editor-toast'], ['plugin-fakedm', 'fakedm-popout'], ['plugin-gc', 'gc-popover'],
         ['plugin-deepsearch', 'vc-deepsearch-modal-root'], ['plugin-calendar', 'vc-cal-picker-popover'],
+        ['semantic-tooltip', '', 'tooltip'], ['semantic-listbox', '', 'listbox'],
+        ['mana-modal', '', 'modal'], ['native-popout-root', 'popoutRoot_newhash'],
+        ['plugin-activity-tooltip', 'vc-bactivities-controls-tooltip'], ['plugin-popover-overflow', 'vc-popover-overflow'],
         ['plugin-roles', 'vc-clickableroles-popout'], ['plugin-presets', 'vc-presets-merge-dropdown-menu']
     ];
     const app = document.getElementById('app-mount');
@@ -42,7 +45,7 @@ window.addEventListener("load", () => {
         const panel = document.createElement('div');
         panel.id = 'case-' + id;
         panel.className = classes + ' fixture-surface';
-        if (semantic === 'menu') panel.role = semantic;
+        if (semantic === 'menu' || id.startsWith('semantic-')) panel.role = semantic;
         else if (semantic) panel.dataset.manaComponent = semantic;
         panel.innerHTML = '<span class="fixture-label">' + id + '</span>';
         if (id === 'files-new-hash') {
@@ -57,7 +60,7 @@ window.addEventListener("load", () => {
         app.append(portal);
         const result = { id, ...describe(panel), portal: getComputedStyle(portal).willChange, animator: getComputedStyle(animator).willChange };
         results.push(result);
-        const frosted = result.blur.includes('blur(48px)') || result.before.includes('blur(48px)');
+        const frosted = result.blur.includes('data:image/svg+xml') || result.before.includes('data:image/svg+xml');
         if (!frosted || result.portal !== 'auto' || result.animator !== 'auto') fail.push(result);
     }
     const add = (parent, classes, id) => {
@@ -71,7 +74,7 @@ window.addEventListener("load", () => {
     nested.role = 'menu';
     nested.style.cssText = 'position:absolute!important;left:210px;top:70px;width:120px!important;height:110px!important';
     const nestedStyle = describe(nested);
-    if (nestedStyle.blur !== 'none' || !nestedStyle.before.includes('blur(48px)')) fail.push({ id: 'nested-menu', ...nestedStyle });
+    if (nestedStyle.blur !== 'none' || !nestedStyle.before.includes('data:image/svg+xml')) fail.push({ id: 'nested-menu', ...nestedStyle });
     const inner = add(document.getElementById('case-picker'), 'emojiPicker_c0e32c', 'picker-inner');
     const section = add(document.getElementById('case-plugin-calendar'), 'vc-cal-tool-popover', 'nested-section');
     const structural = [inner, section].map(e => ({ id: e.id, ...describe(e) }));

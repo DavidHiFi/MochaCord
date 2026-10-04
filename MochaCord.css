@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.13
+ * @version 3.1.14
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -477,12 +477,18 @@ top: 215px;
    Keep the blur on popup surfaces, never on portal containers or call video. */
 body {
     --mochacord-acrylic-background: color-mix(in srgb, var(--bg-floating) 76%, transparent);
-    --mochacord-acrylic-filter: blur(48px) saturate(140%) contrast(105%);
+    /* Normalize the sampled alpha before blurring. A regular CSS blur leaves
+       sharp text underneath when Discord's backdrop is translucent.
+       Keep the SVG embedded because cross-origin filter references fail. */
+    --mochacord-acrylic-filter: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPg0KICA8ZmlsdGVyIGlkPSJmcm9zdCIgeD0iLTUwJSIgeT0iLTUwJSIgd2lkdGg9IjIwMCUiIGhlaWdodD0iMjAwJSIgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSJzUkdCIj4NCiAgICA8ZmVDb21wb25lbnRUcmFuc2Zlcj4NCiAgICAgIDxmZUZ1bmNBIHR5cGU9ImxpbmVhciIgc2xvcGU9IjAiIGludGVyY2VwdD0iMSIvPg0KICAgIDwvZmVDb21wb25lbnRUcmFuc2Zlcj4NCiAgICA8ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSI0OCIvPg0KICAgIDxmZUNvbG9yTWF0cml4IHR5cGU9InNhdHVyYXRlIiB2YWx1ZXM9IjEuNCIvPg0KICAgIDxmZUNvbXBvbmVudFRyYW5zZmVyPg0KICAgICAgPGZlRnVuY1IgdHlwZT0ibGluZWFyIiBzbG9wZT0iMS4wNSIgaW50ZXJjZXB0PSItMC4wMjUiLz4NCiAgICAgIDxmZUZ1bmNHIHR5cGU9ImxpbmVhciIgc2xvcGU9IjEuMDUiIGludGVyY2VwdD0iLTAuMDI1Ii8+DQogICAgICA8ZmVGdW5jQiB0eXBlPSJsaW5lYXIiIHNsb3BlPSIxLjA1IiBpbnRlcmNlcHQ9Ii0wLjAyNSIvPg0KICAgIDwvZmVDb21wb25lbnRUcmFuc2Zlcj4NCiAgPC9maWx0ZXI+DQo8L3N2Zz4NCg==#frost");
 }
 
 :is(
     [role="menu"],
+    [role="tooltip"],
+    [role="listbox"],
     [data-mana-component="popover"],
+    [data-mana-component="modal"],
     [data-mana-component="context-menu"],
     [data-mana-component="select-content"],
     [data-mana-component="tooltip"],
@@ -515,6 +521,7 @@ body {
     [class*="popout_"]:not(.popout__0bd4a),
     [class*="Popout_"],
     [class*="popoutContainer_"],
+    [class*="popoutRoot_"],
     [class*="popoutContentWrapper_"],
     .contentWrapper__08434,
     .container__55c99,
@@ -531,6 +538,8 @@ body {
     .nowPlayingNotificationAnimationWrapper__81a05,
     [class*="popoutContent_"],
     .vc-class-highlight-tooltip,
+    .vc-bactivities-controls-tooltip, .vc-popover-overflow,
+    .vc-bie-picker > .vc-bie-drawer,
     .vc-cal-modal-root, .vc-deepsearch-modal-root,
     .vc-cal-dialog-card,
     [class*="toast_"],
@@ -632,7 +641,10 @@ body {
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
     :is(
     [role="menu"],
+    [role="tooltip"],
+    [role="listbox"],
     [data-mana-component="popover"],
+    [data-mana-component="modal"],
     [data-mana-component="context-menu"],
     [data-mana-component="select-content"],
     [data-mana-component="tooltip"],
@@ -665,6 +677,7 @@ body {
     [class*="popout_"]:not(.popout__0bd4a),
     [class*="Popout_"],
     [class*="popoutContainer_"],
+    [class*="popoutRoot_"],
     [class*="popoutContentWrapper_"],
     .contentWrapper__08434,
     .container__55c99,
@@ -681,6 +694,8 @@ body {
     .nowPlayingNotificationAnimationWrapper__81a05,
     [class*="popoutContent_"],
     .vc-class-highlight-tooltip,
+    .vc-bactivities-controls-tooltip, .vc-popover-overflow,
+    .vc-bie-picker > .vc-bie-drawer,
     .vc-cal-modal-root, .vc-deepsearch-modal-root,
     .vc-cal-dialog-card,
     [class*="toast_"],
@@ -1092,6 +1107,8 @@ body,
     .timelineTooltip__68788,
     .errorTooltip__3b3ff,
     .vc-class-highlight-tooltip,
+    .vc-bactivities-controls-tooltip, .vc-popover-overflow,
+    .vc-bie-picker > .vc-bie-drawer,
     .vc-notification-root,
     .vc-toast-notifications-notification-root,
     .vc-testcord-tab-editor-toast
