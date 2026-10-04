@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.9
+ * @version 3.1.10
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -485,6 +485,22 @@ body {
     [data-mana-component="select-content"],
     [data-mana-component="tooltip"],
     [class*="tooltip_"],
+    .popoverGradientWrapper_d6f39b,
+    .timelineTooltip__68788,
+    .errorTooltip__3b3ff,
+    .reactionTooltip_bbcccb,
+    .popoutList__92efc,
+    .keyboardShortcutsModal_f061f6,
+    .dropdown_edf232,
+    .modal_e44912,
+    .fakedm-dropdown,
+    .gc-dropdown-list,
+    .vc-testcord-tab-editor-toast,
+    .vc-more-stickers-picker-container,
+    .vc-gif-collections-modal,
+    .vc-github-repos-modal,
+    .vc-mds-modal,
+    .vc-cmdpal-panel, .vc-cmdpal-root,
     [class*="popover_"],
     [class*="Popover_"],
     [class*="popoverReactionHoverBar_"],
@@ -492,12 +508,14 @@ body {
     [class*="messagesPopoutWrap_"],
     [class*="recentMentionsPopout_"],
     [class*="quickSelectPopout_"],
-    [class*="user-profile-popout"]:not(.custom-theme-background),
+    [class*="user-profile-popout"],
+    .outer_c0bea0.user-profile-modal-v2,
     [class*="popout_"]:not(.popout__0bd4a),
     [class*="Popout_"],
     [class*="popoutContainer_"],
     [class*="popoutContentWrapper_"],
     .contentWrapper__08434,
+    [class*="contentWrapper_"]:has(:where(#emoji-picker-tab-panel, #gif-picker-tab-panel, #sticker-picker-tab-panel, #files-picker-tab-panel)),
     .container__55c99,
     .root__49fc1:not(.custom-user-profile-theme),
     .selectDropdown__0edde,
@@ -551,6 +569,22 @@ body {
     [data-mana-component="select-content"],
     [data-mana-component="tooltip"],
     [class*="tooltip_"],
+    .popoverGradientWrapper_d6f39b,
+    .timelineTooltip__68788,
+    .errorTooltip__3b3ff,
+    .reactionTooltip_bbcccb,
+    .popoutList__92efc,
+    .keyboardShortcutsModal_f061f6,
+    .dropdown_edf232,
+    .modal_e44912,
+    .fakedm-dropdown,
+    .gc-dropdown-list,
+    .vc-testcord-tab-editor-toast,
+    .vc-more-stickers-picker-container,
+    .vc-gif-collections-modal,
+    .vc-github-repos-modal,
+    .vc-mds-modal,
+    .vc-cmdpal-panel, .vc-cmdpal-root,
     [class*="popover_"],
     [class*="Popover_"],
     [class*="popoverReactionHoverBar_"],
@@ -558,12 +592,14 @@ body {
     [class*="messagesPopoutWrap_"],
     [class*="recentMentionsPopout_"],
     [class*="quickSelectPopout_"],
-    [class*="user-profile-popout"]:not(.custom-theme-background),
+    [class*="user-profile-popout"],
+    .outer_c0bea0.user-profile-modal-v2,
     [class*="popout_"]:not(.popout__0bd4a),
     [class*="Popout_"],
     [class*="popoutContainer_"],
     [class*="popoutContentWrapper_"],
     .contentWrapper__08434,
+    [class*="contentWrapper_"]:has(:where(#emoji-picker-tab-panel, #gif-picker-tab-panel, #sticker-picker-tab-panel, #files-picker-tab-panel)),
     .container__55c99,
     .root__49fc1:not(.custom-user-profile-theme),
     .selectDropdown__0edde,
@@ -597,6 +633,22 @@ body {
     [data-mana-component="select-content"],
     [data-mana-component="tooltip"],
     [class*="tooltip_"],
+    .popoverGradientWrapper_d6f39b,
+    .timelineTooltip__68788,
+    .errorTooltip__3b3ff,
+    .reactionTooltip_bbcccb,
+    .popoutList__92efc,
+    .keyboardShortcutsModal_f061f6,
+    .dropdown_edf232,
+    .modal_e44912,
+    .fakedm-dropdown,
+    .gc-dropdown-list,
+    .vc-testcord-tab-editor-toast,
+    .vc-more-stickers-picker-container,
+    .vc-gif-collections-modal,
+    .vc-github-repos-modal,
+    .vc-mds-modal,
+    .vc-cmdpal-panel, .vc-cmdpal-root,
     [class*="popover_"],
     [class*="Popover_"],
     [class*="popoverReactionHoverBar_"],
@@ -604,12 +656,14 @@ body {
     [class*="messagesPopoutWrap_"],
     [class*="recentMentionsPopout_"],
     [class*="quickSelectPopout_"],
-    [class*="user-profile-popout"]:not(.custom-theme-background),
+    [class*="user-profile-popout"],
+    .outer_c0bea0.user-profile-modal-v2,
     [class*="popout_"]:not(.popout__0bd4a),
     [class*="Popout_"],
     [class*="popoutContainer_"],
     [class*="popoutContentWrapper_"],
     .contentWrapper__08434,
+    [class*="contentWrapper_"]:has(:where(#emoji-picker-tab-panel, #gif-picker-tab-panel, #sticker-picker-tab-panel, #files-picker-tab-panel)),
     .container__55c99,
     .root__49fc1:not(.custom-user-profile-theme),
     .selectDropdown__0edde,
@@ -636,7 +690,7 @@ body {
     .vc-presets-merge-dropdown-menu, .vc-cal-search-dropdown,
     .vc-cal-custom-select-menu, .ps-custom-select-menu,
     .vc-cal-tools-menu
-):not([role="menu"], .menu_c1e9c4) {
+):not([role="menu"], .menu_c1e9c4, .fakedm-dropdown, .gc-dropdown-list) {
     background: transparent !important;
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
@@ -667,14 +721,15 @@ body {
     z-index: -1;
 }
 
-/* Opacity promotion makes a portal a backdrop root even after a fade ends.
-   Preserve its transform animation without isolating the popup's backdrop. */
-.layer__59d0d,
-.layerContainer__59d0d,
-.animatorTop_faf9c0, .animatorBottom_faf9c0, .animatorLeft_faf9c0, .animatorRight_faf9c0 {
+/* Opacity promotion blocks sampling outside a portal even after its fade.
+   Class prefixes survive Discord hash changes. Keep native positioning and
+   animations, but let each popup sample the content behind the portal. */
+[class*="layerContainer_"],
+[class*="layer_"]:has(> :is([class*="animatorTop_"], [class*="animatorBottom_"], [class*="animatorLeft_"], [class*="animatorRight_"])),
+[class*="animatorTop_"], [class*="animatorBottom_"], [class*="animatorLeft_"], [class*="animatorRight_"] {
     will-change: auto !important;
 }
-.tooltip_c36707 {
+[class*="tooltip_"], [data-mana-component="tooltip"] {
     will-change: auto !important;
 }
 
@@ -717,6 +772,22 @@ body {
     [data-mana-component="select-content"],
     [data-mana-component="tooltip"],
     [class*="tooltip_"],
+    .popoverGradientWrapper_d6f39b,
+    .timelineTooltip__68788,
+    .errorTooltip__3b3ff,
+    .reactionTooltip_bbcccb,
+    .popoutList__92efc,
+    .keyboardShortcutsModal_f061f6,
+    .dropdown_edf232,
+    .modal_e44912,
+    .fakedm-dropdown,
+    .gc-dropdown-list,
+    .vc-testcord-tab-editor-toast,
+    .vc-more-stickers-picker-container,
+    .vc-gif-collections-modal,
+    .vc-github-repos-modal,
+    .vc-mds-modal,
+    .vc-cmdpal-panel, .vc-cmdpal-root,
     [class*="popover_"],
     [class*="Popover_"],
     [class*="popoverReactionHoverBar_"],
@@ -724,12 +795,14 @@ body {
     [class*="messagesPopoutWrap_"],
     [class*="recentMentionsPopout_"],
     [class*="quickSelectPopout_"],
-    [class*="user-profile-popout"]:not(.custom-theme-background),
+    [class*="user-profile-popout"],
+    .outer_c0bea0.user-profile-modal-v2,
     [class*="popout_"]:not(.popout__0bd4a),
     [class*="Popout_"],
     [class*="popoutContainer_"],
     [class*="popoutContentWrapper_"],
     .contentWrapper__08434,
+    [class*="contentWrapper_"]:has(:where(#emoji-picker-tab-panel, #gif-picker-tab-panel, #sticker-picker-tab-panel, #files-picker-tab-panel)),
     .container__55c99,
     .root__49fc1:not(.custom-user-profile-theme),
     .selectDropdown__0edde,
@@ -757,7 +830,9 @@ body {
     .vc-cal-custom-select-menu, .ps-custom-select-menu,
     .vc-cal-tools-menu
 ),
-    .menu_c1e9c4::before {
+    .menu_c1e9c4::before,
+    .fakedm-popout::before,
+    .gc-popover::before {
         background: var(--bg-floating) !important;
     }
 }
@@ -1082,6 +1157,70 @@ body,
     --text-overlay-dark: var(--text-0);
     --thread-channel-spine: var(--text-5);
     --user-profile-activity-toolbar-background: var(--bg-3);
+}
+
+/* These plugin dropdowns stay in their parent DOM instead of using a portal.
+   Frost the parent on a sibling layer so dropdowns can sample beyond its box.
+   Keep blur on the scrolling dropdown itself so frost cannot scroll away. */
+:root .fakedm-popout,
+:root .gc-popover {
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+.gc-popover {
+    position: relative;
+    z-index: 0;
+}
+.fakedm-popout::before,
+.gc-popover::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--mochacord-acrylic-background);
+    -webkit-backdrop-filter: var(--mochacord-acrylic-filter);
+    backdrop-filter: var(--mochacord-acrylic-filter);
+    pointer-events: none;
+    z-index: -1;
+}
+#app-mount .nowPlayingNotificationAnimationWrapper__81a05 {
+    opacity: 1;
+}
+.vc-mds-modal {
+    font-family: var(--font-primary) !important;
+}
+.vc-mds-modal .vc-mds-modal-header {
+    background: transparent;
+}
+
+/* Datepicker inner sheets must not cover the outer glass with white fills. */
+.react-datepicker {
+    font-family: var(--font-primary) !important;
+    color: var(--text-2);
+}
+.react-datepicker :is(.react-datepicker__header, .react-datepicker__today-button, .react-datepicker__time-container, .react-datepicker__time) {
+    background: transparent;
+    border-color: var(--border);
+}
+.react-datepicker :is(.react-datepicker__current-month, .react-datepicker-time__header, .react-datepicker-year-header) {
+    color: var(--text-1);
+}
+.react-datepicker :is(.react-datepicker__day-name, .react-datepicker__day, .react-datepicker__time-name) {
+    color: var(--text-2);
+}
+.react-datepicker .react-datepicker__day:hover {
+    background: var(--hover);
+}
+.react-datepicker :is(.react-datepicker__day--selected, .react-datepicker__day--keyboard-selected, .react-datepicker__day--in-range) {
+    background: var(--accent-2);
+    color: var(--text-0);
+}
+.react-datepicker .react-datepicker__day--disabled {
+    color: var(--text-5);
+}
+.react-datepicker .react-datepicker__navigation-icon::before {
+    border-color: var(--text-3);
 }
 
 /* The native Windows title bar already shows the server and channel.

@@ -45,6 +45,17 @@ to `acrylic` (TestCord settings -> Windows material).
 - FiraCode Nerd Font must be installed locally for the font section to apply;
   otherwise Discord falls back to Fira Code / monospace.
 
+## Popup regression checks
+
+Open `tests/acrylic.html` in Chromium after changing popup CSS. The page checks
+48 popup types, changed portal class hashes, nested menus and transparent inner
+sections. Its title reports the result; `window.acrylicResults` contains details.
+The striped background also makes failed backdrop sampling visible. Background
+stripes should blur while popup labels remain sharp. Keep opacity promotion off
+the portal wrappers and keep nested menus on their own glass pseudo-elements.
+These fixture checks do not establish coverage of every live plugin or a measured
+frame-time improvement.
+
 ## Credits
 
 - Base: [Midnight](https://github.com/refact0r/midnight-discord) by refact0r
