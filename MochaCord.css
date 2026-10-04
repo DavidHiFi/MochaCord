@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.12
+ * @version 3.1.13
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -608,29 +608,8 @@ body {
 :is([class*="toast_"], [class*="customToast_"], [class*="errorNotificationContainer_"]) {
     color: var(--text-1);
 }
-/* Tooltips and toasts animate inside opacity layers, which stops backdrop
-   sampling and leaves a see-through tint instead of frost. Paint them solid.
-   :root matches the shared glass rule's specificity; source order wins. */
-:root :is(
-    [data-mana-component="tooltip"],
-    [class*="tooltip_"],
-    .timelineTooltip__68788,
-    .errorTooltip__3b3ff,
-    .reactionTooltip_bbcccb,
-    .vc-class-highlight-tooltip,
-    [class*="toast_"],
-    [class*="customToast_"],
-    [class*="errorNotificationContainer_"],
-    .vc-notification-root,
-    .vc-toast-notifications-notification-root,
-    .vc-testcord-tab-editor-toast
-) {
-    background: var(--bg-floating) !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-}
 .tooltipPointer_c36707 {
-    border-top-color: var(--bg-floating) !important;
+    border-top-color: var(--mochacord-acrylic-background) !important;
 }
 
 :is(.vc-notification-root, .vc-toast-notifications-notification-root) {
