@@ -21,6 +21,8 @@ window.addEventListener("load", () => {
         ['plugin-deepsearch', 'vc-deepsearch-modal-root'], ['plugin-calendar', 'vc-cal-picker-popover'],
         ['plugin-roles', 'vc-clickableroles-popout'], ['plugin-presets', 'vc-presets-merge-dropdown-menu']
     ];
+    // Tooltips and toasts are painted solid; everything else is frosted.
+    const solid = new Set(['tooltip', 'mana-tooltip', 'reaction', 'timeline', 'error-tooltip', 'toast', 'notification', 'plugin-toast', 'plugin-editor-toast']);
     const app = document.getElementById('app-mount');
     app.replaceChildren();
     app.style.cssText = 'display:grid;grid-template-columns:repeat(4,260px);grid-auto-rows:200px;align-content:start;gap:20px;padding:24px;min-height:2900px;background:repeating-linear-gradient(90deg,#d9d9ff 0 3px,#181825 3px 6px)!important';
@@ -57,7 +59,10 @@ window.addEventListener("load", () => {
         app.append(portal);
         const result = { id, ...describe(panel), portal: getComputedStyle(portal).willChange, animator: getComputedStyle(animator).willChange };
         results.push(result);
-        if (!(result.blur.includes('blur(48px)') || result.before.includes('blur(48px)')) || result.portal !== 'auto' || result.animator !== 'auto') fail.push(result);
+        const frosted = result.blur.includes('blur(48px)') || result.before.includes('blur(48px)');
+        const opaque = !/rgba|\//.test(result.background);
+        const ok = solid.has(id) ? result.blur === 'none' && opaque : frosted;
+        if (!ok || result.portal !== 'auto' || result.animator !== 'auto') fail.push(result);
     }
     const add = (parent, classes, id) => {
         const e = document.createElement('div');

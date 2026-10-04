@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.11
+ * @version 3.1.12
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -404,7 +404,8 @@ div.container__37e49 > div.buttons__37e49 {
 /* ===== Fix toggle switch bounding box (post Discord update) ===== */
 /* Target the switch wrapper directly. A document-wide relational selector
    repeatedly invalidates chat styles when unrelated DOM nodes change. */
-.vc-switch-container {
+.vc-switch-container,
+.vc-switch-container.vc-switch-checked {
     background-color: transparent !important;
     border: none !important;
     box-shadow: none !important;
@@ -607,8 +608,29 @@ body {
 :is([class*="toast_"], [class*="customToast_"], [class*="errorNotificationContainer_"]) {
     color: var(--text-1);
 }
+/* Tooltips and toasts animate inside opacity layers, which stops backdrop
+   sampling and leaves a see-through tint instead of frost. Paint them solid.
+   :root matches the shared glass rule's specificity; source order wins. */
+:root :is(
+    [data-mana-component="tooltip"],
+    [class*="tooltip_"],
+    .timelineTooltip__68788,
+    .errorTooltip__3b3ff,
+    .reactionTooltip_bbcccb,
+    .vc-class-highlight-tooltip,
+    [class*="toast_"],
+    [class*="customToast_"],
+    [class*="errorNotificationContainer_"],
+    .vc-notification-root,
+    .vc-toast-notifications-notification-root,
+    .vc-testcord-tab-editor-toast
+) {
+    background: var(--bg-floating) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
 .tooltipPointer_c36707 {
-    border-top-color: var(--mochacord-acrylic-background) !important;
+    border-top-color: var(--bg-floating) !important;
 }
 
 :is(.vc-notification-root, .vc-toast-notifications-notification-root) {
@@ -1144,4 +1166,18 @@ body,
     background: var(--mochacord-acrylic-background) !important;
     -webkit-backdrop-filter: var(--mochacord-acrylic-filter) !important;
     backdrop-filter: var(--mochacord-acrylic-filter) !important;
+}
+
+/* The voice user strip's negative end margin pushes the overflow button's
+   hover box past the panel edge. Keep the strip inside the panel, and size
+   the Show All Users button like the 24px avatars beside it. */
+.scroller__68617 {
+    margin-inline-end: 0 !important;
+}
+.voiceUsers__68617 > [data-mana-component="button"] {
+    width: 24px;
+    height: 24px;
+    min-width: 0;
+    min-height: 0;
+    border-radius: 50%;
 }
