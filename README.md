@@ -25,8 +25,8 @@ works on Vencord and Equicord too.
 
 ## Install
 
-1. Download `MochaCord.css` (or grab the latest release).
-2. Drop it into your client's themes folder:
+1. Download `MochaCord.css` and the `MochaCord-assets` folder together.
+2. Put both in your client's themes folder:
    - **TestCord**: `%APPDATA%\TestCord\themes`
    - **Vencord / Equicord**: Settings -> Themes -> "Open Themes Folder"
    - **BetterDiscord**: `%APPDATA%\BetterDiscord\themes`
@@ -40,8 +40,12 @@ to `acrylic` (TestCord settings -> Windows material).
 
 ## Notes
 
-- The theme imports Midnight's stylesheet from GitHub Pages, so keep the
-  `@import` lines intact.
+- The theme imports a bundled Midnight stylesheet from `MochaCord-assets`.
+  Keep that folder beside `MochaCord.css`. The bundled base removes an
+  ancestor selector that caused repeated style recalculation during calls.
+  Its upstream source and MIT notice are in the stylesheet header.
+- Floating UI uses 48px backdrop blur. Profile artwork clips at the inner
+  sheet, and voice speaking borders follow the saved RoundedVCPFP radius.
 - FiraCode Nerd Font must be installed locally for the font section to apply;
   otherwise Discord falls back to Fira Code / monospace.
 
@@ -49,7 +53,7 @@ to `acrylic` (TestCord settings -> Windows material).
 
 Open `tests/acrylic.html` in Chromium after changing popup CSS. The page checks
 48 popup types, changed portal class hashes, nested menus and transparent inner
-sections. Its title reports the result; `window.acrylicResults` contains details.
+sections, profile clipping and speaking border radii. Its title reports the result; `window.acrylicResults` contains details.
 The striped background also makes failed backdrop sampling visible. Background
 stripes should blur while popup labels remain sharp. Keep opacity promotion off
 the portal wrappers and keep nested menus on their own glass pseudo-elements.

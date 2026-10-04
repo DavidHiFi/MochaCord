@@ -41,7 +41,7 @@ window.addEventListener("load", () => {
         animator.className = 'fixture-animator animatorBottom_newhash';
         const panel = document.createElement('div');
         panel.id = 'case-' + id;
-        panel.className = 'fixture-surface ' + classes;
+        panel.className = classes + ' fixture-surface';
         if (semantic === 'menu') panel.role = semantic;
         else if (semantic) panel.dataset.manaComponent = semantic;
         panel.innerHTML = '<span class="fixture-label">' + id + '</span>';
@@ -57,7 +57,7 @@ window.addEventListener("load", () => {
         app.append(portal);
         const result = { id, ...describe(panel), portal: getComputedStyle(portal).willChange, animator: getComputedStyle(animator).willChange };
         results.push(result);
-        if (!(result.blur.includes('blur(24px)') || result.before.includes('blur(24px)')) || result.portal !== 'auto' || result.animator !== 'auto') fail.push(result);
+        if (!(result.blur.includes('blur(48px)') || result.before.includes('blur(48px)')) || result.portal !== 'auto' || result.animator !== 'auto') fail.push(result);
     }
     const add = (parent, classes, id) => {
         const e = document.createElement('div');
@@ -70,7 +70,7 @@ window.addEventListener("load", () => {
     nested.role = 'menu';
     nested.style.cssText = 'position:absolute!important;left:210px;top:70px;width:120px!important;height:110px!important';
     const nestedStyle = describe(nested);
-    if (nestedStyle.blur !== 'none' || !nestedStyle.before.includes('blur(24px)')) fail.push({ id: 'nested-menu', ...nestedStyle });
+    if (nestedStyle.blur !== 'none' || !nestedStyle.before.includes('blur(48px)')) fail.push({ id: 'nested-menu', ...nestedStyle });
     const inner = add(document.getElementById('case-picker'), 'emojiPicker_c0e32c', 'picker-inner');
     const section = add(document.getElementById('case-plugin-calendar'), 'vc-cal-tool-popover', 'nested-section');
     const structural = [inner, section].map(e => ({ id: e.id, ...describe(e) }));
@@ -85,11 +85,24 @@ window.addEventListener("load", () => {
         if (id === 'dialog-wrapper' && s.background !== 'rgba(0, 0, 0, 0)') fail.push(s);
         e.remove();
     }
+    // Keep the fixture dimensions last for the geometry checks.
     fixture.remove();
     document.head.append(fixture);
-    // Restore the same fixture rule ordering for raster capture. The theme's
-    // important rules must beat normal native opacity promotion either way.
-    return { count: results.length, results, nested: nestedStyle, structural, guards, fail };
+    const profile = add(app, 'outer_c0bea0 user-profile-sidebar fixture-surface', 'profile-sidebar');
+    const profileInner = add(profile, 'inner_c0bea0', 'profile-inner');
+    const profileStyle = getComputedStyle(profileInner);
+    const geometry = [{ id: 'profile-inner', radius: profileStyle.borderRadius, overflow: profileStyle.overflow }];
+    if (profileStyle.borderRadius !== '12px' || profileStyle.overflow !== 'hidden') fail.push(geometry[0]);
+    for (const radius of [0, 12, 24]) {
+        const tile = add(app, 'tile__2f4f7 tile__90dc5', 'voice-tile-' + radius);
+        tile.dataset.seleniumVideoTile = 'true';
+        tile.style.setProperty('--vc-pfp-radius', radius + 'px');
+        const border = add(tile, 'border__2f4f7', 'voice-border-' + radius);
+        const actual = getComputedStyle(border).borderRadius;
+        geometry.push({ id: border.id, radius: actual });
+        if (actual !== radius + 'px') fail.push(geometry.at(-1));
+    }
+    return { count: results.length, results, nested: nestedStyle, structural, guards, geometry, fail };
 })();
     window.acrylicResults = result;
     document.title = result.fail.length ? "MochaCord acrylic tests failed" : "MochaCord acrylic tests passed";

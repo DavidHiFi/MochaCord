@@ -2,14 +2,14 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.10
+ * @version 3.1.11
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
 */
 
 /* import theme modules */
-@import url('https://refact0r.github.io/midnight-discord/build/midnight.css');
+@import url('./MochaCord-assets/midnight.css');
 @import url(https://raw.githubusercontent.com/amozeo/discord-css-snippets/refs/heads/main/snippets/compact-search-button.css);
 @import url(https://davart154.github.io/Themes/Snippets/Mana%20Page%20Switcher/ManaPageSwitcherSource.css);
 @import url("https://raw.githubusercontent.com/yiruzu/vencord-snippets/refs/heads/main/snippets/BubbleUsernames/import.css");
@@ -402,14 +402,15 @@ div.container__37e49 > div.buttons__37e49 {
 }
 
 /* ===== Fix toggle switch bounding box (post Discord update) ===== */
-/* Scoped to real wrapper elements (was `*`): identical fix, far cheaper —
-   a universal :has() forces the browser to re-test every DOM node on each mutation. */
-:is(div, label, li, span):has(> input[type="checkbox"][role="switch"]) {
+/* Target the switch wrapper directly. A document-wide relational selector
+   repeatedly invalidates chat styles when unrelated DOM nodes change. */
+.vc-switch-container {
     background-color: transparent !important;
     border: none !important;
     box-shadow: none !important;
     outline: none !important;
 }
+
 input[type="checkbox"][role="switch"] {
     border: none !important;
     outline: none !important;
@@ -475,7 +476,7 @@ top: 215px;
    Keep the blur on popup surfaces, never on portal containers or call video. */
 body {
     --mochacord-acrylic-background: color-mix(in srgb, var(--bg-floating) 76%, transparent);
-    --mochacord-acrylic-filter: blur(24px) saturate(140%) contrast(105%);
+    --mochacord-acrylic-filter: blur(48px) saturate(140%) contrast(105%);
 }
 
 :is(
@@ -515,7 +516,6 @@ body {
     [class*="popoutContainer_"],
     [class*="popoutContentWrapper_"],
     .contentWrapper__08434,
-    [class*="contentWrapper_"]:has(:where(#emoji-picker-tab-panel, #gif-picker-tab-panel, #sticker-picker-tab-panel, #files-picker-tab-panel)),
     .container__55c99,
     .root__49fc1:not(.custom-user-profile-theme),
     .selectDropdown__0edde,
@@ -560,142 +560,6 @@ body {
     --modal-footer-background: transparent;
 }
 
-/* A nested popup section uses the outer glass instead of another GPU blur.
-   Context submenus are independent surfaces, handled by their own skin below. */
-:is(
-    [role="menu"],
-    [data-mana-component="popover"],
-    [data-mana-component="context-menu"],
-    [data-mana-component="select-content"],
-    [data-mana-component="tooltip"],
-    [class*="tooltip_"],
-    .popoverGradientWrapper_d6f39b,
-    .timelineTooltip__68788,
-    .errorTooltip__3b3ff,
-    .reactionTooltip_bbcccb,
-    .popoutList__92efc,
-    .keyboardShortcutsModal_f061f6,
-    .dropdown_edf232,
-    .modal_e44912,
-    .fakedm-dropdown,
-    .gc-dropdown-list,
-    .vc-testcord-tab-editor-toast,
-    .vc-more-stickers-picker-container,
-    .vc-gif-collections-modal,
-    .vc-github-repos-modal,
-    .vc-mds-modal,
-    .vc-cmdpal-panel, .vc-cmdpal-root,
-    [class*="popover_"],
-    [class*="Popover_"],
-    [class*="popoverReactionHoverBar_"],
-    [class*="autocomplete_"],
-    [class*="messagesPopoutWrap_"],
-    [class*="recentMentionsPopout_"],
-    [class*="quickSelectPopout_"],
-    [class*="user-profile-popout"],
-    .outer_c0bea0.user-profile-modal-v2,
-    [class*="popout_"]:not(.popout__0bd4a),
-    [class*="Popout_"],
-    [class*="popoutContainer_"],
-    [class*="popoutContentWrapper_"],
-    .contentWrapper__08434,
-    [class*="contentWrapper_"]:has(:where(#emoji-picker-tab-panel, #gif-picker-tab-panel, #sticker-picker-tab-panel, #files-picker-tab-panel)),
-    .container__55c99,
-    .root__49fc1:not(.custom-user-profile-theme),
-    .selectDropdown__0edde,
-    .picker__09f65,
-    .react-datepicker,
-    .customColorPicker__459fb,
-    .statusPickerModal_ce8328,
-    .recentChannelsMenu__711d3,
-    .languageSelector__4d95d,
-    .layer__95d7b,
-    .baselayer__518a0,
-    .nowPlayingNotificationAnimationWrapper__81a05,
-    [class*="popoutContent_"],
-    .vc-class-highlight-tooltip,
-    .vc-cal-modal-root, .vc-deepsearch-modal-root,
-    .vc-cal-dialog-card,
-    [class*="toast_"],
-    [class*="customToast_"],
-    [class*="errorNotificationContainer_"],
-    .vc-notification-root,
-    .vc-toast-notifications-notification-root,
-    .vc-cal-picker-popover, .vc-cal-tool-popover, .gc-popover,
-    .fakedm-popout, .vc-clickableroles-popout,
-    .vc-presets-merge-dropdown-menu, .vc-cal-search-dropdown,
-    .vc-cal-custom-select-menu, .ps-custom-select-menu,
-    .vc-cal-tools-menu
-) :is(
-    [role="menu"],
-    [data-mana-component="popover"],
-    [data-mana-component="context-menu"],
-    [data-mana-component="select-content"],
-    [data-mana-component="tooltip"],
-    [class*="tooltip_"],
-    .popoverGradientWrapper_d6f39b,
-    .timelineTooltip__68788,
-    .errorTooltip__3b3ff,
-    .reactionTooltip_bbcccb,
-    .popoutList__92efc,
-    .keyboardShortcutsModal_f061f6,
-    .dropdown_edf232,
-    .modal_e44912,
-    .fakedm-dropdown,
-    .gc-dropdown-list,
-    .vc-testcord-tab-editor-toast,
-    .vc-more-stickers-picker-container,
-    .vc-gif-collections-modal,
-    .vc-github-repos-modal,
-    .vc-mds-modal,
-    .vc-cmdpal-panel, .vc-cmdpal-root,
-    [class*="popover_"],
-    [class*="Popover_"],
-    [class*="popoverReactionHoverBar_"],
-    [class*="autocomplete_"],
-    [class*="messagesPopoutWrap_"],
-    [class*="recentMentionsPopout_"],
-    [class*="quickSelectPopout_"],
-    [class*="user-profile-popout"],
-    .outer_c0bea0.user-profile-modal-v2,
-    [class*="popout_"]:not(.popout__0bd4a),
-    [class*="Popout_"],
-    [class*="popoutContainer_"],
-    [class*="popoutContentWrapper_"],
-    .contentWrapper__08434,
-    [class*="contentWrapper_"]:has(:where(#emoji-picker-tab-panel, #gif-picker-tab-panel, #sticker-picker-tab-panel, #files-picker-tab-panel)),
-    .container__55c99,
-    .root__49fc1:not(.custom-user-profile-theme),
-    .selectDropdown__0edde,
-    .picker__09f65,
-    .react-datepicker,
-    .customColorPicker__459fb,
-    .statusPickerModal_ce8328,
-    .recentChannelsMenu__711d3,
-    .languageSelector__4d95d,
-    .layer__95d7b,
-    .baselayer__518a0,
-    .nowPlayingNotificationAnimationWrapper__81a05,
-    [class*="popoutContent_"],
-    .vc-class-highlight-tooltip,
-    .vc-cal-modal-root, .vc-deepsearch-modal-root,
-    .vc-cal-dialog-card,
-    [class*="toast_"],
-    [class*="customToast_"],
-    [class*="errorNotificationContainer_"],
-    .vc-notification-root,
-    .vc-toast-notifications-notification-root,
-    .vc-cal-picker-popover, .vc-cal-tool-popover, .gc-popover,
-    .fakedm-popout, .vc-clickableroles-popout,
-    .vc-presets-merge-dropdown-menu, .vc-cal-search-dropdown,
-    .vc-cal-custom-select-menu, .ps-custom-select-menu,
-    .vc-cal-tools-menu
-):not([role="menu"], .menu_c1e9c4, .fakedm-dropdown, .gc-dropdown-list) {
-    background: transparent !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-}
-
 /* A filtered menu root blocks a submenu from sampling pixels outside it.
    Put the glass on a sibling ::before layer so every submenu can frost the
    page behind it. This replaces Midnight's second, unpositioned blur layer. */
@@ -725,7 +589,7 @@ body {
    Class prefixes survive Discord hash changes. Keep native positioning and
    animations, but let each popup sample the content behind the portal. */
 [class*="layerContainer_"],
-[class*="layer_"]:has(> :is([class*="animatorTop_"], [class*="animatorBottom_"], [class*="animatorLeft_"], [class*="animatorRight_"])),
+[class*="layerContainer_"] > [class*="layer_"],
 [class*="animatorTop_"], [class*="animatorBottom_"], [class*="animatorLeft_"], [class*="animatorRight_"] {
     will-change: auto !important;
 }
@@ -802,7 +666,6 @@ body {
     [class*="popoutContainer_"],
     [class*="popoutContentWrapper_"],
     .contentWrapper__08434,
-    [class*="contentWrapper_"]:has(:where(#emoji-picker-tab-panel, #gif-picker-tab-panel, #sticker-picker-tab-panel, #files-picker-tab-panel)),
     .container__55c99,
     .root__49fc1:not(.custom-user-profile-theme),
     .selectDropdown__0edde,
@@ -844,11 +707,7 @@ body {
    video (tile letterbox, enlarged camera, fullscreen stream frame). Clear
    them and tint the stage with bg-4, the same tint midnight gives every
    other panel. The frost itself comes from the window's Windows acrylic. */
-:has([class*="callContainer"]),
-:has([class*="fullScreen"][class*="wrapper"]),
-:has([class*="wrapper"][class*="fullScreen"]) {
-    background: none !important;
-}
+
 [class*="callContainer"],
 [class*="fullScreen"][class*="wrapper"],
 [class*="wrapper"][class*="fullScreen"] {
@@ -890,7 +749,7 @@ body {
 ) {
     background-color: transparent !important;
 }
-:is([class*="callContainer"], [class*="fullScreen"]) div:has(video) {
+:is([class*="callContainer"], [class*="fullScreen"]) :is([class*="videoWrapper"], [class*="videoContainer"], [class*="streamContainer"]) {
     background-color: transparent !important;
 }
 
@@ -932,7 +791,11 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
     content: none !important;
 }
 
-/* Profile artwork and inner sheets share the outer rounded outline. */
+/* Clip artwork at the inner sheet. Keep the outer profile open for popovers. */
+.outer_c0bea0.user-profile-sidebar > .inner_c0bea0 {
+    border-radius: inherit;
+    overflow: hidden;
+}
 .outer_c0bea0.user-profile-modal-v2 {
     overflow: hidden;
 }
@@ -983,18 +846,6 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
 }
 #app-mount .sidebarList__5e434 .bannerVisible_f37cb1 .header_f37cb1 {
     border-top: none;
-}
-
-/* Reserve the typing row without a second translucent fill. Clip scrolling
-   messages above the row so their text cannot overlap the typing indicator. */
-#app-mount .chatContent_f75fb0:has(> .form_f75fb0 > .typing_b88801) .messagesWrapper__36d07::before {
-    background: transparent !important;
-}
-#app-mount .chatContent_f75fb0:has(> .form_f75fb0 > .typing_b88801) .scroller__36d07 {
-    mask: linear-gradient(to bottom, #000 calc(100% - 26px), transparent calc(100% - 26px));
-}
-#app-mount .chatContent_f75fb0:has(> .form_f75fb0 > .typing_b88801) .chatGradientBase__36d07 {
-    background: transparent !important;
 }
 
 /* Keep server palettes out of the chat and composer. Custom profile artwork
@@ -1258,4 +1109,39 @@ body,
     --vc-toast-notifications-text-color: var(--text-1);
     --vc-toast-notifications-title-color: var(--text-1);
     color: var(--text-1) !important;
+}
+/* Reserve the typing row without a second translucent fill. Clip scrolling
+   messages above the row so their text cannot overlap the typing indicator. */
+#app-mount .chatContent_f75fb0 .messagesWrapper__36d07::before {
+    background: transparent !important;
+}
+#app-mount .chatContent_f75fb0 .scroller__36d07 {
+    mask: linear-gradient(to bottom, #000 calc(100% - 26px), transparent calc(100% - 26px));
+}
+#app-mount .chatContent_f75fb0 .chatGradientBase__36d07 {
+    background: transparent !important;
+}
+
+
+/* RoundedVCPFP and Discord's inset speaking border must use the same radius.
+   Keep tile clipping so video and avatar artwork cannot leak at the corners. */
+#app-mount [data-selenium-video-tile] {
+    --custom-base-tile-border-radius: var(--vc-pfp-radius, 12px);
+}
+#app-mount [data-selenium-video-tile] .border__2f4f7 {
+    border-radius: var(--vc-pfp-radius, 12px) !important;
+}
+
+/* Known inner popup sheets share their containing glass. Keep submenus separate. */
+.vc-cal-picker-popover > .vc-cal-tool-popover,
+.recentMentionsPopout__95796 .messagesPopoutWrap__432f4 {
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+/* A picker with a changed class hash can still be identified by its direct tab. */
+[class*="layerContainer_"] [class^="contentWrapper_"]:has(> :is(#emoji-picker-tab-panel, #gif-picker-tab-panel, #sticker-picker-tab-panel, #files-picker-tab-panel)) {
+    background: var(--mochacord-acrylic-background) !important;
+    -webkit-backdrop-filter: var(--mochacord-acrylic-filter) !important;
+    backdrop-filter: var(--mochacord-acrylic-filter) !important;
 }
