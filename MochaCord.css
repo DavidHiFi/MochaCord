@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.20
+ * @version 3.1.21
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -979,6 +979,23 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
 }
 #app-mount [data-testid="quest-bar-container"] .content__0d616 {
     overflow: visible !important;
+}
+
+/* 3.1.21: the bar keeps BOTH of Discord's phase rows in the DOM at all times
+   (the collapsed accepted header and the expanded promo with its own reward
+   ring, eyebrow, title and CTA). Stock only ever shows one: the wrapper's
+   inline spring height hides the other behind the overflow. With
+   height: auto both rows stack, so the reward ring, the "Available until"
+   eyebrow and the quest title render twice nearly on top of each other and
+   the expanded promo's banner and CTA appear below the row (measured: two
+   eyebrows 2px apart, two 32px rings 3px apart, two full-width buttons).
+   The at-rest phase the account panel shows is the collapsed row, so keep
+   only it and hand the expanded promo row to hover like stock does. */
+#app-mount [data-testid="quest-bar-container"] .contentExpanded__24e2c {
+    display: none !important;
+}
+#app-mount [data-testid="quest-bar-container"]:hover .contentExpanded__24e2c {
+    display: block !important;
 }
 
 /* Keep banner artwork inside the channel panel's rounded border. */
