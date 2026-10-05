@@ -23,7 +23,7 @@ window.addEventListener("load", () => {
         ['mana-modal', '', 'modal'], ['native-popout-root', 'popoutRoot_newhash'],
         ['plugin-activity-tooltip', 'vc-bactivities-controls-tooltip'], ['plugin-popover-overflow', 'vc-popover-overflow'],
         ['plugin-roles', 'vc-clickableroles-popout'], ['plugin-presets', 'vc-presets-merge-dropdown-menu'],
-        ['plugin-bie-drawer', 'vc-bie-drawer'], ['plugin-message-popover', 'vc-message-popover'],
+        ['plugin-bie-drawer', 'vc-bie-drawer'], ['plugin-message-popover', 'buttonsInner__5126c vc-message-popover-bar popover_f84418'],
         ['plugin-update-modal', 'vc-update-modal-root'], ['plugin-author-modal', 'vc-plugin-modal-author']
     ];
     const app = document.getElementById('app-mount');

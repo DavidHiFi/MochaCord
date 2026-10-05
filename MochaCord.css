@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.18
+ * @version 3.1.19
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -540,7 +540,6 @@ body {
     .vc-class-highlight-tooltip,
     .vc-bactivities-controls-tooltip, .vc-popover-overflow,
     .vc-bie-picker > .vc-bie-drawer, [class*="vc-bie-drawer"],
-    .vc-message-popover,
     .vc-update-modal-root,
     .vc-plugin-modal-author,
     .vc-cal-modal-root, .vc-deepsearch-modal-root,
@@ -635,7 +634,6 @@ body {
     .vc-class-highlight-tooltip,
     .vc-bactivities-controls-tooltip, .vc-popover-overflow,
     .vc-bie-picker > .vc-bie-drawer, [class*="vc-bie-drawer"],
-    .vc-message-popover,
     .vc-update-modal-root,
     .vc-plugin-modal-author,
     .vc-cal-modal-root, .vc-deepsearch-modal-root,
@@ -796,7 +794,6 @@ body {
     .vc-class-highlight-tooltip,
     .vc-bactivities-controls-tooltip, .vc-popover-overflow,
     .vc-bie-picker > .vc-bie-drawer, [class*="vc-bie-drawer"],
-    .vc-message-popover,
     .vc-update-modal-root,
     .vc-plugin-modal-author,
     .vc-cal-modal-root, .vc-deepsearch-modal-root,
@@ -1214,7 +1211,6 @@ body,
     .vc-class-highlight-tooltip,
     .vc-bactivities-controls-tooltip, .vc-popover-overflow,
     .vc-bie-picker > .vc-bie-drawer, [class*="vc-bie-drawer"],
-    .vc-message-popover,
     .vc-notification-root,
     .vc-toast-notifications-notification-root,
     .vc-testcord-tab-editor-toast
