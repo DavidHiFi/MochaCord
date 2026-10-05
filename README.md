@@ -9,7 +9,8 @@ works on Vencord and Equicord too.
 - Catppuccin Mocha palette over Midnight's layout: rounded panels, custom
   window controls, separated chatbar, compact search.
 - Frosted glass on context menus and submenus, dropdowns, notifications,
-  tooltips, pickers, profile popouts, dialogs, and the image viewer backdrop.
+  tooltips, pickers, the message hover bar, profile popouts, dialogs, plugin
+  popovers, and the image viewer backdrop.
   Popup text and images stay sharp.
   The voice call stage uses the window's acrylic material in every view,
   including tile grids, focused cameras, and fullscreen streams.
@@ -54,7 +55,7 @@ to `acrylic` (TestCord settings -> Windows material).
 ## Popup regression checks
 
 Open `tests/acrylic.html` in Chromium after changing popup CSS. The page checks
-54 popup types, changed portal class hashes, nested menus and transparent inner
+58 popup types, changed portal class hashes, nested menus and transparent inner
 sections, profile clipping and speaking border radii. Its title reports the result; `window.acrylicResults` contains details.
 The striped background also makes failed backdrop sampling visible.
 The live regression test also uses white text over a translucent sidebar.

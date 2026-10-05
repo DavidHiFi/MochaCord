@@ -22,7 +22,9 @@ window.addEventListener("load", () => {
         ['semantic-tooltip', '', 'tooltip'], ['semantic-listbox', '', 'listbox'],
         ['mana-modal', '', 'modal'], ['native-popout-root', 'popoutRoot_newhash'],
         ['plugin-activity-tooltip', 'vc-bactivities-controls-tooltip'], ['plugin-popover-overflow', 'vc-popover-overflow'],
-        ['plugin-roles', 'vc-clickableroles-popout'], ['plugin-presets', 'vc-presets-merge-dropdown-menu']
+        ['plugin-roles', 'vc-clickableroles-popout'], ['plugin-presets', 'vc-presets-merge-dropdown-menu'],
+        ['plugin-bie-drawer', 'vc-bie-drawer'], ['plugin-message-popover', 'vc-message-popover'],
+        ['plugin-update-modal', 'vc-update-modal-root'], ['plugin-author-modal', 'vc-plugin-modal-author']
     ];
     const app = document.getElementById('app-mount');
     app.replaceChildren();
