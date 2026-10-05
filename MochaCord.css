@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.15
+ * @version 3.1.16
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -1185,4 +1185,26 @@ body,
     min-width: 0;
     min-height: 0;
     border-radius: 50%;
+}
+
+/* ===== Channel sidebar voice user list =====
+   Stock indents the rows 36px to line up with the channel label. With the
+   VoiceButtons pill on the left that reads as dead space and squeezes long
+   names, so pull the list back to the channel-icon column (8px list padding
+   plus the 8px row padding puts the pill at the same x as the speaker icon)
+   and let the name column keep the freed width. Give the name/tag cluster
+   more room before the mute, deafen and Live icons so hover additions and
+   server tag chips never crowd them, and add a little height so stacked
+   names breathe. */
+li.containerDefault_c69b6d > .list_c3cd7d {
+    padding-inline-start: 8px !important;
+}
+.listDefault__07f91 .userSmall__07f91 {
+    height: 36px !important;
+}
+.listDefault__07f91 .content__07f91 > .icons__07f91 {
+    margin-inline-start: 6px !important;
+}
+.listDefault__07f91 .container__394db .chipletParent__394db {
+    padding-inline-start: 6px !important;
 }
