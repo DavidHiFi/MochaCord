@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.19
+ * @version 3.1.20
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -954,6 +954,33 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
     width: 100% !important;
     min-width: 0;
     max-width: 100%;
+}
+
+/* ===== Questify account-panel quest bar =====
+   Questify replaces the account panel's quest promo with its own quest bar
+   (title, subtitle and a full-width CTA button) and forces it visible while a
+   quest auto-completes. Two MochaCord pieces clash with it:
+
+   1. Midnight's panel separation gives .panels__5e434 a rounded border and
+      --panel-backdrop-filter, and the acrylic block's broad [class*="popout_"]
+      arm matches the bar's own popout wrapper. The wrapper then frosts over
+      the panel's tint while the promo fades in behind it, so the bar reads as
+      a cut-out box with the promo text showing through its edges.
+   2. Questify's own managed CSS forces the stock outer/inner pair to
+      height:100%, which collapses the bar to the panel's promo height and
+      clips the title, subtitle and button.
+
+   Un-frost the wrapper (it sits on the panel, not over page content), pin the
+   wrapper's height to its content, and let the inner stack keep its natural
+   two-row layout so the button sits below the text instead of on top of it. */
+#app-mount .panels__5e434 [class*="questProgressWrapper"] [class*="popout_"] {
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    height: auto !important;
+}
+#app-mount .panels__5e434 [class*="questProgressWrapper"] [class*="popout_"] > [class*="outer"] > [class*="inner"] {
+    height: auto !important;
 }
 
 /* Keep banner artwork inside the channel panel's rounded border. */
