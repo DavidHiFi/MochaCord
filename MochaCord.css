@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.24
+ * @version 3.1.25
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -743,6 +743,35 @@ body {
     background: transparent !important;
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
+}
+
+/* Tooltips always paint their own acrylic, in every position. The nested
+   strip above outranks the glass block at equal importance (0,2,0 vs 0,1,0),
+   so any container above a tooltip that matches the strip's outer list — a
+   voice-tile wrapper matching popoutContainer_ does — stripped the body to
+   fully transparent while the pointer kept its acrylic: the two-tone Options
+   tooltip over call video. This guard outranks every copy of the strip,
+   including the quickCss duplicate; the :not() id never exists and only
+   adds specificity. */
+:is(
+    [role="tooltip"],
+    [data-mana-component="tooltip"],
+    [class*="tooltip_"],
+    [class*="tooltipPrimary_"],
+    [class*="tooltipGrey_"],
+    [class*="tooltipBrand_"],
+    [class*="tooltipRed_"],
+    [class*="tooltipGreen_"],
+    [class*="rewardTooltip_"],
+    [class*="timelineTooltip_"],
+    [class*="errorTooltip_"],
+    [class*="reactionTooltip_"],
+    .vc-class-highlight-tooltip,
+    .vc-bactivities-controls-tooltip
+):not(#mochacord-tooltip-guard) {
+    background: var(--mochacord-acrylic-background) !important;
+    -webkit-backdrop-filter: var(--mochacord-acrylic-filter) !important;
+    backdrop-filter: var(--mochacord-acrylic-filter) !important;
 }
 
 /* Base-level content inside popups keeps a solid fill too. These chips,

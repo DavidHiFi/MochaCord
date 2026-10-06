@@ -83,7 +83,24 @@ window.addEventListener("load", () => {
     const nestedLegacyTip = add(document.getElementById('case-menu'), 'fixture-surface tooltipPrimary_c36707', 'nested-legacy-tooltip');
     nestedLegacyTip.style.cssText = 'position:absolute!important;left:10px;top:10px;width:120px!important;height:40px!important';
     const nestedLegacyStyle = describe(nestedLegacyTip);
-    if (nestedLegacyStyle.blur !== 'none' || nestedLegacyStyle.background !== 'rgba(0, 0, 0, 0)') fail.push({ id: 'nested-legacy-tooltip', ...nestedLegacyStyle });
+    /* 3.1.25: tooltips keep their own acrylic even nested in a popup; only
+       the blur is asserted here because the glass alpha depends on scope. */
+    if (!nestedLegacyStyle.blur.includes('data:image/svg+xml')) fail.push({ id: 'nested-legacy-tooltip', ...nestedLegacyStyle });
+    /* Regression for the two-tone Options tooltip: a tooltip inside a
+       container that matches the nested strip's OUTER list (voice-tile
+       wrappers match popoutContainer_) must still frost — the guard
+       outranks the strip. */
+    const tileWrap = document.createElement('div');
+    tileWrap.className = 'fixture-portal layerContainer_newhash popoutContainer_newhash';
+    tileWrap.style.cssText = 'position:relative;width:260px;height:120px';
+    const tileTip = add(tileWrap, 'fixture-surface tooltipPrimary_c36707', 'tooltip-in-tile-container');
+    const tileTipSemantic = add(tileWrap, 'fixture-surface', 'tooltip-in-tile-container-semantic');
+    tileTipSemantic.role = 'tooltip';
+    app.append(tileWrap);
+    for (const el of [tileTip, tileTipSemantic]) {
+        const s = describe(el);
+        if (!s.blur.includes('data:image/svg+xml')) fail.push({ id: el.id, ...s });
+    }
     const inner = add(document.getElementById('case-picker'), 'emojiPicker_c0e32c', 'picker-inner');
     const section = add(document.getElementById('case-plugin-calendar'), 'vc-cal-tool-popover', 'nested-section');
     const structural = [inner, section].map(e => ({ id: e.id, ...describe(e) }));
