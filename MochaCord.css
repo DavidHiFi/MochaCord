@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.21
+ * @version 3.1.22
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -966,18 +966,21 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
    pushes the button over it. Measured against the real QuestBar component:
    stock collapsed content 70px, Questify content 137-151px.
 
-   Let the bar, its wrapper and the collapsed/expanded rows size to their
-   content; the inline spring height loses to the !important rules. The bar
-   sits above the account panel row on the user panel, so no frost or fill
-   is added here. Questify's own opacity rule for the faded wrapper keeps
-   working (opacity is untouched). */
+   Let the bar, its wrapper and the phase rows size to their content; the
+   inline spring height loses to the !important rules. Row selectors match by
+   class prefix (contentCollapsed/contentExpanded + the contentWrapper child)
+   so a Discord hash bump does not orphan the rules. The bar sits above the
+   account panel row on the user panel, so no frost or fill is added here.
+   Questify's own opacity rule for the faded wrapper keeps working (opacity
+   is untouched). */
 #app-mount [data-testid="quest-bar-container"],
-#app-mount [data-testid="quest-bar-container"] .wrapper__0d616,
-#app-mount [data-testid="quest-bar-container"] .contentWrapper__0d616,
-#app-mount [data-testid="quest-bar-container"] .content__0d616 {
+#app-mount [data-testid="quest-bar-container"] > [class*="contentWrapper"],
+#app-mount [data-testid="quest-bar-container"] [class*="contentCollapsed"],
+#app-mount [data-testid="quest-bar-container"] [class*="contentExpanded"] {
     height: auto !important;
 }
-#app-mount [data-testid="quest-bar-container"] .content__0d616 {
+#app-mount [data-testid="quest-bar-container"] [class*="contentCollapsed"],
+#app-mount [data-testid="quest-bar-container"] [class*="contentExpanded"] {
     overflow: visible !important;
 }
 
@@ -991,10 +994,10 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
    eyebrows 2px apart, two 32px rings 3px apart, two full-width buttons).
    The at-rest phase the account panel shows is the collapsed row, so keep
    only it and hand the expanded promo row to hover like stock does. */
-#app-mount [data-testid="quest-bar-container"] .contentExpanded__24e2c {
+#app-mount [data-testid="quest-bar-container"] [class*="contentExpanded"] {
     display: none !important;
 }
-#app-mount [data-testid="quest-bar-container"]:hover .contentExpanded__24e2c {
+#app-mount [data-testid="quest-bar-container"]:hover [class*="contentExpanded"] {
     display: block !important;
 }
 
