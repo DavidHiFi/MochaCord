@@ -2,14 +2,14 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.9
+ * @version 3.1.22
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
 */
 
 /* import theme modules */
-@import url('https://refact0r.github.io/midnight-discord/build/midnight.css');
+@import url('./MochaCord-assets/midnight.css');
 @import url(https://raw.githubusercontent.com/amozeo/discord-css-snippets/refs/heads/main/snippets/compact-search-button.css);
 @import url(https://davart154.github.io/Themes/Snippets/Mana%20Page%20Switcher/ManaPageSwitcherSource.css);
 @import url("https://raw.githubusercontent.com/yiruzu/vencord-snippets/refs/heads/main/snippets/BubbleUsernames/import.css");
@@ -402,14 +402,16 @@ div.container__37e49 > div.buttons__37e49 {
 }
 
 /* ===== Fix toggle switch bounding box (post Discord update) ===== */
-/* Scoped to real wrapper elements (was `*`): identical fix, far cheaper —
-   a universal :has() forces the browser to re-test every DOM node on each mutation. */
-:is(div, label, li, span):has(> input[type="checkbox"][role="switch"]) {
+/* Target the switch wrapper directly. A document-wide relational selector
+   repeatedly invalidates chat styles when unrelated DOM nodes change. */
+.vc-switch-container,
+.vc-switch-container.vc-switch-checked {
     background-color: transparent !important;
     border: none !important;
     box-shadow: none !important;
     outline: none !important;
 }
+
 input[type="checkbox"][role="switch"] {
     border: none !important;
     outline: none !important;
@@ -475,16 +477,38 @@ top: 215px;
    Keep the blur on popup surfaces, never on portal containers or call video. */
 body {
     --mochacord-acrylic-background: color-mix(in srgb, var(--bg-floating) 76%, transparent);
-    --mochacord-acrylic-filter: blur(24px) saturate(140%) contrast(105%);
+    /* Normalize the sampled alpha before blurring. A regular CSS blur leaves
+       sharp text underneath when Discord's backdrop is translucent.
+       Keep the SVG embedded because cross-origin filter references fail. */
+    --mochacord-acrylic-filter: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPg0KICA8ZmlsdGVyIGlkPSJmcm9zdCIgeD0iLTUwJSIgeT0iLTUwJSIgd2lkdGg9IjIwMCUiIGhlaWdodD0iMjAwJSIgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSJzUkdCIj4NCiAgICA8ZmVDb21wb25lbnRUcmFuc2Zlcj4NCiAgICAgIDxmZUZ1bmNBIHR5cGU9ImxpbmVhciIgc2xvcGU9IjAiIGludGVyY2VwdD0iMSIvPg0KICAgIDwvZmVDb21wb25lbnRUcmFuc2Zlcj4NCiAgICA8ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSI0OCIvPg0KICAgIDxmZUNvbG9yTWF0cml4IHR5cGU9InNhdHVyYXRlIiB2YWx1ZXM9IjEuNCIvPg0KICAgIDxmZUNvbXBvbmVudFRyYW5zZmVyPg0KICAgICAgPGZlRnVuY1IgdHlwZT0ibGluZWFyIiBzbG9wZT0iMS4wNSIgaW50ZXJjZXB0PSItMC4wMjUiLz4NCiAgICAgIDxmZUZ1bmNHIHR5cGU9ImxpbmVhciIgc2xvcGU9IjEuMDUiIGludGVyY2VwdD0iLTAuMDI1Ii8+DQogICAgICA8ZmVGdW5jQiB0eXBlPSJsaW5lYXIiIHNsb3BlPSIxLjA1IiBpbnRlcmNlcHQ9Ii0wLjAyNSIvPg0KICAgIDwvZmVDb21wb25lbnRUcmFuc2Zlcj4NCiAgPC9maWx0ZXI+DQo8L3N2Zz4NCg==#frost");
 }
 
 :is(
     [role="menu"],
+    [role="tooltip"],
+    [role="listbox"],
     [data-mana-component="popover"],
+    [data-mana-component="modal"],
     [data-mana-component="context-menu"],
     [data-mana-component="select-content"],
     [data-mana-component="tooltip"],
     [class*="tooltip_"],
+    .popoverGradientWrapper_d6f39b,
+    .timelineTooltip__68788,
+    .errorTooltip__3b3ff,
+    .reactionTooltip_bbcccb,
+    .popoutList__92efc,
+    .keyboardShortcutsModal_f061f6,
+    .dropdown_edf232,
+    .modal_e44912,
+    .fakedm-dropdown,
+    .gc-dropdown-list,
+    .vc-testcord-tab-editor-toast,
+    .vc-more-stickers-picker-container,
+    .vc-gif-collections-modal,
+    .vc-github-repos-modal,
+    .vc-mds-modal,
+    .vc-cmdpal-panel, .vc-cmdpal-root,
     [class*="popover_"],
     [class*="Popover_"],
     [class*="popoverReactionHoverBar_"],
@@ -492,10 +516,12 @@ body {
     [class*="messagesPopoutWrap_"],
     [class*="recentMentionsPopout_"],
     [class*="quickSelectPopout_"],
-    [class*="user-profile-popout"]:not(.custom-theme-background),
+    [class*="user-profile-popout"],
+    .outer_c0bea0.user-profile-modal-v2,
     [class*="popout_"]:not(.popout__0bd4a),
     [class*="Popout_"],
     [class*="popoutContainer_"],
+    [class*="popoutRoot_"],
     [class*="popoutContentWrapper_"],
     .contentWrapper__08434,
     .container__55c99,
@@ -512,6 +538,10 @@ body {
     .nowPlayingNotificationAnimationWrapper__81a05,
     [class*="popoutContent_"],
     .vc-class-highlight-tooltip,
+    .vc-bactivities-controls-tooltip, .vc-popover-overflow,
+    .vc-bie-picker > .vc-bie-drawer, [class*="vc-bie-drawer"],
+    .vc-update-modal-root,
+    .vc-plugin-modal-author,
     .vc-cal-modal-root, .vc-deepsearch-modal-root,
     .vc-cal-dialog-card,
     [class*="toast_"],
@@ -528,13 +558,13 @@ body {
     background: var(--mochacord-acrylic-background) !important;
     -webkit-backdrop-filter: var(--mochacord-acrylic-filter) !important;
     backdrop-filter: var(--mochacord-acrylic-filter) !important;
-    /* Structural headers, footers and scrollers share the outer glass. */
+    /* Structural levels (headers, footers, scrollers) go see-through so the
+       outer glass shows through them. Surface levels stay at their solid
+       values: content chips, cards, embeds and status bubbles read the same
+       variables and must never turn transparent. */
     --background-base-low: transparent;
     --background-base-lower: transparent;
     --background-base-lowest: transparent;
-    --background-surface-high: transparent;
-    --background-surface-higher: transparent;
-    --background-surface-highest: transparent;
     --background-primary: transparent;
     --background-secondary: transparent;
     --background-secondary-alt: transparent;
@@ -542,15 +572,37 @@ body {
     --modal-footer-background: transparent;
 }
 
-/* A nested popup section uses the outer glass instead of another GPU blur.
-   Context submenus are independent surfaces, handled by their own skin below. */
+/* Base-level content inside popups keeps a solid fill too. These chips,
+   embeds, code blocks and pills read the base variables that the glass block
+   still zeroes, so they would otherwise go see-through on popup artwork.
+   Scoped to popups so the translucent panel aesthetic outside them is
+   unchanged. */
 :is(
     [role="menu"],
+    [role="tooltip"],
+    [role="listbox"],
     [data-mana-component="popover"],
+    [data-mana-component="modal"],
     [data-mana-component="context-menu"],
     [data-mana-component="select-content"],
     [data-mana-component="tooltip"],
     [class*="tooltip_"],
+    .popoverGradientWrapper_d6f39b,
+    .timelineTooltip__68788,
+    .errorTooltip__3b3ff,
+    .reactionTooltip_bbcccb,
+    .popoutList__92efc,
+    .keyboardShortcutsModal_f061f6,
+    .dropdown_edf232,
+    .modal_e44912,
+    .fakedm-dropdown,
+    .gc-dropdown-list,
+    .vc-testcord-tab-editor-toast,
+    .vc-more-stickers-picker-container,
+    .vc-gif-collections-modal,
+    .vc-github-repos-modal,
+    .vc-mds-modal,
+    .vc-cmdpal-panel, .vc-cmdpal-root,
     [class*="popover_"],
     [class*="Popover_"],
     [class*="popoverReactionHoverBar_"],
@@ -558,10 +610,12 @@ body {
     [class*="messagesPopoutWrap_"],
     [class*="recentMentionsPopout_"],
     [class*="quickSelectPopout_"],
-    [class*="user-profile-popout"]:not(.custom-theme-background),
+    [class*="user-profile-popout"],
+    .outer_c0bea0.user-profile-modal-v2,
     [class*="popout_"]:not(.popout__0bd4a),
     [class*="Popout_"],
     [class*="popoutContainer_"],
+    [class*="popoutRoot_"],
     [class*="popoutContentWrapper_"],
     .contentWrapper__08434,
     .container__55c99,
@@ -578,6 +632,10 @@ body {
     .nowPlayingNotificationAnimationWrapper__81a05,
     [class*="popoutContent_"],
     .vc-class-highlight-tooltip,
+    .vc-bactivities-controls-tooltip, .vc-popover-overflow,
+    .vc-bie-picker > .vc-bie-drawer, [class*="vc-bie-drawer"],
+    .vc-update-modal-root,
+    .vc-plugin-modal-author,
     .vc-cal-modal-root, .vc-deepsearch-modal-root,
     .vc-cal-dialog-card,
     [class*="toast_"],
@@ -591,55 +649,16 @@ body {
     .vc-cal-custom-select-menu, .ps-custom-select-menu,
     .vc-cal-tools-menu
 ) :is(
-    [role="menu"],
-    [data-mana-component="popover"],
-    [data-mana-component="context-menu"],
-    [data-mana-component="select-content"],
-    [data-mana-component="tooltip"],
-    [class*="tooltip_"],
-    [class*="popover_"],
-    [class*="Popover_"],
-    [class*="popoverReactionHoverBar_"],
-    [class*="autocomplete_"],
-    [class*="messagesPopoutWrap_"],
-    [class*="recentMentionsPopout_"],
-    [class*="quickSelectPopout_"],
-    [class*="user-profile-popout"]:not(.custom-theme-background),
-    [class*="popout_"]:not(.popout__0bd4a),
-    [class*="Popout_"],
-    [class*="popoutContainer_"],
-    [class*="popoutContentWrapper_"],
-    .contentWrapper__08434,
-    .container__55c99,
-    .root__49fc1:not(.custom-user-profile-theme),
-    .selectDropdown__0edde,
-    .picker__09f65,
-    .react-datepicker,
-    .customColorPicker__459fb,
-    .statusPickerModal_ce8328,
-    .recentChannelsMenu__711d3,
-    .languageSelector__4d95d,
-    .layer__95d7b,
-    .baselayer__518a0,
-    .nowPlayingNotificationAnimationWrapper__81a05,
-    [class*="popoutContent_"],
-    .vc-class-highlight-tooltip,
-    .vc-cal-modal-root, .vc-deepsearch-modal-root,
-    .vc-cal-dialog-card,
-    [class*="toast_"],
-    [class*="customToast_"],
-    [class*="errorNotificationContainer_"],
-    .vc-notification-root,
-    .vc-toast-notifications-notification-root,
-    .vc-cal-picker-popover, .vc-cal-tool-popover, .gc-popover,
-    .fakedm-popout, .vc-clickableroles-popout,
-    .vc-presets-merge-dropdown-menu, .vc-cal-search-dropdown,
-    .vc-cal-custom-select-menu, .ps-custom-select-menu,
-    .vc-cal-tools-menu
-):not([role="menu"], .menu_c1e9c4) {
-    background: transparent !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
+    .key__98feb,
+    .embedCard_b99f57, .embedCard__44c9a,
+    .code__1a1f5, .code__2e07e, .inlineCode__2e07e, .inlineCode__59fad, .hljs,
+    .pollAnswerOption__250d5,
+    .inviteCard__742a4,
+    .preview__6b741,
+    .usagePill__74f72,
+    .role_b4b2c3
+) {
+    background-color: var(--bg-3);
 }
 
 /* A filtered menu root blocks a submenu from sampling pixels outside it.
@@ -667,19 +686,27 @@ body {
     z-index: -1;
 }
 
-/* Opacity promotion makes a portal a backdrop root even after a fade ends.
-   Preserve its transform animation without isolating the popup's backdrop. */
-.layer__59d0d,
-.layerContainer__59d0d,
-.animatorTop_faf9c0, .animatorBottom_faf9c0, .animatorLeft_faf9c0, .animatorRight_faf9c0 {
+/* Opacity promotion blocks sampling outside a portal even after its fade.
+   Class prefixes survive Discord hash changes. Keep native positioning and
+   animations, but let each popup sample the content behind the portal. */
+[class*="layerContainer_"],
+[class*="layerContainer_"] > [class*="layer_"],
+[class*="animatorTop_"], [class*="animatorBottom_"], [class*="animatorLeft_"], [class*="animatorRight_"] {
     will-change: auto !important;
 }
-.tooltip_c36707 {
+[class*="tooltip_"], [data-mana-component="tooltip"] {
     will-change: auto !important;
 }
 
-/* The expression picker's opaque inner sheets otherwise cover the glass. */
-.contentWrapper__08434 :is(.emojiPicker_c0e32c, .wrapper__14245, .container_fed6d3),
+/* The expression picker's opaque inner sheets otherwise cover the glass.
+   With surface levels solid again, its headers, emoji list and sticky
+   category headers keep this explicit transparency so the picker stays
+   seamless. */
+.contentWrapper__08434 :is(
+    .emojiPicker_c0e32c, .wrapper__14245, .container_fed6d3,
+    .header_c0e32c, .emojiPickerHeader__0800c, .soundboardHeader__08434,
+    .header_fed6d3, .header__8ef02, .emojiList__4a30c, .categoryHeader_d1405b
+),
 .messagesPopoutWrap__432f4 > .header__432f4 {
     background: transparent !important;
 }
@@ -712,11 +739,30 @@ body {
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
     :is(
     [role="menu"],
+    [role="tooltip"],
+    [role="listbox"],
     [data-mana-component="popover"],
+    [data-mana-component="modal"],
     [data-mana-component="context-menu"],
     [data-mana-component="select-content"],
     [data-mana-component="tooltip"],
     [class*="tooltip_"],
+    .popoverGradientWrapper_d6f39b,
+    .timelineTooltip__68788,
+    .errorTooltip__3b3ff,
+    .reactionTooltip_bbcccb,
+    .popoutList__92efc,
+    .keyboardShortcutsModal_f061f6,
+    .dropdown_edf232,
+    .modal_e44912,
+    .fakedm-dropdown,
+    .gc-dropdown-list,
+    .vc-testcord-tab-editor-toast,
+    .vc-more-stickers-picker-container,
+    .vc-gif-collections-modal,
+    .vc-github-repos-modal,
+    .vc-mds-modal,
+    .vc-cmdpal-panel, .vc-cmdpal-root,
     [class*="popover_"],
     [class*="Popover_"],
     [class*="popoverReactionHoverBar_"],
@@ -724,10 +770,12 @@ body {
     [class*="messagesPopoutWrap_"],
     [class*="recentMentionsPopout_"],
     [class*="quickSelectPopout_"],
-    [class*="user-profile-popout"]:not(.custom-theme-background),
+    [class*="user-profile-popout"],
+    .outer_c0bea0.user-profile-modal-v2,
     [class*="popout_"]:not(.popout__0bd4a),
     [class*="Popout_"],
     [class*="popoutContainer_"],
+    [class*="popoutRoot_"],
     [class*="popoutContentWrapper_"],
     .contentWrapper__08434,
     .container__55c99,
@@ -744,6 +792,10 @@ body {
     .nowPlayingNotificationAnimationWrapper__81a05,
     [class*="popoutContent_"],
     .vc-class-highlight-tooltip,
+    .vc-bactivities-controls-tooltip, .vc-popover-overflow,
+    .vc-bie-picker > .vc-bie-drawer, [class*="vc-bie-drawer"],
+    .vc-update-modal-root,
+    .vc-plugin-modal-author,
     .vc-cal-modal-root, .vc-deepsearch-modal-root,
     .vc-cal-dialog-card,
     [class*="toast_"],
@@ -757,7 +809,9 @@ body {
     .vc-cal-custom-select-menu, .ps-custom-select-menu,
     .vc-cal-tools-menu
 ),
-    .menu_c1e9c4::before {
+    .menu_c1e9c4::before,
+    .fakedm-popout::before,
+    .gc-popover::before {
         background: var(--bg-floating) !important;
     }
 }
@@ -769,11 +823,7 @@ body {
    video (tile letterbox, enlarged camera, fullscreen stream frame). Clear
    them and tint the stage with bg-4, the same tint midnight gives every
    other panel. The frost itself comes from the window's Windows acrylic. */
-:has([class*="callContainer"]),
-:has([class*="fullScreen"][class*="wrapper"]),
-:has([class*="wrapper"][class*="fullScreen"]) {
-    background: none !important;
-}
+
 [class*="callContainer"],
 [class*="fullScreen"][class*="wrapper"],
 [class*="wrapper"][class*="fullScreen"] {
@@ -815,7 +865,7 @@ body {
 ) {
     background-color: transparent !important;
 }
-:is([class*="callContainer"], [class*="fullScreen"]) div:has(video) {
+:is([class*="callContainer"], [class*="fullScreen"]) :is([class*="videoWrapper"], [class*="videoContainer"], [class*="streamContainer"]) {
     background-color: transparent !important;
 }
 
@@ -857,7 +907,11 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
     content: none !important;
 }
 
-/* Profile artwork and inner sheets share the outer rounded outline. */
+/* Clip artwork at the inner sheet. Keep the outer profile open for popovers. */
+.outer_c0bea0.user-profile-sidebar > .inner_c0bea0 {
+    border-radius: inherit;
+    overflow: hidden;
+}
 .outer_c0bea0.user-profile-modal-v2 {
     overflow: hidden;
 }
@@ -902,24 +956,74 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
     max-width: 100%;
 }
 
+/* ===== Questify account-panel quest bar =====
+   Questify forces the account panel's quest bar visible while a quest
+   auto-completes and swaps in its own subtitle and a full-width CTA button.
+   The bar animates its height with an inline spring style that assumes
+   Discord's stock one-line copy (70px collapsed, 148px with the reward
+   banner). Questify's longer subtitle wraps to two lines and the full-width
+   button wraps to a second row, so the fixed height clips the copy and
+   pushes the button over it. Measured against the real QuestBar component:
+   stock collapsed content 70px, Questify content 137-151px.
+
+   Let the bar, its wrapper and the phase rows size to their content; the
+   inline spring height loses to the !important rules. Row selectors match by
+   class prefix (contentCollapsed/contentExpanded + the contentWrapper child)
+   so a Discord hash bump does not orphan the rules. The bar sits above the
+   account panel row on the user panel, so no frost or fill is added here.
+   Questify's own opacity rule for the faded wrapper keeps working (opacity
+   is untouched). */
+#app-mount [data-testid="quest-bar-container"],
+#app-mount [data-testid="quest-bar-container"] > [class*="contentWrapper"],
+#app-mount [data-testid="quest-bar-container"] [class*="contentCollapsed"],
+#app-mount [data-testid="quest-bar-container"] [class*="contentExpanded"] {
+    height: auto !important;
+}
+#app-mount [data-testid="quest-bar-container"] [class*="contentCollapsed"],
+#app-mount [data-testid="quest-bar-container"] [class*="contentExpanded"] {
+    overflow: visible !important;
+}
+
+/* 3.1.21: the bar keeps BOTH of Discord's phase rows in the DOM at all times
+   (the collapsed accepted header and the expanded promo with its own reward
+   ring, eyebrow, title and CTA). Stock only ever shows one: the wrapper's
+   inline spring height hides the other behind the overflow. With
+   height: auto both rows stack, so the reward ring, the "Available until"
+   eyebrow and the quest title render twice nearly on top of each other and
+   the expanded promo's banner and CTA appear below the row (measured: two
+   eyebrows 2px apart, two 32px rings 3px apart, two full-width buttons).
+   The at-rest phase the account panel shows is the collapsed row, so keep
+   only it and hand the expanded promo row to hover like stock does. */
+#app-mount [data-testid="quest-bar-container"] [class*="contentExpanded"] {
+    display: none !important;
+}
+#app-mount [data-testid="quest-bar-container"]:hover [class*="contentExpanded"] {
+    display: block !important;
+}
+
+/* The bar's title and description use Discord's --white (white over the quest
+   artwork in stock). Midnight remaps --white to a dark Mocha background
+   globally so text on colored pills reads dark, which paints the bar's title
+   about 5% above its backdrop (measured rgb(49,50,67) over rgb(24,24,37)).
+   Restore the stock value inside the bar only. */
+#app-mount [data-testid="quest-bar-container"] {
+    --white: #fff;
+}
+/* Belt over the variable restore: the progress-row title and subtitle sit in
+   styled blocks that otherwise inherit the panel's near-invisible fill, so
+   pin them to the theme's own near-white text token. */
+#app-mount [data-testid="quest-bar-container"] [class*="questProgressHint"],
+#app-mount [data-testid="quest-bar-container"] [class*="questProgressCopy"] {
+    color: var(--text-1) !important;
+    -webkit-text-fill-color: var(--text-1) !important;
+}
+
 /* Keep banner artwork inside the channel panel's rounded border. */
 #app-mount .sidebarList__5e434 {
     overflow: hidden;
 }
 #app-mount .sidebarList__5e434 .bannerVisible_f37cb1 .header_f37cb1 {
     border-top: none;
-}
-
-/* Reserve the typing row without a second translucent fill. Clip scrolling
-   messages above the row so their text cannot overlap the typing indicator. */
-#app-mount .chatContent_f75fb0:has(> .form_f75fb0 > .typing_b88801) .messagesWrapper__36d07::before {
-    background: transparent !important;
-}
-#app-mount .chatContent_f75fb0:has(> .form_f75fb0 > .typing_b88801) .scroller__36d07 {
-    mask: linear-gradient(to bottom, #000 calc(100% - 26px), transparent calc(100% - 26px));
-}
-#app-mount .chatContent_f75fb0:has(> .form_f75fb0 > .typing_b88801) .chatGradientBase__36d07 {
-    background: transparent !important;
 }
 
 /* Keep server palettes out of the chat and composer. Custom profile artwork
@@ -1023,6 +1127,8 @@ body,
     --mobile-background-scrim-opaque: var(--bg-3);
     --mobile-expression-picker-background-default: var(--bg-3);
     --mobile-text-heading-primary: var(--text-1);
+    --modal-background: var(--bg-3);
+    --modal-footer-background: var(--bg-3);
     --navigator-header-tint: var(--bg-4);
     --overlay-backdrop-lightbox: color-mix(in srgb, var(--bg-3) 55%, transparent);
     --panel-bg: var(--bg-4);
@@ -1084,6 +1190,70 @@ body,
     --user-profile-activity-toolbar-background: var(--bg-3);
 }
 
+/* These plugin dropdowns stay in their parent DOM instead of using a portal.
+   Frost the parent on a sibling layer so dropdowns can sample beyond its box.
+   Keep blur on the scrolling dropdown itself so frost cannot scroll away. */
+:root .fakedm-popout,
+:root .gc-popover {
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+.gc-popover {
+    position: relative;
+    z-index: 0;
+}
+.fakedm-popout::before,
+.gc-popover::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--mochacord-acrylic-background);
+    -webkit-backdrop-filter: var(--mochacord-acrylic-filter);
+    backdrop-filter: var(--mochacord-acrylic-filter);
+    pointer-events: none;
+    z-index: -1;
+}
+#app-mount .nowPlayingNotificationAnimationWrapper__81a05 {
+    opacity: 1;
+}
+.vc-mds-modal {
+    font-family: var(--font-primary) !important;
+}
+.vc-mds-modal .vc-mds-modal-header {
+    background: transparent;
+}
+
+/* Datepicker inner sheets must not cover the outer glass with white fills. */
+.react-datepicker {
+    font-family: var(--font-primary) !important;
+    color: var(--text-2);
+}
+.react-datepicker :is(.react-datepicker__header, .react-datepicker__today-button, .react-datepicker__time-container, .react-datepicker__time) {
+    background: transparent;
+    border-color: var(--border);
+}
+.react-datepicker :is(.react-datepicker__current-month, .react-datepicker-time__header, .react-datepicker-year-header) {
+    color: var(--text-1);
+}
+.react-datepicker :is(.react-datepicker__day-name, .react-datepicker__day, .react-datepicker__time-name) {
+    color: var(--text-2);
+}
+.react-datepicker .react-datepicker__day:hover {
+    background: var(--hover);
+}
+.react-datepicker :is(.react-datepicker__day--selected, .react-datepicker__day--keyboard-selected, .react-datepicker__day--in-range) {
+    background: var(--accent-2);
+    color: var(--text-0);
+}
+.react-datepicker .react-datepicker__day--disabled {
+    color: var(--text-5);
+}
+.react-datepicker .react-datepicker__navigation-icon::before {
+    border-color: var(--text-3);
+}
+
 /* The native Windows title bar already shows the server and channel.
    Hide Discord's duplicate title text; keep the bar, navigation and toolbar. */
 .bar_c38106 > .title_c38106 > * {
@@ -1101,6 +1271,8 @@ body,
     .timelineTooltip__68788,
     .errorTooltip__3b3ff,
     .vc-class-highlight-tooltip,
+    .vc-bactivities-controls-tooltip, .vc-popover-overflow,
+    .vc-bie-picker > .vc-bie-drawer, [class*="vc-bie-drawer"],
     .vc-notification-root,
     .vc-toast-notifications-notification-root,
     .vc-testcord-tab-editor-toast
@@ -1119,4 +1291,80 @@ body,
     --vc-toast-notifications-text-color: var(--text-1);
     --vc-toast-notifications-title-color: var(--text-1);
     color: var(--text-1) !important;
+}
+/* Reserve the typing row without a second translucent fill. Clip scrolling
+   messages above the row so their text cannot overlap the typing indicator. */
+#app-mount .chatContent_f75fb0 .messagesWrapper__36d07::before {
+    background: transparent !important;
+}
+#app-mount .chatContent_f75fb0 .scroller__36d07 {
+    mask: linear-gradient(to bottom, #000 calc(100% - 26px), transparent calc(100% - 26px));
+}
+#app-mount .chatContent_f75fb0 .chatGradientBase__36d07 {
+    background: transparent !important;
+}
+
+
+/* RoundedVCPFP and Discord's inset speaking border must use the same radius.
+   Keep tile clipping so video and avatar artwork cannot leak at the corners. */
+#app-mount [data-selenium-video-tile] {
+    --custom-base-tile-border-radius: var(--vc-pfp-radius, 12px);
+}
+#app-mount [data-selenium-video-tile] .border__2f4f7 {
+    border-radius: var(--vc-pfp-radius, 12px) !important;
+}
+
+/* Known inner popup sheets share their containing glass. Keep submenus separate. */
+.vc-cal-picker-popover > .vc-cal-tool-popover,
+.recentMentionsPopout__95796 .messagesPopoutWrap__432f4 {
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+/* A picker with a changed class hash can still be identified by its direct tab. */
+[class*="layerContainer_"] [class^="contentWrapper_"]:has(> :is(#emoji-picker-tab-panel, #gif-picker-tab-panel, #sticker-picker-tab-panel, #files-picker-tab-panel)) {
+    background: var(--mochacord-acrylic-background) !important;
+    -webkit-backdrop-filter: var(--mochacord-acrylic-filter) !important;
+    backdrop-filter: var(--mochacord-acrylic-filter) !important;
+}
+
+/* The voice user strip's negative end margin pushes the overflow button's
+   hover box past the panel edge. Keep the strip inside the panel, and size
+   the Show All Users button like the 24px avatars beside it. */
+.scroller__68617 {
+    margin-inline-end: 0 !important;
+}
+.voiceUsers__68617 > [data-mana-component="button"] {
+    width: 24px;
+    height: 24px;
+    min-width: 0;
+    min-height: 0;
+    border-radius: 50%;
+}
+
+/* ===== Channel sidebar voice user list =====
+   Stock indents the rows 36px to line up with the channel label. With the
+   VoiceButtons pill on the left that reads as dead space and squeezes long
+   names, so pull the list back to the channel-icon column (8px list padding
+   plus the 8px row padding puts the pill at the same x as the speaker icon)
+   and let the name column keep the freed width.
+   Stock also leaves the row fill at its natural height (~39px with padding)
+   inside a 32px row, so the hover fill bleeds down over the next row's
+   mute/deafen pill; border-box at 32px keeps the fill on its own row, and a
+   small row gap separates stacked users. The name/tag cluster gets more room
+   before the mute, deafen and Live icons so hover additions and server tag
+   chips never crowd them. */
+li.containerDefault_c69b6d > .list_c3cd7d {
+    padding-inline-start: 8px !important;
+    row-gap: 4px !important;
+}
+.listDefault__07f91 .content__07f91 {
+    box-sizing: border-box !important;
+    height: 32px !important;
+}
+.listDefault__07f91 .content__07f91 > .icons__07f91 {
+    margin-inline-start: 6px !important;
+}
+.listDefault__07f91 .container__394db .chipletParent__394db {
+    padding-inline-start: 6px !important;
 }
