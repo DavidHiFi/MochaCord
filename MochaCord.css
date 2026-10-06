@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.23
+ * @version 3.1.24
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -497,6 +497,12 @@ body {
     .timelineTooltip__68788,
     .errorTooltip__3b3ff,
     .reactionTooltip_bbcccb,
+    /* Legacy tooltip variant roots (video tile Options, etc.) paint stock
+       translucent --background-surface-high and never matched tooltip_.
+       popoutLoader is the floating skeleton a popout shows while loading. */
+    [class*="tooltipPrimary_"], [class*="tooltipGrey_"], [class*="tooltipBrand_"],
+    [class*="tooltipRed_"], [class*="tooltipGreen_"], [class*="rewardTooltip_"],
+    [class*="popoutLoader_"],
     .popoutList__92efc,
     .keyboardShortcutsModal_f061f6,
     .dropdown_edf232,
@@ -570,6 +576,7 @@ body {
     --background-secondary-alt: transparent;
     --modal-background: transparent;
     --modal-footer-background: transparent;
+    --tooltip-pointer-bg: var(--mochacord-acrylic-background);
 }
 
 /* Nested popup scopes must not paint their own acrylic. The scope list above
@@ -592,6 +599,12 @@ body {
     .timelineTooltip__68788,
     .errorTooltip__3b3ff,
     .reactionTooltip_bbcccb,
+    /* Legacy tooltip variant roots (video tile Options, etc.) paint stock
+       translucent --background-surface-high and never matched tooltip_.
+       popoutLoader is the floating skeleton a popout shows while loading. */
+    [class*="tooltipPrimary_"], [class*="tooltipGrey_"], [class*="tooltipBrand_"],
+    [class*="tooltipRed_"], [class*="tooltipGreen_"], [class*="rewardTooltip_"],
+    [class*="popoutLoader_"],
     .popoutList__92efc,
     .keyboardShortcutsModal_f061f6,
     .dropdown_edf232,
@@ -663,6 +676,12 @@ body {
     .timelineTooltip__68788,
     .errorTooltip__3b3ff,
     .reactionTooltip_bbcccb,
+    /* Legacy tooltip variant roots (video tile Options, etc.) paint stock
+       translucent --background-surface-high and never matched tooltip_.
+       popoutLoader is the floating skeleton a popout shows while loading. */
+    [class*="tooltipPrimary_"], [class*="tooltipGrey_"], [class*="tooltipBrand_"],
+    [class*="tooltipRed_"], [class*="tooltipGreen_"], [class*="rewardTooltip_"],
+    [class*="popoutLoader_"],
     .popoutList__92efc,
     .keyboardShortcutsModal_f061f6,
     .dropdown_edf232,
@@ -745,6 +764,12 @@ body {
     .timelineTooltip__68788,
     .errorTooltip__3b3ff,
     .reactionTooltip_bbcccb,
+    /* Legacy tooltip variant roots (video tile Options, etc.) paint stock
+       translucent --background-surface-high and never matched tooltip_.
+       popoutLoader is the floating skeleton a popout shows while loading. */
+    [class*="tooltipPrimary_"], [class*="tooltipGrey_"], [class*="tooltipBrand_"],
+    [class*="tooltipRed_"], [class*="tooltipGreen_"], [class*="rewardTooltip_"],
+    [class*="popoutLoader_"],
     .popoutList__92efc,
     .keyboardShortcutsModal_f061f6,
     .dropdown_edf232,
@@ -869,7 +894,11 @@ body {
 :is([class*="toast_"], [class*="customToast_"], [class*="errorNotificationContainer_"]) {
     color: var(--text-1);
 }
-.tooltipPointer_c36707 {
+/* Keep toast text readable and match tooltip arrows to the glass. Every
+   tooltip pointer family (hash suffixes move between builds) takes the
+   acrylic, matching the body root it points at. */
+.tooltipPointer_c36707,
+[class*="tooltipPointer_"] {
     border-top-color: var(--mochacord-acrylic-background) !important;
 }
 
@@ -905,6 +934,12 @@ body {
     .timelineTooltip__68788,
     .errorTooltip__3b3ff,
     .reactionTooltip_bbcccb,
+    /* Legacy tooltip variant roots (video tile Options, etc.) paint stock
+       translucent --background-surface-high and never matched tooltip_.
+       popoutLoader is the floating skeleton a popout shows while loading. */
+    [class*="tooltipPrimary_"], [class*="tooltipGrey_"], [class*="tooltipBrand_"],
+    [class*="tooltipRed_"], [class*="tooltipGreen_"], [class*="rewardTooltip_"],
+    [class*="popoutLoader_"],
     .popoutList__92efc,
     .keyboardShortcutsModal_f061f6,
     .dropdown_edf232,
@@ -1422,6 +1457,8 @@ body,
     [class*="customToast_"],
     [class*="errorNotificationContainer_"],
     .reactionTooltip_bbcccb,
+    [class*="tooltipPrimary_"], [class*="tooltipGrey_"], [class*="tooltipBrand_"],
+    [class*="tooltipRed_"], [class*="tooltipGreen_"], [class*="rewardTooltip_"],
     .timelineTooltip__68788,
     .errorTooltip__3b3ff,
     .vc-class-highlight-tooltip,
