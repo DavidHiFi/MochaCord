@@ -1009,6 +1009,14 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
 #app-mount [data-testid="quest-bar-container"] {
     --white: #fff;
 }
+/* Belt over the variable restore: the progress-row title and subtitle sit in
+   styled blocks that otherwise inherit the panel's near-invisible fill, so
+   pin them to the theme's own near-white text token. */
+#app-mount [data-testid="quest-bar-container"] [class*="questProgressHint"],
+#app-mount [data-testid="quest-bar-container"] [class*="questProgressCopy"] {
+    color: var(--text-1) !important;
+    -webkit-text-fill-color: var(--text-1) !important;
+}
 
 /* Keep banner artwork inside the channel panel's rounded border. */
 #app-mount .sidebarList__5e434 {
