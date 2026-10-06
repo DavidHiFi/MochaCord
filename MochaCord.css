@@ -998,6 +998,15 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
     display: block !important;
 }
 
+/* The bar's title and description use Discord's --white (white over the quest
+   artwork in stock). Midnight remaps --white to a dark Mocha background
+   globally so text on colored pills reads dark, which paints the bar's title
+   about 5% above its backdrop (measured rgb(49,50,67) over rgb(24,24,37)).
+   Restore the stock value inside the bar only. */
+#app-mount [data-testid="quest-bar-container"] {
+    --white: #fff;
+}
+
 /* Keep banner artwork inside the channel panel's rounded border. */
 #app-mount .sidebarList__5e434 {
     overflow: hidden;
