@@ -10,6 +10,7 @@ window.addEventListener("load", () => {
         ['sticker', 'contentWrapper__08434'], ['files-new-hash', 'contentWrapper_newhash'],
         ['reaction', 'reactionTooltip_bbcccb'], ['timeline', 'timelineTooltip__68788'], ['error-tooltip', 'errorTooltip__3b3ff'],
         ['list', 'popoutList__92efc'], ['shortcuts', 'keyboardShortcutsModal_f061f6'], ['dropdown', 'dropdown_edf232'],
+        ['select-menu', 'selectDropdown__0edde'],
         ['modal', 'root__49fc1'], ['profile-modal', 'outer_c0bea0 user-profile-modal-v2'],
         ['toast', 'toast__3fde7'], ['notification', 'vc-notification-root'], ['plugin-toast', 'vc-toast-notifications-notification-root'],
         ['datepicker', 'react-datepicker'], ['color', 'customColorPicker__459fb'], ['status', 'statusPickerModal_ce8328'],
@@ -101,6 +102,16 @@ window.addEventListener("load", () => {
         const s = describe(el);
         if (!s.blur.includes('data:image/svg+xml')) fail.push({ id: el.id, ...s });
     }
+    /* 3.1.26: combo-box menus render inline inside the settings modal DOM
+       (control__* under a mana modal root), which matches the nested strip's
+       OUTER list via .modal_e44912 - the select guard must still frost them. */
+    const modalWrap = document.createElement('div');
+    modalWrap.className = 'fixture-portal layerContainer_newhash modal_e44912';
+    modalWrap.style.cssText = 'position:relative;width:260px;height:120px';
+    const modalSelect = add(modalWrap, 'fixture-surface selectDropdown__0edde', 'select-in-modal');
+    app.append(modalWrap);
+    const modalSelectStyle = describe(modalSelect);
+    if (!modalSelectStyle.blur.includes('data:image/svg+xml')) fail.push({ id: modalSelect.id, ...modalSelectStyle });
     const inner = add(document.getElementById('case-picker'), 'emojiPicker_c0e32c', 'picker-inner');
     const section = add(document.getElementById('case-plugin-calendar'), 'vc-cal-tool-popover', 'nested-section');
     const structural = [inner, section].map(e => ({ id: e.id, ...describe(e) }));

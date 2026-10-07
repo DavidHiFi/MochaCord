@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.25
+ * @version 3.1.26
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -774,6 +774,25 @@ body {
     backdrop-filter: var(--mochacord-acrylic-filter) !important;
 }
 
+/* Select dropdowns always paint their own acrylic, even inline. Discord
+   renders combo-box menus inside the settings modal DOM (control__* under a
+   mana modal root) instead of a separate layer, so the nested strip above
+   outranks the glass block at equal importance (0,2,0 vs 0,1,0) and strips
+   the menu to fully transparent while its options stay readable: the
+   see-through "Show All" filter on the Plugins tab. This guard outranks
+   every copy of the strip, including the quickCss duplicate; the :not() id
+   never exists and only adds specificity. The inner listbox stays
+   transparent by design so the outer glass shows through it. */
+:is(
+    .selectDropdown__0edde,
+    [data-mana-component="select-content"],
+    [data-mana-component="listbox"]
+):not(#mochacord-select-guard) {
+    background: var(--mochacord-acrylic-background) !important;
+    -webkit-backdrop-filter: var(--mochacord-acrylic-filter) !important;
+    backdrop-filter: var(--mochacord-acrylic-filter) !important;
+}
+
 /* Base-level content inside popups keeps a solid fill too. These chips,
    embeds, code blocks and pills read the base variables that the glass block
    still zeroes, so they would otherwise go see-through on popup artwork.
@@ -1470,6 +1489,18 @@ body,
 }
 .react-datepicker .react-datepicker__navigation-icon::before {
     border-color: var(--text-3);
+}
+
+/* The segmented control marks its active pill with a dark fill that blends
+   into the frosted modal behind it (GoLive source picker: the active
+   Applications / Entire Screen / Devices tab reads the same as the idle
+   tabs). Tint the selected pill with the theme accent and ring it so the
+   selection is visible on dark glass. Scoped to segmented controls so other
+   tab bars keep their stock look. */
+[class*="segmentedControl_"] [class*="pillItemSelected_"] {
+    background: color-mix(in srgb, var(--accent-2) 25%, transparent) !important;
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-2) 65%, transparent) !important;
+    color: var(--text-1) !important;
 }
 
 /* The native Windows title bar already shows the server and channel.
