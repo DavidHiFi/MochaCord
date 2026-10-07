@@ -41,7 +41,7 @@ window.addEventListener("load", () => {
     const fail = [];
     const describe = e => {
         const s = getComputedStyle(e), p = getComputedStyle(e, '::before');
-        return { background: s.backgroundColor, blur: s.backdropFilter, before: p.backdropFilter, beforeContent: p.content, beforeBackground: p.backgroundColor, opacity: s.opacity };
+        return { background: s.backgroundColor, blur: s.backdropFilter, before: p.backdropFilter, beforeContent: p.content, beforeBackground: p.backgroundColor, opacity: s.opacity, boxShadow: s.boxShadow };
     };
     for (const [id, classes, semantic] of specs) {
         const portal = document.createElement('div');
@@ -101,6 +101,9 @@ window.addEventListener("load", () => {
     for (const el of [tileTip, tileTipSemantic]) {
         const s = describe(el);
         if (!s.blur.includes('data:image/svg+xml')) fail.push({ id: el.id, ...s });
+        /* 3.1.27: tooltip roots always carry the hairline ring so their edge
+           reads over flat dark panels where the frost itself is invisible. */
+        if (s.boxShadow === 'none') fail.push({ id: el.id + '-ring', ...s });
     }
     /* 3.1.26: combo-box menus render inline inside the settings modal DOM
        (control__* under a mana modal root), which matches the nested strip's
@@ -112,6 +115,18 @@ window.addEventListener("load", () => {
     app.append(modalWrap);
     const modalSelectStyle = describe(modalSelect);
     if (!modalSelectStyle.blur.includes('data:image/svg+xml')) fail.push({ id: modalSelect.id, ...modalSelectStyle });
+    /* 3.1.27: the message hover bar keeps its glass over messages inside
+       popups (pins, mentions); the nested strip would otherwise bleach it. */
+    const pinsWrap = document.createElement('div');
+    pinsWrap.className = 'fixture-portal layerContainer_newhash messagesPopoutWrap__432f4';
+    pinsWrap.style.cssText = 'position:relative;width:260px;height:260px';
+    const miniBar = add(pinsWrap, 'fixture-surface miniPopover_e21ed7', 'minipopover-in-pins');
+    const fullBar = add(pinsWrap, 'fixture-surface buttonsInner__5126c', 'hoverbar-in-pins');
+    app.append(pinsWrap);
+    for (const el of [miniBar, fullBar]) {
+        const s = describe(el);
+        if (!s.blur.includes('data:image/svg+xml')) fail.push({ id: el.id, ...s });
+    }
     const inner = add(document.getElementById('case-picker'), 'emojiPicker_c0e32c', 'picker-inner');
     const section = add(document.getElementById('case-plugin-calendar'), 'vc-cal-tool-popover', 'nested-section');
     const structural = [inner, section].map(e => ({ id: e.id, ...describe(e) }));

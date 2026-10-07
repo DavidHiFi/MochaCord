@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.26
+ * @version 3.1.27
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -772,6 +772,30 @@ body {
     background: var(--mochacord-acrylic-background) !important;
     -webkit-backdrop-filter: var(--mochacord-acrylic-filter) !important;
     backdrop-filter: var(--mochacord-acrylic-filter) !important;
+    /* Frost over a flat dark panel is invisible: the 76% fill melts into the
+       identical background and the pill reads as fully transparent (voice
+       panel "User Settings" and call-bar "Turn On Camera" tooltips). Ring
+       every tooltip root like toasts so its edge always reads, even where
+       there is nothing behind it to blur. */
+    border: 1px solid rgba(255, 255, 255, 0.09) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        0 4px 16px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* The message hover bar keeps its glass over messages inside popups (pins,
+   mentions). The nested strip would otherwise bleach it to fully
+   transparent: the bar matches the strip's inner popover scopes while the
+   message popout matches the outer list. Scoped to message popouts so bars
+   in normal chat keep their exact stock styling; the :not() id outranks
+   every copy of the strip. */
+:is([class*="messagesPopoutWrap_"], [class*="recentMentionsPopout_"]) :is(
+    [class*="miniPopover_"],
+    [class*="buttonsInner_"]
+):not(#mochacord-messagebar-guard) {
+    background: var(--mochacord-acrylic-background) !important;
+    -webkit-backdrop-filter: var(--mochacord-acrylic-filter) !important;
+    backdrop-filter: var(--mochacord-acrylic-filter) !important;
 }
 
 /* Select dropdowns always paint their own acrylic, even inline. Discord
@@ -781,10 +805,13 @@ body {
    the menu to fully transparent while its options stay readable: the
    see-through "Show All" filter on the Plugins tab. This guard outranks
    every copy of the strip, including the quickCss duplicate; the :not() id
-   never exists and only adds specificity. The inner listbox stays
-   transparent by design so the outer glass shows through it. */
+   never exists and only adds specificity. Listbox roots are always menu
+   surfaces (options carry role=option, never listbox), so covering the
+   role protects every inline combo box, including ones with unlisted
+   class hashes. */
 :is(
     .selectDropdown__0edde,
+    [role="listbox"],
     [data-mana-component="select-content"],
     [data-mana-component="listbox"]
 ):not(#mochacord-select-guard) {
@@ -879,7 +906,7 @@ body {
     .key__98feb,
     .embedCard_b99f57, .embedCard__44c9a,
     .code__1a1f5, .code__2e07e, .inlineCode__2e07e, .inlineCode__59fad, .hljs,
-    .pollAnswerOption__250d5,
+    .pollAnswerOption_a60893,
     .inviteCard__742a4,
     .preview__6b741,
     .usagePill__74f72,
