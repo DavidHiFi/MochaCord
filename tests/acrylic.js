@@ -35,7 +35,7 @@ window.addEventListener("load", () => {
     app.style.cssText = 'display:grid;grid-template-columns:repeat(4,260px);grid-auto-rows:200px;align-content:start;gap:20px;padding:24px;min-height:2900px;background:repeating-linear-gradient(90deg,#d9d9ff 0 3px,#181825 3px 6px)!important';
     document.body.className = 'theme-dark';
     const fixture = document.createElement('style');
-    fixture.textContent = '.fixture-portal{position:relative;width:260px;height:200px;will-change:opacity}.fixture-animator{will-change:opacity,transform}.fixture-surface{position:relative!important;width:260px!important;height:200px!important;min-width:0!important;min-height:0!important;max-width:none!important;max-height:none!important;border-radius:12px!important;box-sizing:border-box;z-index:1}.fixture-label{position:absolute;top:12px;left:12px;color:#fff;font:14px monospace}.fixture-guard{width:30px;height:20px}';
+    fixture.textContent = '.fixture-portal{position:relative;width:260px;height:200px;will-change:opacity}.fixture-animator{will-change:opacity,transform}.fixture-surface{position:relative!important;width:260px!important;height:200px!important;min-width:0!important;min-height:0!important;max-width:none!important;max-height:none!important;border-radius:12px!important;box-sizing:border-box;z-index:1}.fixture-label{position:absolute;top:12px;left:12px;color:#fff;font:14px monospace}.fixture-guard{width:30px;height:20px}.fixture-plain{position:relative;width:260px;height:80px;z-index:1}';
     document.head.prepend(fixture);
     const results = [];
     const fail = [];
@@ -127,6 +127,64 @@ window.addEventListener("load", () => {
         const s = describe(el);
         if (!s.blur.includes('data:image/svg+xml')) fail.push({ id: el.id, ...s });
     }
+    /* 3.1.28: menu surfaces round to 8px like the context menus, and inner
+       menu surfaces stay clear so the outer rounded corners read — the
+       square corners of the Plugins "Show All" dropdown list. */
+    const modalListbox = add(modalSelect, 'listBox_newhash', 'listbox-in-select-root');
+    modalListbox.role = 'listbox';
+    modalListbox.style.cssText = 'position:absolute;inset:0';
+    const innerLb = describe(modalListbox);
+    if (innerLb.blur !== 'none' || innerLb.background !== 'rgba(0, 0, 0, 0)') fail.push({ id: 'listbox-in-select-root', ...innerLb });
+    const modalRadius = getComputedStyle(modalSelect).borderRadius;
+    if (modalRadius !== '8px') fail.push({ id: 'select-root-radius', radius: modalRadius });
+    const bareLb = document.createElement('div');
+    bareLb.className = 'fixture-plain';
+    bareLb.id = 'bare-inline-listbox';
+    bareLb.role = 'listbox';
+    app.append(bareLb);
+    const bareLbS = describe(bareLb);
+    if (!bareLbS.blur.includes('data:image/svg+xml')) fail.push({ id: 'bare-inline-listbox', ...bareLbS });
+    const bareRadius = getComputedStyle(bareLb).borderRadius;
+    if (bareRadius !== '8px') fail.push({ id: 'bare-inline-listbox-radius', radius: bareRadius });
+    /* 3.1.28: notification cards take the firmer Mocha fill plus the ring so
+       they never read as see-through over any background. */
+    for (const id of ['toast', 'notification', 'plugin-toast', 'plugin-editor-toast']) {
+        const r = results.find(x => x.id === id);
+        if (!r) { fail.push({ id: id + '-missing' }); continue; }
+        if (!r.background.includes('/ 0.92)')) fail.push({ id: id + '-fill', background: r.background });
+        if (r.boxShadow === 'none') fail.push({ id: id + '-ring', ...r });
+    }
+    /* 3.1.28: entries in the notification log keep sharing their modal's
+       glass instead of painting their own card. */
+    const logWrap = document.createElement('div');
+    logWrap.className = 'fixture-plain vc-notification-log-wrapper';
+    logWrap.id = 'log-wrapper';
+    const logRoot = document.createElement('div');
+    logRoot.className = 'vc-notification-root';
+    logRoot.id = 'notification-in-log';
+    logRoot.style.cssText = 'position:relative;width:200px;height:60px';
+    logWrap.append(logRoot);
+    app.append(logWrap);
+    const logS = describe(logRoot);
+    if (logS.blur !== 'none' || logS.background !== 'rgba(0, 0, 0, 0)') fail.push({ id: 'notification-in-log', ...logS });
+    /* 3.1.28: in-call message toasts (chatToasts strip): the root wrapper
+       stays clear and the message pill carries the notification card fill. */
+    const ctStrip = document.createElement('div');
+    ctStrip.className = 'fixture-plain chatToasts_newhash';
+    ctStrip.id = 'chattoast-strip';
+    const ctWrap = document.createElement('div');
+    ctWrap.className = 'toastWrapper_newhash toast_newhash';
+    ctWrap.id = 'chattoast-wrapper';
+    const ctPill = document.createElement('div');
+    ctPill.className = 'messageContentWrapper_newhash';
+    ctPill.id = 'chattoast-pill';
+    ctWrap.append(ctPill);
+    ctStrip.append(ctWrap);
+    app.append(ctStrip);
+    const ctWrapS = describe(ctWrap);
+    if (ctWrapS.blur !== 'none' || ctWrapS.background !== 'rgba(0, 0, 0, 0)') fail.push({ id: 'chattoast-wrapper', ...ctWrapS });
+    const ctPillS = describe(ctPill);
+    if (!ctPillS.blur.includes('data:image/svg+xml') || !ctPillS.background.includes('/ 0.92)')) fail.push({ id: 'chattoast-pill', ...ctPillS });
     const inner = add(document.getElementById('case-picker'), 'emojiPicker_c0e32c', 'picker-inner');
     const section = add(document.getElementById('case-plugin-calendar'), 'vc-cal-tool-popover', 'nested-section');
     const structural = [inner, section].map(e => ({ id: e.id, ...describe(e) }));

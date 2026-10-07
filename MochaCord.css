@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.27
+ * @version 3.1.28
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -477,6 +477,10 @@ top: 215px;
    Keep the blur on popup surfaces, never on portal containers or call video. */
 body {
     --mochacord-acrylic-background: color-mix(in srgb, var(--bg-floating) 76%, transparent);
+    /* Notifications float over app content, often over a flat area where the
+       76% popup fill reads as see-through. They take a firmer fill instead so
+       they always read as a glass card. */
+    --mochacord-acrylic-notification: color-mix(in srgb, var(--bg-floating) 92%, transparent);
     /* Normalize the sampled alpha before blurring. A regular CSS blur leaves
        sharp text underneath when Discord's backdrop is translucent.
        Keep the SVG embedded because cross-origin filter references fail. */
@@ -818,6 +822,24 @@ body {
     background: var(--mochacord-acrylic-background) !important;
     -webkit-backdrop-filter: var(--mochacord-acrylic-filter) !important;
     backdrop-filter: var(--mochacord-acrylic-filter) !important;
+    /* Menus round to 8px like the context menus. Bare listbox roots carry no
+       radius of their own, which painted square acrylic corners on the
+       Plugins "Show All" dropdown. */
+    border-radius: var(--radius-sm, 8px) !important;
+}
+
+/* Inner menu surfaces stay clear so the outer menu's rounded corners read.
+   The listbox guard repaints every listbox, which put a square acrylic panel
+   inside the rounded dropdown root: the Show All list showed sharp corners
+   where the panel met the root. The inner list is transparent and the root's
+   glass shows through it. */
+:is(.selectDropdown__0edde, [data-mana-component="select-content"]):not(#mochacord-select-guard) :is(
+    [role="listbox"],
+    [data-mana-component="listbox"]
+):not(#mochacord-select-guard) {
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
 }
 
 /* Base-level content inside popups keeps a solid fill too. These chips,
@@ -977,11 +999,44 @@ body {
     border-top-color: var(--mochacord-acrylic-background) !important;
 }
 
-:is(.vc-notification-root, .vc-toast-notifications-notification-root) {
+/* Notification surfaces are floating cards over app content: the native
+   toast (top of the screen), the rectangular in-app notification
+   (bottom right) and the plugin toasts. The 76% popup fill reads as
+   see-through on them, so they take the firmer Mocha fill with the same
+   frost, a hairline ring and a drop shadow: a proper glass card over any
+   background, never see-through. Entries in the notification log keep
+   sharing their modal's glass instead. */
+:is(
+    [class*="toast_"],
+    [class*="customToast_"],
+    [class*="errorNotificationContainer_"],
+    .vc-notification-root,
+    .vc-toast-notifications-notification-root,
+    .vc-testcord-tab-editor-toast
+):where(:not(.vc-notification-log-wrapper .vc-notification-root)):not(#mochacord-notification-card) {
+    background: var(--mochacord-acrylic-notification) !important;
+    -webkit-backdrop-filter: var(--mochacord-acrylic-filter) !important;
+    backdrop-filter: var(--mochacord-acrylic-filter) !important;
     border: 1px solid rgba(255, 255, 255, 0.09) !important;
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.12),
-        0 12px 32px rgba(0, 0, 0, 0.35) !important;
+        0 12px 32px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* In-call message toasts (the chatToasts strip at the top of a call): the
+   visible surface is the message pill, not the toast root. The root's glass
+   zeroes the pill's stock --background-base-lowest fill, leaving the pill
+   see-through inside a square acrylic patch. Clear the wrapper and paint the
+   pill itself with the notification card treatment. */
+[class*="chatToasts_"] [class*="toast_"]:not(#mochacord-chattoast-clear) {
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+[class*="chatToasts_"] [class*="messageContentWrapper_"] {
+    background: var(--mochacord-acrylic-notification) !important;
+    -webkit-backdrop-filter: var(--mochacord-acrylic-filter) !important;
+    backdrop-filter: var(--mochacord-acrylic-filter) !important;
 }
 
 /* The persistent notification history shares its containing modal's glass. */
