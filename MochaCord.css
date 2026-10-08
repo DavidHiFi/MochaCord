@@ -1355,6 +1355,9 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
 #app-mount [data-testid="quest-bar-container"]:hover [class*="contentExpanded"] {
     display: block !important;
     position: static !important;
+    /* Stock's crossfade slide is written for the absolute model; with the row
+       in flow it would paint the promo a bar-height above the bar. */
+    transform: none !important;
 }
 /* The promo's video preview and its CTA live in a nested spring-height
    wrapper that parks at 0px on the same forced mount. Open it on the same
