@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.29
+ * @version 3.1.30
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -1328,8 +1328,41 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
 #app-mount [data-testid="quest-bar-container"] [class*="contentExpanded"] {
     display: none !important;
 }
+
+/* 3.1.30: Questify 2.2.9 holds the bar mounted through Discord's dismissed
+   state, and that forced mount skips the state transition Discord's content
+   springs animate on, so the springs park at their initial keyframes
+   (measured live on TestCord 2.2.9/4275aabf4: the collapsed row's reward ring
+   and both text lines sit in wrappers with inline opacity: 0 while the text
+   color itself is already correct; the promo's video preview wrapper parks at
+   height: 0px). The user sees an empty shell at rest and a hover promo that
+   renders only its CTA. Force the parked wrappers to their stock end states.
+   The progress-row selectors hit both phase rows' copies; the expanded row is
+   display: none at rest, so only the visible row is affected. */
+#app-mount [data-testid="quest-bar-container"] [class*="questProgressWrapper"] > div,
+#app-mount [data-testid="quest-bar-container"] [class*="questProgressCopy"] > div {
+    opacity: 1 !important;
+}
+/* Stock hover keeps the promo row absolute behind the collapsed row and lets
+   springs crossfade them and open the video preview; those springs are the
+   parked ones, so stock hover collapses to a lone CTA. On hover the promo row
+   joins the flow instead, the collapsed row steps aside, and the
+   content-sized bar from 3.1.20 grows to fit it, so the promo renders in full
+   instead of overflowing over the voice panel below. */
+#app-mount [data-testid="quest-bar-container"]:hover [class*="contentCollapsed"] {
+    display: none !important;
+}
 #app-mount [data-testid="quest-bar-container"]:hover [class*="contentExpanded"] {
     display: block !important;
+    position: static !important;
+}
+/* The promo's video preview and its CTA live in a nested spring-height
+   wrapper that parks at 0px on the same forced mount. Open it on the same
+   terms; the wrapper has no class, so match it by the preview it wraps. */
+#app-mount [data-testid="quest-bar-container"] div:has(> [class*="videoQuestPreviewCont"]),
+#app-mount [data-testid="quest-bar-container"] div:has(> div:has(> [class*="videoQuestPreviewCont"])) {
+    height: auto !important;
+    overflow: visible !important;
 }
 
 /* The bar's title and description use Discord's --white (white over the quest
