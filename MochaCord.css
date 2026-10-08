@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.43
+ * @version 3.1.44
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -1387,16 +1387,37 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
    joins the flow instead, the collapsed row steps aside, and the
    content-sized bar from 3.1.20 grows to fit it, so the promo renders in full
    instead of overflowing over the voice panel below. */
-#app-mount [data-testid="quest-bar-container"]:hover [class*="contentCollapsed"] {
+#app-mount [data-testid="quest-bar-container"]:hover [class*="contentCollapsed"]:not([class*="Accepted"]) {
     display: none !important;
 }
-#app-mount [data-testid="quest-bar-container"]:hover [class*="contentExpanded"] {
+#app-mount [data-testid="quest-bar-container"]:hover [class*="contentExpanded"]:not([class*="Accepted"]) {
     display: block !important;
     position: static !important;
     /* Stock's crossfade slide is written for the absolute model; with the row
        in flow it would paint the promo a bar-height above the bar. */
     transform: none !important;
 }
+
+/* 3.1.44: completed Quest bars mount the Accepted variant pair
+   (contentCollapsedAccepted / contentExpandedAccepted). Stock renders both
+   phase trees all the time and splits them with opacity springs (expanded
+   absolute at top 0, z-index 1 under the collapsed row's z-index 2). Measured
+   on the real bar and on a synthetic mount of the real QuestBar (probe rig in
+   work/mochacord-quest-hover-20261009): the two Accepted rows draw the SAME
+   card — eyebrow, ring, title, subtitle and the Claim Reward CTA — so the
+   hover swap has no visible job here. With the parked content springs from
+   Questify's forced mount, the swap still let the accepted-expanded tree take
+   over mid-crossfade: its internal questAcceptedContentHeading block and the
+   doubled textOverflowBlur subtitle copies painted over the collapsed row at
+   the bar's top while its ring clipped at the panel edge — the user's
+   "completed quest doubles on hover". Keep the completed bar on its collapsed
+   row in every phase; the accepted-expanded tree stays display: none, and the
+   3.1.30 hover rules above are scoped with :not(...) so video-quest promo bars
+   keep their hover swap, flow growth and preview opening untouched. */
+#app-mount [data-testid="quest-bar-container"] [class*="contentExpandedAccepted"] {
+    display: none !important;
+}
+
 /* The promo's video preview and its CTA live in a nested spring-height
    wrapper that parks at 0px on the same forced mount. Open it on the same
    terms; the wrapper has no class, so match it by the preview it wraps. */
