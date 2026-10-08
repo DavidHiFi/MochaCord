@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.28
+ * @version 3.1.29
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -478,9 +478,14 @@ top: 215px;
 body {
     --mochacord-acrylic-background: color-mix(in srgb, var(--bg-floating) 76%, transparent);
     /* Notifications float over app content, often over a flat area where the
-       76% popup fill reads as see-through. They take a firmer fill instead so
-       they always read as a glass card. */
-    --mochacord-acrylic-notification: color-mix(in srgb, var(--bg-floating) 92%, transparent);
+       76% popup fill reads as see-through. Chromium down-samples the
+       backdrop-filter input buffer (effective blur drops to roughly a
+       quarter of the spec radius) and can skip the frost entirely when the
+       window is under GPU load, so 92% fill plus frost still let a sharp,
+       bright backdrop bleed through. The user's rule allows a static paint:
+       notifications take the solid Mocha base color, so they can never read
+       as see-through anywhere, frost sampled or not. */
+    --mochacord-acrylic-notification: var(--bg-floating);
     /* Normalize the sampled alpha before blurring. A regular CSS blur leaves
        sharp text underneath when Discord's backdrop is translucent.
        Keep the SVG embedded because cross-origin filter references fail. */
@@ -1002,14 +1007,19 @@ body {
 /* Notification surfaces are floating cards over app content: the native
    toast (top of the screen), the rectangular in-app notification
    (bottom right) and the plugin toasts. The 76% popup fill reads as
-   see-through on them, so they take the firmer Mocha fill with the same
-   frost, a hairline ring and a drop shadow: a proper glass card over any
-   background, never see-through. Entries in the notification log keep
-   sharing their modal's glass instead. */
+   see-through on them, so they take the static Mocha base paint with the
+   same frost, a hairline ring and a drop shadow (the frost keeps the app
+   content from flashing at the corners while the fill itself is opaque;
+   Chromium's down-sampled backdrop blur once let an 8% sharp ghost of the
+   backdrop bleed through the 92% fill, most visibly over bright or red
+   video in calls). The matcher is case-insensitive: 1.0.9261 adds
+   successToast_a35754 (capital T) that no lowercase substring ever
+   matched, and it rendered fully transparent. Entries in the notification
+   log keep sharing their modal's glass instead. */
 :is(
-    [class*="toast_"],
-    [class*="customToast_"],
-    [class*="errorNotificationContainer_"],
+    [class*="toast_" i],
+    [class*="customToast_" i],
+    [class*="errorNotificationContainer_" i],
     .vc-notification-root,
     .vc-toast-notifications-notification-root,
     .vc-testcord-tab-editor-toast
@@ -1027,8 +1037,10 @@ body {
    visible surface is the message pill, not the toast root. The root's glass
    zeroes the pill's stock --background-base-lowest fill, leaving the pill
    see-through inside a square acrylic patch. Clear the wrapper and paint the
-   pill itself with the notification card treatment. */
-[class*="chatToasts_"] [class*="toast_"]:not(#mochacord-chattoast-clear) {
+   pill itself with the notification card treatment. The clear matcher is
+   case-insensitive so a capital-case root inside the strip cannot
+   re-introduce a painted clear patch inside it. */
+[class*="chatToasts_"] [class*="toast_" i]:not(#mochacord-chattoast-clear) {
     background: transparent !important;
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;

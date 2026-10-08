@@ -13,6 +13,7 @@ window.addEventListener("load", () => {
         ['select-menu', 'selectDropdown__0edde'],
         ['modal', 'root__49fc1'], ['profile-modal', 'outer_c0bea0 user-profile-modal-v2'],
         ['toast', 'toast__3fde7'], ['notification', 'vc-notification-root'], ['plugin-toast', 'vc-toast-notifications-notification-root'],
+        ['error-notif', 'errorNotificationContainer_e13eda'], ['capital-toast', 'successToast_a35754'],
         ['datepicker', 'react-datepicker'], ['color', 'customColorPicker__459fb'], ['status', 'statusPickerModal_ce8328'],
         ['recent-channels', 'recentChannelsMenu__711d3'], ['search', 'container__55c99'], ['mentions', 'recentMentionsPopout__95796'],
         ['region', 'quickSelectPopout_ebaca5'], ['roles', 'rolePopout__75297'], ['generic-popout', 'popout_newhash'],
@@ -146,12 +147,22 @@ window.addEventListener("load", () => {
     if (!bareLbS.blur.includes('data:image/svg+xml')) fail.push({ id: 'bare-inline-listbox', ...bareLbS });
     const bareRadius = getComputedStyle(bareLb).borderRadius;
     if (bareRadius !== '8px') fail.push({ id: 'bare-inline-listbox-radius', radius: bareRadius });
-    /* 3.1.28: notification cards take the firmer Mocha fill plus the ring so
-       they never read as see-through over any background. */
-    for (const id of ['toast', 'notification', 'plugin-toast', 'plugin-editor-toast']) {
+    /* 3.1.29: notification cards take the static Mocha base paint plus the
+       ring so they never read as see-through over any background. The fill
+       is opaque on purpose: Chromium's down-sampled backdrop blur leaked an
+       8% sharp ghost of the 92% fill's transparent share. The capital-toast
+       case is the negative control for the case-insensitive matcher: drop
+       the i flag and successToast_a35754 renders fully transparent. */
+    const bgProbe = document.createElement('div');
+    bgProbe.style.cssText = 'background-color: var(--bg-floating); visibility: hidden; position: absolute;';
+    app.append(bgProbe);
+    const expectedNotif = getComputedStyle(bgProbe).backgroundColor;
+    bgProbe.remove();
+    for (const id of ['toast', 'notification', 'plugin-toast', 'plugin-editor-toast', 'error-notif', 'capital-toast']) {
         const r = results.find(x => x.id === id);
         if (!r) { fail.push({ id: id + '-missing' }); continue; }
-        if (!r.background.includes('/ 0.92)')) fail.push({ id: id + '-fill', background: r.background });
+        const filled = r.background !== 'rgba(0, 0, 0, 0)' && !r.background.includes('/ 0.') && r.background === expectedNotif;
+        if (!filled) fail.push({ id: id + '-fill', background: r.background, expected: expectedNotif });
         if (r.boxShadow === 'none') fail.push({ id: id + '-ring', ...r });
     }
     /* 3.1.28: entries in the notification log keep sharing their modal's
@@ -184,7 +195,9 @@ window.addEventListener("load", () => {
     const ctWrapS = describe(ctWrap);
     if (ctWrapS.blur !== 'none' || ctWrapS.background !== 'rgba(0, 0, 0, 0)') fail.push({ id: 'chattoast-wrapper', ...ctWrapS });
     const ctPillS = describe(ctPill);
-    if (!ctPillS.blur.includes('data:image/svg+xml') || !ctPillS.background.includes('/ 0.92)')) fail.push({ id: 'chattoast-pill', ...ctPillS });
+    /* 3.1.29: the pill takes the static opaque Mocha paint, so the
+       translucency must be gone, not merely firmed. */
+    if (!ctPillS.blur.includes('data:image/svg+xml') || !ctPillS.background || ctPillS.background.includes('/ 0.') || ctPillS.background === 'rgba(0, 0, 0, 0)') fail.push({ id: 'chattoast-pill', ...ctPillS });
     const inner = add(document.getElementById('case-picker'), 'emojiPicker_c0e32c', 'picker-inner');
     const section = add(document.getElementById('case-plugin-calendar'), 'vc-cal-tool-popover', 'nested-section');
     const structural = [inner, section].map(e => ({ id: e.id, ...describe(e) }));
