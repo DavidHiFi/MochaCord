@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.32
+ * @version 3.1.33
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -1240,13 +1240,18 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
 
 /* Restore the bottom edge of standalone thread, Friends and home headers.
    Midnight removes it from titlebars, leaving the rounded panel open.
+   The quests pill (headerBar__1a9ce) and the server boosts titlebar
+   (toolbar__89463) carry container__9293f directly, so Midnight's
+   border-bottom stripper also ate their bottom edge while the panel list
+   framed and hover-ringed the rest.
    Keep the current border color so the gray and blue hover edges match. */
 #app-mount .container__01ae2 > .container__9293f,
 #app-mount .container__133bf > .container__9293f,
 #app-mount .container_f391e3 > .container__9293f,
 #app-mount .homeWrapper__0920e > .container__9293f,
 #app-mount .container_fb64c9 > .container__9293f,
-#app-mount .headerBar__1a9ce.container__9293f {
+#app-mount .headerBar__1a9ce.container__9293f,
+#app-mount .toolbar__89463.container__9293f {
     border-bottom-width: var(--border-thickness);
     border-bottom-style: solid;
     border-bottom-color: var(--border-subtle);
@@ -1257,7 +1262,8 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
 #app-mount .container_f391e3 > .container__9293f:hover,
 #app-mount .homeWrapper__0920e > .container__9293f:hover,
 #app-mount .container_fb64c9 > .container__9293f:hover,
-#app-mount .headerBar__1a9ce.container__9293f:hover {
+#app-mount .headerBar__1a9ce.container__9293f:hover,
+#app-mount .toolbar__89463.container__9293f:hover {
     border-bottom-color: var(--border-hover);
 }
 
