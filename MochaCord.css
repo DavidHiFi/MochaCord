@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.40
+ * @version 3.1.41
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -1936,4 +1936,57 @@ li.containerDefault_c69b6d > .list_c3cd7d {
    vc-stafftag places (chat, members) are untouched. */
 .vc-stafftag-profile {
     transform: translateX(-4px);
+}
+
+/* 3.1.41 (2026-10-09): promo speech-bubble popouts ("New: Wishlists!" shop
+   promo family) no longer paint square corner notches past the chassis
+   curve. User capture 2026-10-09 (red arrow at the bottom-right notch).
+   The chassis paints acrylic through the popup scope, but the chassis'
+   interior layers have no radius of their own in the shop's promo
+   stylesheet (live read: .popoverContentWithGradient__2ee1b and
+   .caretIcon__2ee1b variant rules are EMPTY), so any interior layer that
+   covers the chassis box read as an 8x8 square surface notch at every
+   radius curve. Three guards:
+   1. interior layers inherit the chassis' own curve (caret entries, svg
+      shapes and the shaped CTA/close buttons keep their own rounding);
+   2. the promo's on-edge caret SVG stops reading the hard token
+      (--background-surface-high resolves #181825 = "$mantle" under this
+      theme while the chassis glass reads as ~$base) and takes the same
+      opaque Mocha surface tone the chassis glass settles at, so the
+      bubble and its notch stop reading as two different surfaces;
+   3. the chassis copy stays on the light text tokens, so the headline
+      ("New: Wishlists!"), the body copy and footer notes never darken
+      into the acrylic (user report: "black text in that already dark
+      element ... make it more easier to see").
+   No :has(): TestCord's composed-sheet composer drops those rules at
+   boot (3.1.36 finding). */
+:is(
+    .popover_d6f39b, .popoverGradientWrapper_d6f39b, .popoverContentWithGradient_d6f39b,
+    .popoverGradientWrapper__2ee1b, .popoverContentWithGradient__2ee1b
+) :is(
+    div, span, p, h1, h2, h3, h4, h5, h6
+):not([class*="caret"]):not([class*="button"]):not([class*="Button"]):not(svg):not(svg *):not(#mochacord-promo-clamp) {
+    border-radius: inherit;
+}
+:is(
+    .caretIcon_d6f39b .caretFill_d6f39b,
+    .caretIcon_fa450d .caretFill_fa450d,
+    .caretIcon__2ee1b .caretFill__2ee1b,
+    .caretIcon__2ee1b .caretFill_d6f39b
+) {
+    fill: var(--mochacord-acrylic-notification) !important;
+}
+:is(
+    .popover_d6f39b, .popoverGradientWrapper_d6f39b, .popoverContentWithGradient_d6f39b,
+    .popoverGradientWrapper__2ee1b, .popoverContentWithGradient__2ee1b
+) {
+    --white: var(--text-1);
+    --white-500: var(--text-1);
+    --text-0: var(--text-1);
+    --text-strong: var(--text-1);
+    --text-default: var(--text-2);
+    --text-muted: var(--text-2);
+    --text-subtle: var(--text-2);
+    --footer-text: var(--text-3);
+    color: var(--text-2);
 }
