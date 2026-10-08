@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.42
+ * @version 3.1.43
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -2016,4 +2016,20 @@ li.containerDefault_c69b6d > .list_c3cd7d {
     --text-subtle: var(--text-2);
     --footer-text: var(--text-3);
     color: var(--text-2);
+}
+
+/* 3.1.43 (2026-10-09): DM tile art corners. Discord's collectibles video
+   layer (.img_df39b2, 224px right-flushed over the 8px DM row) ships a
+   12px radius, so its corner arcs cut deeper than the row's own 8px
+   curve and read as dark crescents at the row corners (live read stable
+   9334: video 224x42 right-flushed over the row, radius 12px, inside the
+   row-radius-8 clip). The art takes the row's own 8px on its coincident
+   right corners and stays square on its mid-row left edge, so no notch
+   is cut there either. A uniform 1px boundary contrast remains where
+   the bright tile meets the dark panel at the extreme right edge;
+   that is the tile edge itself, not a layer defect (verified: the same
+   edge with the video hidden paints the container gradient with no
+   seam, and plain rows show no such line). No :has(). */
+.img_df39b2 {
+    border-radius: 0 8px 8px 0 !important;
 }
