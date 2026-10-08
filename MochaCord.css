@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.38
+ * @version 3.1.39
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -1875,4 +1875,24 @@ li.containerDefault_c69b6d > .list_c3cd7d {
 .listDefault__07f91 .container__394db .chipletParent__394db {
     align-self: flex-start;
     margin-top: 2.81px;
+}
+/* 3.1.39: the one member whose display name rides a custom font. Discord's
+   name-font feature tags that name's username block with dnsFont__89a31
+   chicle__89a31 (a Jellybean pick), and those metrics grow the row's strut
+   (username 28.2px against 26.14px, name line 20.06 against 18.00), so the
+   crown's middle-anchor sits on a lower strut than every plain-font row:
+   measured in the live renderer (Stable 9334 and PTB 9223, identical
+   numbers), the plain-font crowns seat their glyph path 0.55 above the name
+   span's box centre and read aligned, while this row read 1.4-1.8px low -
+   crown base bar nearly touching the seconds line (user capture 2026-10-08,
+   red arrow; pixel-weighted read of the user's own shot + the 4x CDP row
+   capture + the healthy-row calibration row SickoHours at +0.24). A chicle
+   row's crown needs the full seat, not the 3.1.37 -2px: translateY(-3.5px)
+   landed the path at span+0.31 where the plain rows read their +0.24-look -
+   within the antialias noise both weighted-pixel captures agree and the
+   seconds band regains a ~3px gap. The selector keys on the font class, so
+   a member changing his font changes the class; different fonts carry
+   different struts, extend a seat per font if anyone else picks one. */
+.listDefault__07f91 .container__394db .chicle__89a31 .vc-stafftag-voice {
+    transform: translateY(-3.5px);
 }
