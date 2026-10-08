@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.30
+ * @version 3.1.31
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -1302,8 +1302,7 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
    class prefix (contentCollapsed/contentExpanded + the contentWrapper child)
    so a Discord hash bump does not orphan the rules. The bar sits above the
    account panel row on the user panel, so no frost or fill is added here.
-   Questify's own opacity rule for the faded wrapper keeps working (opacity
-   is untouched). */
+   Opacity handling now lives in the 3.1.30 block below. */
 #app-mount [data-testid="quest-bar-container"],
 #app-mount [data-testid="quest-bar-container"] > [class*="contentWrapper"],
 #app-mount [data-testid="quest-bar-container"] [class*="contentCollapsed"],
@@ -1734,18 +1733,39 @@ body,
    mute/deafen pill; border-box at 32px keeps the fill on its own row, and a
    small row gap separates stacked users. The name/tag cluster gets more room
    before the mute, deafen and Live icons so hover additions and server tag
-   chips never crowd them. */
+   chips never crowd them.
+   3.1.31 centering pass, measured in the live renderer (CDP 9334) and in the
+   user's 1920x1080 capture: with the channel status line above (channel
+   owner view) the user row art sat ~6px high in the slot between that line
+   and the next channel's name (avatar centre 359 against a strip midpoint
+   365.5), so the row read top-heavy. 6px of top padding on the list drops
+   every row to the midpoint without changing the 36px stacked pitch. Inside
+   the row, the clan/server tag chip flowed as inline text next to the name
+   block, so its bubble landed on whatever line the inline flow picked -
+   beside the crown on line one in one row shape, beside the activity timer
+   on line two in another (4.3px / 4.6px under the row centre in two live
+   measurements). The name container becomes a flex row so the name block
+   and the chip are both row-centred children in every row shape, and the
+   loosened chip gap keeps the full tag text (the row in the user's own
+   server clipped the chip to a fading "HIF"). */
 li.containerDefault_c69b6d > .list_c3cd7d {
     padding-inline-start: 8px !important;
+    padding-top: 6px !important;
     row-gap: 4px !important;
 }
 .listDefault__07f91 .content__07f91 {
     box-sizing: border-box !important;
     height: 32px !important;
 }
+.listDefault__07f91 .container__394db {
+    display: flex !important;
+    align-items: center;
+}
 .listDefault__07f91 .content__07f91 > .icons__07f91 {
-    margin-inline-start: 6px !important;
+    margin-inline-start: 4px !important;
 }
 .listDefault__07f91 .container__394db .chipletParent__394db {
-    padding-inline-start: 6px !important;
+    padding-inline-start: 1px !important;
+    flex-shrink: 0;
+    display: flex;
 }
