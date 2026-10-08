@@ -1,5 +1,16 @@
 window.addEventListener("load", () => {
     const result = (() => {
+    /* 3.1.32: every tooltip-class family, compared against its EX class or
+       semantic matcher. The caret/pointer cases live in their own block. */
+    const TOOLTIP_IDS = new Set(['tooltip', 'mana-tooltip', 'semantic-tooltip', 'reaction', 'timeline', 'error-tooltip',
+        'tooltip-legacy-primary', 'tooltip-legacy-grey', 'tooltip-legacy-red', 'reward-tooltip', 'plugin-activity-tooltip']);
+    /* resolved static surface tokens, measured before any fixture surfaces mount */
+    const probeBg = document.createElement('div');
+    probeBg.style.cssText = 'visibility:hidden;position:absolute;';
+    document.body.appendChild(probeBg);
+    probeBg.style.backgroundColor = 'var(--bg-1)';
+    const EX = { tooltip: getComputedStyle(probeBg).backgroundColor };
+    probeBg.remove();
     const specs = [
         ['picker', 'contentWrapper__08434'], ['menu', 'menu_c1e9c4', 'menu'],
         ['tooltip', 'tooltip_fa450d'], ['profile', 'outer_c0bea0 user-profile-popout'],
@@ -67,8 +78,17 @@ window.addEventListener("load", () => {
         app.append(portal);
         const result = { id, ...describe(panel), portal: getComputedStyle(portal).willChange, animator: getComputedStyle(animator).willChange };
         results.push(result);
+        /* 3.1.32: tooltip-class pills take the static raised Mocha surface
+           (--bg-2) instead of the 76% popup fill, so their facet of the
+           contract is tone+ring with no frost. Every other popup family
+           still frosts. */
+        const tooltipFam = TOOLTIP_IDS.has(id);
         const frosted = result.blur.includes('data:image/svg+xml') || result.before.includes('data:image/svg+xml');
-        if (!frosted || result.portal !== 'auto' || result.animator !== 'auto') fail.push(result);
+        if (tooltipFam) {
+            if (result.blur !== 'none' || result.background !== EX.tooltip || result.boxShadow === 'none') fail.push(result);
+        } else {
+            if (!frosted || result.portal !== 'auto' || result.animator !== 'auto') fail.push(result);
+        }
     }
     const add = (parent, classes, id) => {
         const e = document.createElement('div');
@@ -85,9 +105,10 @@ window.addEventListener("load", () => {
     const nestedLegacyTip = add(document.getElementById('case-menu'), 'fixture-surface tooltipPrimary_c36707', 'nested-legacy-tooltip');
     nestedLegacyTip.style.cssText = 'position:absolute!important;left:10px;top:10px;width:120px!important;height:40px!important';
     const nestedLegacyStyle = describe(nestedLegacyTip);
-    /* 3.1.25: tooltips keep their own acrylic even nested in a popup; only
-       the blur is asserted here because the glass alpha depends on scope. */
-    if (!nestedLegacyStyle.blur.includes('data:image/svg+xml')) fail.push({ id: 'nested-legacy-tooltip', ...nestedLegacyStyle });
+    /* 3.1.25 then 3.1.32: tooltips keep their own surface even nested in a
+       popup; after 3.1.32 the surface is the static Mocha pill tone, not a
+       scoped frost. */
+    if (nestedLegacyStyle.blur !== 'none' || nestedLegacyStyle.background !== EX.tooltip) fail.push({ id: 'nested-legacy-tooltip', ...nestedLegacyStyle });
     /* Regression for the two-tone Options tooltip: a tooltip inside a
        container that matches the nested strip's OUTER list (voice-tile
        wrappers match popoutContainer_) must still frost — the guard
@@ -101,11 +122,29 @@ window.addEventListener("load", () => {
     app.append(tileWrap);
     for (const el of [tileTip, tileTipSemantic]) {
         const s = describe(el);
-        if (!s.blur.includes('data:image/svg+xml')) fail.push({ id: el.id, ...s });
-        /* 3.1.27: tooltip roots always carry the hairline ring so their edge
-           reads over flat dark panels where the frost itself is invisible. */
+        /* 3.1.32: static pill tone beats the nested strip everywhere, and
+           the ring still reads over flat dark panels (3.1.27). */
+        if (s.blur !== 'none' || s.background !== EX.tooltip) fail.push({ id: el.id, ...s });
         if (s.boxShadow === 'none') fail.push({ id: el.id + '-ring', ...s });
     }
+    /* 3.1.32: the mana caret (inline SVG path under every pill) and the
+       legacy triangle pointer take the same pill tone, so a fixed #181825
+       notch can never hang under a #313244 pill again. The caret host is
+       nested inside the tooltip case root so the scoped caret rule finds
+       it. */
+    const tipRoot = document.getElementById('case-tooltip');
+    const caretHost = document.createElement('div');
+    caretHost.className = 'caret__0b5f9 caret--bottom__0b5f9';
+    caretHost.innerHTML = '<svg width="16" height="8"><path d="M0 0h16L8 8z"></path></svg>';
+    tipRoot.append(caretHost);
+    const caretFill = getComputedStyle(caretHost.querySelector('path')).fill;
+    if (caretFill !== EX.tooltip) fail.push({ id: 'mana-caret-fill', fill: caretFill, expected: EX.tooltip });
+    const ptr = document.createElement('div');
+    ptr.className = 'tooltipPointer_c36707';
+    ptr.style.cssText = 'width:16px;height:8px;border-top:8px solid transparent';
+    app.append(ptr);
+    const ptrColor = getComputedStyle(ptr).borderTopColor;
+    if (ptrColor !== EX.tooltip) fail.push({ id: 'legacy-pointer-fill', fill: ptrColor, expected: EX.tooltip });
     /* 3.1.26: combo-box menus render inline inside the settings modal DOM
        (control__* under a mana modal root), which matches the nested strip's
        OUTER list via .modal_e44912 - the select guard must still frost them. */

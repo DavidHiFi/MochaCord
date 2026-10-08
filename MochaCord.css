@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.31
+ * @version 3.1.32
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -486,6 +486,21 @@ body {
        notifications take the solid Mocha base color, so they can never read
        as see-through anywhere, frost sampled or not. */
     --mochacord-acrylic-notification: var(--bg-floating);
+    /* Tooltip pills float over panels painted in the same dark family:
+       the voice deck buttons even paint solid --bg-2 (#313244, measured on
+       the live client 2026-10-08), the panels around them read the
+       --bg-floating family, and a frost over a flat same-tone backdrop has
+       nothing to differ, so depending on the surface behind, the pill
+       reads as a merged slab of the buttons it hovers (deck BetterUserTools
+       tooltip report 2026-10-08) or melts invisibly (the 3.1.27 report).
+       The fix is tone, not sampling: pills take the static raised Mocha
+       surface --bg-1 (#45475a), one step above the deck buttons
+       themselves, so the definition comes from the paint and is distinct
+       from every panel and button tone the pill can float over. Ring,
+       highlight and shadow stay; the frost is dropped from the pill root
+       because an opaque fill makes it a wasted GPU pass (the
+       notifications took this route in 3.1.29). */
+    --mochacord-acrylic-tooltip: var(--bg-1);
     /* Normalize the sampled alpha before blurring. A regular CSS blur leaves
        sharp text underneath when Discord's backdrop is translucent.
        Keep the SVG embedded because cross-origin filter references fail. */
@@ -778,18 +793,30 @@ body {
     .vc-class-highlight-tooltip,
     .vc-bactivities-controls-tooltip
 ):not(#mochacord-tooltip-guard) {
-    background: var(--mochacord-acrylic-background) !important;
-    -webkit-backdrop-filter: var(--mochacord-acrylic-filter) !important;
-    backdrop-filter: var(--mochacord-acrylic-filter) !important;
-    /* Frost over a flat dark panel is invisible: the 76% fill melts into the
-       identical background and the pill reads as fully transparent (voice
-       panel "User Settings" and call-bar "Turn On Camera" tooltips). Ring
-       every tooltip root like toasts so its edge always reads, even where
-       there is nothing behind it to blur. */
+    background: var(--mochacord-acrylic-tooltip) !important;
+    /* Static surface: sampling behind the pill is meaningless over a solid
+       fill, so the frost is switched off here, not merely overridden. */
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    /* Tone, not sampling, carries the definition over flat dark panels: a
+       76% --bg-floating fill melts into (or reads as an opaque slab over)
+       the #1e1e2e-family panels these pills float over. Ring every tooltip
+       root like toasts so its edge always reads. */
+    --tooltip-pointer-bg: var(--mochacord-acrylic-tooltip);
     border: 1px solid rgba(255, 255, 255, 0.09) !important;
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.12),
         0 4px 16px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* Mana tooltips draw their caret as an inline SVG path with a hard-coded
+   presentation fill; it must follow the pill surface it hangs from or a
+   #181825 notch shows under the #313244 pill. A presentation attribute
+   loses to any CSS declaration, so one rule covers every fill source.
+   Scoped to tooltip roots so select-field arrows, which can share the
+   caret class family, keep their own paint. */
+:is([role="tooltip"], [data-mana-component="tooltip"], [class*="tooltip_"]) [class*="caret__"] :is(svg, path) {
+    fill: var(--mochacord-acrylic-tooltip) !important;
 }
 
 /* The message hover bar keeps its glass over messages inside popups (pins,
@@ -996,12 +1023,12 @@ body {
 :is([class*="toast_"], [class*="customToast_"], [class*="errorNotificationContainer_"]) {
     color: var(--text-1);
 }
-/* Keep toast text readable and match tooltip arrows to the glass. Every
+/* Keep toast text readable and match tooltip arrows to the pills. Every
    tooltip pointer family (hash suffixes move between builds) takes the
-   acrylic, matching the body root it points at. */
+   pill surface, matching the body root it points at. */
 .tooltipPointer_c36707,
 [class*="tooltipPointer_"] {
-    border-top-color: var(--mochacord-acrylic-background) !important;
+    border-top-color: var(--mochacord-acrylic-tooltip) !important;
 }
 
 /* Notification surfaces are floating cards over app content: the native
@@ -1218,7 +1245,8 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
 #app-mount .container__133bf > .container__9293f,
 #app-mount .container_f391e3 > .container__9293f,
 #app-mount .homeWrapper__0920e > .container__9293f,
-#app-mount .container_fb64c9 > .container__9293f {
+#app-mount .container_fb64c9 > .container__9293f,
+#app-mount .headerBar__1a9ce.container__9293f {
     border-bottom-width: var(--border-thickness);
     border-bottom-style: solid;
     border-bottom-color: var(--border-subtle);
@@ -1228,7 +1256,8 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
 #app-mount .container__133bf > .container__9293f:hover,
 #app-mount .container_f391e3 > .container__9293f:hover,
 #app-mount .homeWrapper__0920e > .container__9293f:hover,
-#app-mount .container_fb64c9 > .container__9293f:hover {
+#app-mount .container_fb64c9 > .container__9293f:hover,
+#app-mount .headerBar__1a9ce.container__9293f:hover {
     border-bottom-color: var(--border-hover);
 }
 
