@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.41
+ * @version 3.1.42
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -1936,6 +1936,33 @@ li.containerDefault_c69b6d > .list_c3cd7d {
    vc-stafftag places (chat, members) are untouched. */
 .vc-stafftag-profile {
     transform: translateX(-4px);
+}
+
+/* 3.1.42 (2026-10-09): seat the voice-row right columns on the name line,
+   the same reference the 3.1.31/3.1.37/3.1.38 passes already hold for the
+   headphone icon, crown, chip and name. Live row read (stable 9334,
+   DavidHiFi's own user row with its timeCounter band): the username span
+   centres at container top + 10.5 (span y 399.9, 17.0 tall inside a
+   397.9-top container) and the pinned chip rides +10.81 per the 3.1.38
+   seat, while the stock icons__07f91 column and the VoiceVUMeters row
+   meter are both content-level flex children that centre-ride the 32px
+   content: content top + 16 = container top + 14.05, so they read ~3.5px
+   below every aligned item in the row (user capture 2026-10-09, red
+   arrows: activity icons, mute/deafen, platform indicators, meters).
+   translateY(-3.5px) lifts each column centre onto the name-line seat in
+   both callTimer shapes (centre to centre, so no height math and no
+   :has()) without moving a layout box: row pitch, avatar, name, chip and
+   crown seats are untouched. Coverage: the icons column carries the
+   activity, mute/deafen, platform and Live icons, and the plugin patch
+   appends its meter as the last content child with only
+   data-vu-meter on the root, so these two selectors hold the whole
+   right-side cluster. Bars are 18px (BAR_HEIGHT) and the icons column
+   keeps its own height, so the lift only moves paint. */
+.listDefault__07f91 .content__07f91 > .icons__07f91 {
+    transform: translateY(-3.5px);
+}
+.listDefault__07f91 .content__07f91 > [data-vu-meter] {
+    transform: translateY(-3.5px);
 }
 
 /* 3.1.41 (2026-10-09): promo speech-bubble popouts ("New: Wishlists!" shop
