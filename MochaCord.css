@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.38
+ * @version 3.1.37
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -1737,24 +1737,21 @@ body,
    the dark stage with no box, so dark artwork (dim avatars, night photos)
    sinks into the background. Two halves:
    1. The halo filter on the tile's unmasked content wrapper rains the Mocha
-      tone around the picture outline. The backdrop wrapper exists only on
-      picture tiles, which scopes the rule. This one only matches when the
-      plugin has no --vc-pfp-glow-slot marker (older plugin builds without
-      the glow settings); current plugin builds emit their own
-      --vc-pfp-glow-filter and the theme stays out of the way.
-   2. The staged clip release: the tile root and its content layer clip paint
-      to the old box edges, which cut the halo into a hard straight line once
-      the box is gone. Video tiles keep their rounded corners through the
-      video's own border-radius. Selectors stay :has()-free: the composed
-      plugin-sheet parse can silently drop :has() rules at boot (measured
-      2026-10-08 evening). */
-#app-mount div[data-selenium-video-tile][style*="--vc-pfp-hide-bg"] {
+      tone around the picture outline. This rule only matches when the plugin
+      has no --vc-pfp-glow-slot marker (older plugin builds without the glow
+      settings); current plugin builds emit their own --vc-pfp-glow-filter
+      and the theme stays out of the way.
+   2. The staged clip release: both the tile root and its content layer clip
+      paint to the old box edges, which cut the halo into a hard straight
+      line once the box is gone. Releasing both here keeps the fade whole
+      from before this plugin version carries it. */
+#app-mount div[data-selenium-video-tile][style*="--vc-pfp-hide-bg"]:has(div[role="img"]) {
     overflow: visible !important; /* halo must leave the old box edges */
 }
-#app-mount div[data-selenium-video-tile][style*="--vc-pfp-hide-bg"] [class*="content"] {
+#app-mount div[data-selenium-video-tile][style*="--vc-pfp-hide-bg"]:has(div[role="img"]) [class*="content"] {
     overflow: visible !important; /* one more clip level above the wrapper */
 }
-#app-mount div[data-selenium-video-tile]:not([style*="--vc-pfp-glow-slot"])[style*="--vc-pfp-hide-bg"] div[class*="background"] {
+#app-mount div[data-selenium-video-tile]:not([style*="--vc-pfp-glow-slot"])[style*="--vc-pfp-hide-bg"]:has(div[role="img"]) div[class*="background"] {
     filter:
         drop-shadow(0 0 14px color-mix(in srgb, var(--bg-1) 40%, transparent))
         drop-shadow(0 0 3px color-mix(in srgb, var(--bg-1) 60%, transparent))
@@ -1851,22 +1848,4 @@ li.containerDefault_c69b6d > .list_c3cd7d {
    profile) are single-line and stay stock. */
 .listDefault__07f91 .vc-stafftag-voice {
     transform: translateY(-2px);
-}
-/* 3.1.38: The server tag chip paints low in the voice rows, measured in the
-   live renderer (Stable 9334 and PTB 9223, TestCord 2.2.9): 3.1.31's
-   align-items:center centres the chip on the whole name container, and that
-   container spans the 18px name line plus the timer band the callTimer's
-   -6px margin inflates to 26.14px, so the 16px pill's centre lands 3.25px
-   under the name text's centre (pill 176.69, name 173.44) and its bottom
-   third rides down beside the in-call time, the same "down a little bit"
-   read the user reported for the tags after the crown lift. Lift the chip
-   the same transform way: 3.25px puts the pill centre on the name centre
-   (173.44, a symmetric 0.5px inset on both edges, measured identical on
-   both clients). Gate on the timer's presence so a row without the
-   callTimer band keeps stock centring, and transform moves no layout box,
-   so the 18px name line and the 36px row pitch stay untouched. The chips
-   outside the voice rows (member, message, profile) are single-line and
-   stay stock. */
-.listDefault__07f91 .container__394db:has(.timeCounter) .chipletParent__394db {
-    transform: translateY(-3.25px);
 }
