@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.39
+ * @version 3.1.40
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -1895,4 +1895,45 @@ li.containerDefault_c69b6d > .list_c3cd7d {
    different struts, extend a seat per font if anyone else picks one. */
 .listDefault__07f91 .container__394db .chicle__89a31 .vc-stafftag-voice {
     transform: translateY(-3.5px);
+}
+
+/* 3.1.40 (2026-10-09): the custom-status edit/clear pair (pencil + clear)
+   that fades in on your own profile popout and modal header. Stock ships
+   the pill root with no background at all (CSSOM ground truth: the
+   bar_b730cc.bar_b730cc rule carries only radius/flex/gap), so the two
+   icons float bare over the banner art, and the strip's inner
+   [class*="popover_"] leg would bleach any future root paint anyway: the
+   bar itself carries popover_c97e55. This bar now takes the same static
+   raised Mocha pill its sibling Edit/Clear tooltips already paint
+   (3.1.32): --bg-1 fill, hairline ring, inset highlight, soft drop
+   shadow. Static, not frosted: the pill is 26px tall, where the frost
+   pass decays (3.1.29 finding), and tone + ring carry the read over the
+   banner. Stock's per-button hover and :active fills
+   (--background-mod-normal/--background-mod-strong) keep painting on top,
+   the stock 100px radius and the opacity fade-in are untouched, and the
+   tooltip guard keeps the floating Edit/Clear tooltip labels in family.
+   The :not() id never exists; it only outranks the strip's (0,2,0)
+   important clear and any quickCss copy. */
+.bar_b730cc.popover_c97e55:not(#mochacord-status-pill-guard) {
+    background: var(--mochacord-acrylic-tooltip) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.09) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        0 4px 16px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* 3.1.40 (2026-10-09): centre the profile owner crown between the voice
+   speaker icon and the OWNER tag. Measured live on both profile surface
+   name rows (popout probe + modal probe11): the crown box ends exactly
+   where botTagRegular__82f07 begins (gap 0) while the vc-uvs speaker icon
+   leaves an 8px gap, so the crown reads glued to the tag (user report,
+   red arrows, 2026-10-09). translateX(-4px) splits the 24px dead band
+   into two 4px gaps - the crown stands equidistant from the speaker and
+   the tag, and the tag itself does not move. Profile place only: the
+   voice-list crowns keep their 3.1.37/3.1.38/3.1.39 seats, and other
+   vc-stafftag places (chat, members) are untouched. */
+.vc-stafftag-profile {
+    transform: translateX(-4px);
 }
