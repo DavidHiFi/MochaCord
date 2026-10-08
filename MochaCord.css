@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.44
+ * @version 3.1.45
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -862,6 +862,22 @@ body {
        radius of their own, which painted square acrylic corners on the
        Plugins "Show All" dropdown. */
     border-radius: var(--radius-sm, 8px) !important;
+}
+
+/* Forward To modal: its destination list is a role="listbox", so the select
+   guard above paints it as a menu panel (76% acrylic, 8px radius). Discord's
+   destination rows bleed 8px past the list content on purpose (padding
+   0 8px, margin 0 -8px) so their hover pills touch the modal's own edges —
+   with the glass panel behind them, the row avatars and checkboxes land
+   exactly on the panel edge and the first and last rows sit inside its
+   corner curves. Seat the rows on the panel: zeroing their negative inline
+   margin puts each row's hover pill on the panel border-box (row radius 8
+   concentric with the panel's) and the avatar and checkbox 8px inside it,
+   in every scroll position. Scoped to the modal shell's body list so a
+   destination-row surface rendered outside this shell keeps its stock
+   bleed. */
+[class*="bodyList__8a031"] [class*="destinationRow_"] {
+    margin-inline: 0 !important;
 }
 
 /* Inner menu surfaces stay clear so the outer menu's rounded corners read.
