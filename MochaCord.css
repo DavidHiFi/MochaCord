@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.34
+ * @version 3.1.35
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -1731,6 +1731,20 @@ body,
 }
 #app-mount [data-selenium-video-tile] .border__2f4f7 {
     border-radius: var(--vc-pfp-radius, 12px) !important;
+}
+
+/* RoundedVCPFP's hide-background switch floats the masked avatar pictures on
+   the dark stage with no box, so dark artwork (dim avatars, night photos)
+   sinks into the background. A subtree drop-shadow on the tile's unmasked
+   content wrapper trails the picture outline - mask, radius and zoom all come
+   along - because a filter on the wrapper sees the child's composited alpha,
+   something a shadow on the masked element itself could never keep. Gate on
+   the plugin's inline marker so the normal (boxed) look stays untouched. */
+#app-mount div[data-selenium-video-tile][style*="--vc-pfp-hide-bg"] div[class*="background"] {
+    filter:
+        drop-shadow(0 0 14px color-mix(in srgb, var(--bg-1) 40%, transparent))
+        drop-shadow(0 0 3px color-mix(in srgb, var(--bg-1) 60%, transparent))
+        !important; /* only author rule on this filter; guards future plugin CSS turning it off */
 }
 
 /* Known inner popup sheets share their containing glass. Keep submenus separate. */
