@@ -259,6 +259,39 @@ window.addEventListener("load", () => {
     const profileStyle = getComputedStyle(profileInner);
     const geometry = [{ id: 'profile-inner', radius: profileStyle.borderRadius, overflow: profileStyle.overflow }];
     if (profileStyle.borderRadius !== '12px' || profileStyle.overflow !== 'hidden') fail.push(geometry[0]);
+    /* 3.1.46: gradient-popover chassis at a NEVER-LISTED hash (the Boost
+       nudge shape the hash-named 3.1.41 clamp missed) still seats its
+       square interior layers on the chassis curve, while caret wrappers
+       and CTA buttons keep their own shape and the caret fill retakes the
+       opaque Mocha tone. */
+    const promoRoot = add(app, 'fixture-surface popover_z9q8w7', 'promo-rotated-chassis');
+    const promoWrap = add(promoRoot, 'popoverContentWithGradient_z9q8w7', 'promo-rotated-wrap');
+    promoWrap.style.cssText = 'position:absolute;inset:0';
+    const promoHead = add(promoWrap, 'promoHeadline_z9q8w7', 'promo-rotated-head');
+    promoHead.style.cssText = 'position:absolute;top:0;left:0;right:0;height:60px';
+    const promoBody = add(promoWrap, 'promoBody_z9q8w7', 'promo-rotated-body');
+    promoBody.style.cssText = 'position:absolute;left:0;right:0;bottom:0;height:60px';
+    const promoCta = document.createElement('button');
+    promoCta.className = 'promoCta_z9q8w7';
+    promoCta.id = 'promo-rotated-cta';
+    promoCta.textContent = 'Boost';
+    promoBody.append(promoCta);
+    const promoCaret = add(promoRoot, 'caretIcon_z9q8w7', 'promo-rotated-caret');
+    promoCaret.innerHTML = '<svg width="16" height="8"><path class="caretFill_z9q8w7" d="M0 0h16L8 8z"></path></svg>';
+    const prootR = getComputedStyle(promoRoot).borderRadius;
+    for (const el of [promoWrap, promoHead, promoBody]) {
+        const got = getComputedStyle(el).borderRadius;
+        geometry.push({ id: el.id, radius: got });
+        if (got !== prootR) fail.push({ id: el.id, radius: got, expected: prootR });
+    }
+    const promoCaretR = getComputedStyle(promoCaret).borderRadius;
+    geometry.push({ id: 'promo-rotated-caret', radius: promoCaretR });
+    if (promoCaretR === prootR) fail.push({ id: 'promo-rotated-caret', radius: promoCaretR, expected: 'not-chassis-radius' });
+    const promoCtaR = getComputedStyle(promoCta).borderRadius;
+    geometry.push({ id: 'promo-rotated-cta', radius: promoCtaR });
+    if (promoCtaR === prootR) fail.push({ id: 'promo-rotated-cta', radius: promoCtaR, expected: 'not-chassis-radius' });
+    const promoFill = getComputedStyle(promoCaret.querySelector('path')).fill;
+    if (promoFill !== expectedNotif) fail.push({ id: 'promo-rotated-caret-fill', fill: promoFill, expected: expectedNotif });
     for (const radius of [0, 12, 24]) {
         const tile = add(app, 'tile__2f4f7 tile__90dc5', 'voice-tile-' + radius);
         tile.dataset.seleniumVideoTile = 'true';

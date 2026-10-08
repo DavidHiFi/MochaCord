@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.45
+ * @version 3.1.46
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -2002,48 +2002,32 @@ li.containerDefault_c69b6d > .list_c3cd7d {
     transform: translateY(-3.5px);
 }
 
-/* 3.1.41 (2026-10-09): promo speech-bubble popouts ("New: Wishlists!" shop
-   promo family) no longer paint square corner notches past the chassis
-   curve. User capture 2026-10-09 (red arrow at the bottom-right notch).
-   The chassis paints acrylic through the popup scope, but the chassis'
-   interior layers have no radius of their own in the shop's promo
-   stylesheet (live read: .popoverContentWithGradient__2ee1b and
-   .caretIcon__2ee1b variant rules are EMPTY), so any interior layer that
-   covers the chassis box read as an 8x8 square surface notch at every
-   radius curve. Three guards:
-   1. interior layers inherit the chassis' own curve (caret entries, svg
-      shapes and the shaped CTA/close buttons keep their own rounding);
-   2. the promo's on-edge caret SVG stops reading the hard token
-      (--background-surface-high resolves #181825 = "$mantle" under this
-      theme while the chassis glass reads as ~$base) and takes the same
-      opaque Mocha surface tone the chassis glass settles at, so the
-      bubble and its notch stop reading as two different surfaces;
-   3. the chassis copy stays on the light text tokens, so the headline
-      ("New: Wishlists!"), the body copy and footer notes never darken
-      into the acrylic (user report: "black text in that already dark
-      element ... make it more easier to see").
-   No :has(): TestCord's composed-sheet composer drops those rules at
-   boot (3.1.36 finding). */
-:is(
-    .popover_d6f39b, .popoverGradientWrapper_d6f39b, .popoverContentWithGradient_d6f39b,
-    .popoverGradientWrapper__2ee1b, .popoverContentWithGradient__2ee1b
-) :is(
+/* 3.1.46 (2026-10-09): gradient-popover chassis at ANY hash. The server
+   Boost nudge ("You're almost there! ... Boost this Server") rides the same
+   WithGradient chassis family the 3.1.41 shop-promo fix covered, but ships a
+   different class hash, so the hash-named 3.1.41 clamp never bit it. Measured
+   on the user capture: both bottom corners show the rounded chassis curve
+   with square material poking outside it (red arrow at the bottom-left
+   notch), and the top edge is a sharp 90° line with no curve at all — the
+   square full-bleed gradient header covers the chassis' own top rounding,
+   which reads as the top being "cut off". The clamp, caret retone and copy
+   pinning now match the chassis family by substring ([class*="popover_"]
+   covers popover_, popoverGradientWrapper_, popoverContentWithGradient_ and
+   caretIcon_ at any hash, including the two 3.1.41 hashes) so the next hash
+   rotation can't orphan the rules again. Same exclusions as 3.1.41: caret
+   wrappers, svg shapes and the shaped CTA/close buttons keep their own
+   rounding. Reaction hover bars (popoverReactionHoverBar_) and Popover-
+   capital roots don't contain the lowercase "popover_" substring and are
+   untouched. No :has(). */
+:is([class*="popover_"]) :is(
     div, span, p, h1, h2, h3, h4, h5, h6
 ):not([class*="caret"]):not([class*="button"]):not([class*="Button"]):not(svg):not(svg *):not(#mochacord-promo-clamp) {
     border-radius: inherit;
 }
-:is(
-    .caretIcon_d6f39b .caretFill_d6f39b,
-    .caretIcon_fa450d .caretFill_fa450d,
-    .caretIcon__2ee1b .caretFill__2ee1b,
-    .caretIcon__2ee1b .caretFill_d6f39b
-) {
+[class*="caretIcon_"] [class*="caretFill_"] {
     fill: var(--mochacord-acrylic-notification) !important;
 }
-:is(
-    .popover_d6f39b, .popoverGradientWrapper_d6f39b, .popoverContentWithGradient_d6f39b,
-    .popoverGradientWrapper__2ee1b, .popoverContentWithGradient__2ee1b
-) {
+:is([class*="popover_"]) {
     --white: var(--text-1);
     --white-500: var(--text-1);
     --text-0: var(--text-1);
