@@ -1849,21 +1849,30 @@ li.containerDefault_c69b6d > .list_c3cd7d {
 .listDefault__07f91 .vc-stafftag-voice {
     transform: translateY(-2px);
 }
-/* 3.1.38: The server tag chip paints low in the voice rows, measured in the
-   live renderer (Stable 9334 and PTB 9223, TestCord 2.2.9): 3.1.31's
-   align-items:center centres the chip on the whole name container, and that
-   container spans the 18px name line plus the timer band the callTimer's
-   -6px margin inflates to 26.14px, so the 16px pill's centre lands 3.25px
-   under the name text's centre (pill 176.69, name 173.44) and its bottom
-   third rides down beside the in-call time, the same "down a little bit"
-   read the user reported for the tags after the crown lift. Lift the chip
-   the same transform way: 3.25px puts the pill centre on the name centre
-   (173.44, a symmetric 0.5px inset on both edges, measured identical on
-   both clients). Gate on the timer's presence so a row without the
-   callTimer band keeps stock centring, and transform moves no layout box,
-   so the 18px name line and the 36px row pitch stay untouched. The chips
-   outside the voice rows (member, message, profile) are single-line and
-   stay stock. */
-.listDefault__07f91 .container__394db:has(.timeCounter) .chipletParent__394db {
-    transform: translateY(-3.25px);
+/* 3.1.38 (fix): boot-safe rephrase of the same alignment, measured live
+   (Stable 9334 and PTB 9223, TestCord 2.2.9). TestCord's managed-sheet
+   composer drops :has()-bearing rules from the theme at boot (the glow
+   thread's 21:42 relaunch finding: 149 of 155 rules in the cascade vs the
+   same bytes parsed standalone), so the timer-presence gate has to go, and
+   with it the transform: the chip's seat has to track the name line in both
+   callTimer modes (text band when show-without-hover is on, bare 18px name
+   line when it is off). Pinning does that without conditioning on the
+   timer at all: the chip stops centre-riding the 28.14px container and
+   flex-starts from the container's content top at the pill's name-line
+   seat, content top + 2.81px - measured chip top 498.73 on a 497.94
+   username on both clients, pill centre 506.42 against the name span
+   centre 506.44, and 578.42 against 578.44 on the second row - which seats
+   the same way with the timer (name line 18px + timer band 14.14px pulled
+   up by the -6px margin) and without it (bare 18px line), and the empty
+   chips (height 0) gain no footprint. Margin moves no layout box, so the
+   row pitch stays untouched. The same live test shows one styled row (a
+   member whose display name rides a custom name font) carrying a taller
+   strut of its own: his chip seats 0.5px wide there, and his CrownTag sits
+   1.81px under the span box centre because the badge middle-aligns to that
+   strut - a name-font metric effect, not part of this pass. Chips outside
+   the voice rows (member, message, profile) are single-line and stay
+   stock. */
+.listDefault__07f91 .container__394db .chipletParent__394db {
+    align-self: flex-start;
+    margin-top: 2.81px;
 }
