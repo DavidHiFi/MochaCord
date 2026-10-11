@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.51
+ * @version 3.1.52
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -2128,4 +2128,29 @@ li.containerDefault_c69b6d > .list_c3cd7d {
    same way. */
 #app-mount [class*="numberBadge"] {
     padding-top: 2.5px !important;
+}
+
+/* 3.1.52 (2026-10-11): Plugin Health nav fits its column on one line. The
+   7-tab nav wrapped its labels to two lines and Guide overhung the section
+   hairline: stock .vc-health-nav-item ships padding 0.5rem 1rem, font-size
+   0.9rem and no white-space nowrap, and the theme's global FiraCode Nerd
+   Font (monospace, ~0.615em per char) makes the 88-char label set measure
+   779.8px of text at 14.4px alone inside the 696px nav column (hairline
+   x 739..1434 on the user's captures), so flex items shrank to
+   min-content, each label wrapped internally and the row overflowed the
+   nav box (Guide text reached ~1455, past the hairline end 1434). At 11px
+   FiraCode 600 the labels measure 595.7px total + 7x8px padding + 6x5px
+   gap = 681.7px <= 696px measured column (slack 14.3px), so every tab
+   sits on one line; the #app-mount prefix ((1,1,0)/(1,2,0)) beats stock
+   (0,1,0) regardless of lazy style-injection order, and overflow-x:auto
+   is the safety net for narrower windows. No :has(). */
+#app-mount .vc-health-nav {
+    gap: 5px;
+    overflow-x: auto;
+}
+#app-mount .vc-health-nav .vc-health-nav-item {
+    flex-shrink: 0;
+    padding: 6px 4px;
+    font-size: 11px;
+    white-space: nowrap;
 }
