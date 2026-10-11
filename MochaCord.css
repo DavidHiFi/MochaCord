@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.46
+ * @version 3.1.47
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -1441,6 +1441,25 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
 #app-mount [data-testid="quest-bar-container"] div:has(> div:has(> [class*="videoQuestPreviewCont"])) {
     height: auto !important;
     overflow: visible !important;
+}
+
+/* 3.1.47: the expanded promo keeps Discord's collapsed-phase overlay mounted
+   as its first child — an absolute full-cover layer (inline pointer-events:
+   none) holding the parked reward ring and a second copy of the title and
+   subtitle. Stock crossfades this layer out as questAcceptedContent fades
+   in; Questify's forced mount parks its springs at opacity 1, so on the
+   3.1.30 hover swap the overlay paints its ring and duplicated copy straight
+   over the promo's eyebrow and heading (measured on the real QuestBar via
+   CDP 9334: duplicate title at the row top over the "Available until"
+   eyebrow, doubled subtitle beside it). The video preview lives in the
+   second child's questAcceptedContent, never in this overlay, so dropping
+   the overlay costs nothing stock renders in the end state anyway. A hint
+   rule backs the overlay up by class in case Discord reshapes it. */
+#app-mount [data-testid="quest-bar-container"] [class*="contentExpanded"] > div[style*="pointer-events: none"] {
+    display: none !important;
+}
+#app-mount [data-testid="quest-bar-container"] [class*="contentExpanded"] [class*="questProgressHint"]:not([class*="questAcceptedContent"] [class*="questProgressHint"]) {
+    display: none !important;
 }
 
 /* The bar's title and description use Discord's --white (white over the quest
