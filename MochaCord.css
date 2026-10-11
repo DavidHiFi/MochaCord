@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.49
+ * @version 3.1.50
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -1268,6 +1268,25 @@ body {
     background-color: transparent !important;
 }
 
+/* The call panel border. Discord's midnight call rule sets the top edge to 1px
+   at specificity 0,3,0, which beats midnight's panel border (0,1,0), so the
+   top looked hairline thin next to the other edges at --border-thickness. With
+   the chat open, the same rule drops the inline-end edge to 1px and keeps it at
+   the rest colour on hover. Restore both edges at the panel's own width and
+   colours. */
+#app-mount .callContainer_cb9592 {
+    border-top: var(--border-thickness) solid var(--border-subtle);
+}
+#app-mount .callContainer_cb9592:hover {
+    border-top-color: var(--border-hover);
+}
+#app-mount .wrapper_cb9592.sidebarOpen_cb9592 .callContainer_cb9592 {
+    border-inline-end: var(--border-thickness) solid var(--border-subtle);
+}
+#app-mount .wrapper_cb9592.sidebarOpen_cb9592 .callContainer_cb9592:hover {
+    border-inline-end-color: var(--border-hover);
+}
+
 /* MochaCord header margin repair. Midnight's #app-mount titlebar rule also
    matches the row inside the bordered header. Keep spacing on the outer panel. */
 #app-mount .subtitleContainer_f75fb0 > .title_f75fb0.container__9293f {
@@ -1334,6 +1353,17 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
     box-shadow: none !important;
+}
+
+/* The image hover toolbar (edit, remove, download) and the image favorite star
+   fill with --background-base-low, which MochaCord leaves translucent, so the
+   picture showed straight through them. Give both the acrylic fill and blur of
+   the other floating controls. */
+[class*="hoverButtonGroup"],
+[class*="gifFavoriteButton"] {
+    background: var(--mochacord-acrylic-background) !important;
+    -webkit-backdrop-filter: var(--mochacord-acrylic-filter) !important;
+    backdrop-filter: var(--mochacord-acrylic-filter) !important;
 }
 
 /* The compact search import leaves Discord's 244px flex basis in place.
