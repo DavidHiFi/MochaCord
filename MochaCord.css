@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.47
+ * @version 3.1.48
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -98,12 +98,12 @@ body {
     --window-control-size: 14px;
 
     /* dms button */
-    --custom-dms-icon: hide;
+    --custom-dms-icon: off;
     --dms-icon-svg-url: url('https://refact0r.github.io/midnight-discord/assets/Font_Awesome_5_solid_moon.svg');
     --dms-icon-svg-size: 90%;
     --dms-icon-color-before: var(--icon-subtle);
     --dms-icon-color-after: var(--white);
-    --custom-dms-background: image;
+    --custom-dms-background: ;
     --dms-background-image-url: url('https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/logos/exports/1544x1544_circle.png');
     --dms-background-image-size: cover;
     --dms-background-color: linear-gradient(70deg, var(--blue-2), var(--purple-2), var(--red-2));
@@ -2072,4 +2072,17 @@ li.containerDefault_c69b6d > .list_c3cd7d {
    seam, and plain rows show no such line). No :has(). */
 .img_df39b2 {
     border-radius: 0 8px 8px 0 !important;
+}
+
+/* 3.1.48: number badges render their digit high in the circle. The badge
+   flex-centres the text box exactly (live read: text box centre 61.505 in a
+   badge spanning 53.5..69.5), but Fira Code's line box puts the
+   cap-to-baseline ink about 1.25px above the badge centre (measured on the
+   live pending "7" badge on the home button via CDP 9334: ink bbox centre
+   y 72.75 css against badge centre 74; horizontal offset 0.25px, subpixel).
+   Padding-top re-centres the ink inside the border box without moving the
+   circle; the badge keeps its 16px shape and any digit count centres the
+   same way. */
+#app-mount [class*="numberBadge"] {
+    padding-top: 2.5px !important;
 }
