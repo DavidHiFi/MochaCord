@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.52
+ * @version 3.1.53
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -2153,4 +2153,31 @@ li.containerDefault_c69b6d > .list_c3cd7d {
     padding: 6px 4px;
     font-size: 11px;
     white-space: nowrap;
+}
+
+/* 3.1.53 (2026-10-13, user report: "1 Mutual Serve" red-arrowed in the user
+   profile modal): the modal v2 tab bar clipped its last label and stopped its
+   hairline with it. The bar is a scroller (.tabListScroller__37bfc,
+   overflow-x scroll) whose 456px box leaves a 432px content width; the
+   theme's global FiraCode Nerd Font renders the labels (Discord's own
+   text-sm/semibold wrapper, 14px/600) at a uniform 8.62px advance, so the
+   45-char label set measures 387.7px of text + 3x24px stock margins =
+   459.7px and overflows the 432px box by ~28px - stock gg-sans is
+   proportional and fits. The last tab then dies past the scroller's clip
+   edge (x 1392 live) and the row's border-bottom hairline stops with it.
+   13px labels measure 8.0px/char: this user's row is 396px in the box and
+   the worst label set (47 chars, e.g. "No Mutual Friends" + "24 Mutual
+   Servers") is 412px, so the row fits without scrolling and the hairline
+   spans the full bar again. Scoped to the modal's own semantic root
+   (.user-profile-modal-v2) with role selectors and an itemText_ substring,
+   so Discord's per-build hash rotation cannot orphan it; no :has(), and the
+   (1,4,0) specificity beats stock (0,1,0)/(0,3,0) regardless of lazy
+   style-injection order. Measured live with the real modal
+   (openUserProfileModal, Nimai_HK): row scrollWidth 432 == clientWidth 432,
+   last tab right 1356 vs clip 1392, text advance 8.0px/char. */
+#app-mount .user-profile-modal-v2 [role="tablist"] [role="tab"] [class*="itemText_"] {
+    font-size: 13px;
+}
+#app-mount .user-profile-modal-v2 [role="tablist"] [role="tab"] + [role="tab"] {
+    margin-left: 12px;
 }
