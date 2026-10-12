@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.53
+ * @version 3.1.54
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -2155,29 +2155,24 @@ li.containerDefault_c69b6d > .list_c3cd7d {
     white-space: nowrap;
 }
 
-/* 3.1.53 (2026-10-13, user report: "1 Mutual Serve" red-arrowed in the user
-   profile modal): the modal v2 tab bar clipped its last label and stopped its
-   hairline with it. The bar is a scroller (.tabListScroller__37bfc,
-   overflow-x scroll) whose 456px box leaves a 432px content width; the
-   theme's global FiraCode Nerd Font renders the labels (Discord's own
-   text-sm/semibold wrapper, 14px/600) at a uniform 8.62px advance, so the
-   45-char label set measures 387.7px of text + 3x24px stock margins =
-   459.7px and overflows the 432px box by ~28px - stock gg-sans is
-   proportional and fits. The last tab then dies past the scroller's clip
-   edge (x 1392 live) and the row's border-bottom hairline stops with it.
-   13px labels measure 8.0px/char: this user's row is 396px in the box and
-   the worst label set (47 chars, e.g. "No Mutual Friends" + "24 Mutual
-   Servers") is 412px, so the row fits without scrolling and the hairline
-   spans the full bar again. Scoped to the modal's own semantic root
-   (.user-profile-modal-v2) with role selectors and an itemText_ substring,
-   so Discord's per-build hash rotation cannot orphan it; no :has(), and the
-   (1,4,0) specificity beats stock (0,1,0)/(0,3,0) regardless of lazy
-   style-injection order. Measured live with the real modal
-   (openUserProfileModal, Nimai_HK): row scrollWidth 432 == clientWidth 432,
-   last tab right 1356 vs clip 1392, text advance 8.0px/char. */
-#app-mount .user-profile-modal-v2 [role="tablist"] [role="tab"] [class*="itemText_"] {
-    font-size: 13px;
+/* 3.1.54 (2026-10-13, user follow-up on 3.1.53: "a little bit too small now,
+   they're too close together - get that sweet spot so it's perfectly fitting
+   with that gray line underneath"): stock-size labels, spread to the
+   hairline. 3.1.53's 13px/12px fit but read cramped and left the line
+   trailing empty; the bar has a fixed 432px content box (456px scroller less
+   its 4px/20px padding) and the widest real label set (Board + Activity +
+   two 17-char mutual labels = 47 chars) is 405.0px at the stock 14px
+   text-sm/semibold FiraCode advance of 8.62px/char, so the row always fits
+   without shrinking the text at all. justify-content: space-between
+   distributes the leftover 0-27px as even gaps (the stock 24px adjacent
+   margin is zeroed so only distributed space separates tabs): 14.8px gaps on
+   the reported profile (last tab right == hairline end x 1392), 9px on the
+   47-char worst case, and the row cannot overflow into the scroller clip
+   again. Same scoping as 3.1.53 (.user-profile-modal-v2 semantic root, role
+   selectors, no :has(), (1,2,0)/(1,3,0) beats stock (0,1,0)/(0,3,0)). */
+#app-mount .user-profile-modal-v2 [role="tablist"] {
+    justify-content: space-between;
 }
 #app-mount .user-profile-modal-v2 [role="tablist"] [role="tab"] + [role="tab"] {
-    margin-left: 12px;
+    margin-left: 0;
 }
