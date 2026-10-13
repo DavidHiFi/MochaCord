@@ -1,0 +1,1259 @@
+/**
+ * @name MochaCord
+ * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
+ * @author david_hifi
+ * @version 3.1.9
+ * @website https://github.com/refact0r/midnight-discord
+ * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
+ * @authorId 1553713171938938891
+*/
+
+/* import theme modules */
+@import url('https://refact0r.github.io/midnight-discord/build/midnight.css');
+@import url(https://davart154.github.io/Themes/Snippets/Mana%20Page%20Switcher/ManaPageSwitcherSource.css);
+@import url("https://raw.githubusercontent.com/yiruzu/vencord-snippets/refs/heads/main/snippets/BubbleUsernames/import.css");
+
+/* FiraCode Nerd Font - served from your local Windows install, zero network cost.
+   You can disable/remove the Google Font Loader plugin: it is no longer needed. */
+@font-face {
+    font-family: "FiraCode Nerd Font";
+    src: local("FiraCode Nerd Font Light"), local("FiraCodeNerdFont-Light");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "FiraCode Nerd Font";
+    src: local("FiraCode Nerd Font"), local("FiraCode Nerd Font Reg"), local("FiraCodeNerdFont-Regular");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "FiraCode Nerd Font";
+    src: local("FiraCode Nerd Font Med"), local("FiraCodeNerdFont-Medium");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "FiraCode Nerd Font";
+    src: local("FiraCode Nerd Font SemBd"), local("FiraCodeNerdFont-SemiBold");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "FiraCode Nerd Font";
+    src: local("FiraCode Nerd Font Bold"), local("FiraCodeNerdFont-Bold");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Keep this lock on body and #app-mount. Midnight redeclares Discord's font
+   variables on body, so a :root-only override is inherited too early and loses. */
+:root,
+body,
+#app-mount {
+    --font: "FiraCode Nerd Font" !important;
+    --code-font: "FiraCode Nerd Font Mono" !important;
+    --font-primary: "FiraCode Nerd Font", "Fira Code", monospace !important;
+    --font-display: "FiraCode Nerd Font", "Fira Code", monospace !important;
+    --font-headline: "FiraCode Nerd Font", "Fira Code", monospace !important;
+    --font-code: "FiraCode Nerd Font Mono", "FiraCode Nerd Font", "Fira Code", monospace !important;
+    font-family: "FiraCode Nerd Font", "Fira Code", monospace !important;
+}
+
+:root {
+    --gDM-online: linear-gradient(to right, rgb(68, 105, 68), transparent);
+    --gDM-offline: linear-gradient(to right, rgb(66, 66, 66), transparent);
+    --gDM-dnd: linear-gradient(to right, rgb(130, 70, 70), transparent);
+    --gDM-idle: linear-gradient(to right, rgb(135, 105, 75), transparent);
+    --gDM-streaming: linear-gradient(to right, rgb(63, 33, 88), transparent);
+    --gDM-border-radius: 12px;
+}
+
+body {
+    /* sizes */
+    --gap: 15px;
+    --divider-thickness: 4px;
+    --border-thickness: 2.5px;
+
+    /* animations */
+    --animations: off;
+    --list-item-transition: 0.2s ease;
+    --dms-icon-svg-transition: 0.4s ease;
+    --border-hover-transition: 0.2s ease;
+
+    /* top bar */
+    --top-bar-height: 28px;
+    --top-bar-button-position: off;
+    --top-bar-title-position: off;
+    --subtle-top-bar-title: off;
+
+    /* window controls */
+    --custom-window-controls: on;
+    --window-control-size: 14px;
+
+    /* dms button */
+    --custom-dms-icon: hide;
+    --dms-icon-svg-url: url('https://refact0r.github.io/midnight-discord/assets/Font_Awesome_5_solid_moon.svg');
+    --dms-icon-svg-size: 90%;
+    --dms-icon-color-before: var(--icon-subtle);
+    --dms-icon-color-after: var(--white);
+    --custom-dms-background: image;
+    --dms-background-image-url: url('https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/logos/exports/1544x1544_circle.png');
+    --dms-background-image-size: cover;
+    --dms-background-color: linear-gradient(70deg, var(--blue-2), var(--purple-2), var(--red-2));
+
+    /* background image */
+    --background-image: off;
+    --background-image-url: none;
+
+    /* transparency/blur */
+    --transparency-tweaks: on;
+    --remove-bg-layer: on;
+    --panel-blur: on;
+    --blur-amount: 20px;
+    --bg-floating: #1e1e2e;
+
+    /* chatbar */
+    --custom-chatbar: separated;
+    --chatbar-height: 56px;
+
+    /* other */
+    --small-user-panel: on;
+}
+
+/* colors */
+:root {
+    --colors: on;
+
+    /* text */
+    --text-0: var(--bg-3);
+    --text-1: hsl(226, 64%, 95%);
+    --text-2: #cdd6f4;
+    --text-3: #bac2de;
+    --text-4: #7f849c;
+    --text-5: #585b70;
+
+    /* backgrounds */
+    --bg-1: #45475a;
+    --bg-2: #313244;
+    --bg-3: #181825;
+    --bg-4: #1e1e2e75;
+    --hover: hsla(235, 15%, 53%, 0.1);
+    --active: hsla(235, 15%, 53%, 0.2);
+    --active-2: hsla(235, 15%, 53%, 0.3);
+    --message-hover: hsla(235, 0%, 0%, 0.1);
+
+    /* accent (Blue) */
+    --accent-1: var(--blue-1);
+    --accent-2: var(--blue-2);
+    --accent-3: var(--blue-3);
+    --accent-4: var(--blue-4);
+    --accent-5: var(--blue-5);
+    --accent-new: var(--accent-2);
+    --mention: linear-gradient(to right, color-mix(in hsl, var(--accent-2), transparent 90%) 40%, transparent);
+    --mention-hover: linear-gradient(to right, color-mix(in hsl, var(--accent-2), transparent 95%) 40%, transparent);
+    --reply: linear-gradient(to right, color-mix(in hsl, var(--text-3), transparent 90%) 40%, transparent);
+    --reply-hover: linear-gradient(to right, color-mix(in hsl, var(--text-3), transparent 95%) 40%, transparent);
+
+    /* status */
+    --online: var(--green-2);
+    --dnd: var(--red-2);
+    --idle: var(--yellow-2);
+    --streaming: var(--purple-2);
+    --offline: var(--text-4);
+
+    /* borders */
+    --border-light: var(--hover);
+    --border: var(--active);
+    --border-hover: #89B4FA;
+    --button-border: hsl(235, 0%, 100%, 0.1);
+
+    /* base colors */
+    --red-1: hsl(343deg, 81%, 80%);
+    --red-2: hsl(343deg, 81%, 75%);
+    --red-3: hsl(343deg, 81%, 75%);
+    --red-4: hsl(343deg, 81%, 70%);
+    --red-5: hsl(343deg, 81%, 65%);
+
+    --green-1: hsl(115deg, 54%, 81%);
+    --green-2: hsl(115deg, 54%, 76%);
+    --green-3: hsl(115deg, 54%, 76%);
+    --green-4: hsl(115deg, 54%, 71%);
+    --green-5: hsl(115deg, 54%, 66%);
+
+    --blue-1: hsl(217deg, 92%, 86%);
+    --blue-2: hsl(217deg, 92%, 76%);
+    --blue-3: hsl(217deg, 92%, 76%);
+    --blue-4: hsl(217deg, 92%, 71%);
+    --blue-5: hsl(217deg, 92%, 66%);
+
+    --yellow-1: hsl(41deg, 86%, 88%);
+    --yellow-2: hsl(41deg, 86%, 83%);
+    --yellow-3: hsl(41deg, 86%, 83%);
+    --yellow-4: hsl(41deg, 86%, 78%);
+    --yellow-5: hsl(41deg, 86%, 73%);
+
+    --purple-1: hsl(267deg, 84%, 86%);
+    --purple-2: hsl(267deg, 84%, 81%);
+    --purple-3: hsl(267deg, 84%, 81%);
+    --purple-4: hsl(267deg, 84%, 76%);
+    --purple-5: hsl(267deg, 84%, 71%);
+}
+
+/* Reorder expression picker buttons (GIF | Sticker | Emoji) */
+.expression-picker-chat-input-button:has(> [aria-label="Add Emoji"]) {
+    order: 3 !important;
+    ~ div { order: 2; }
+}
+.expression-picker-chat-input-button:has(> [aria-label="Open GIF picker"]) {
+    order: 1 !important;
+    ~ div { order: 3; }
+}
+
+/* Profile bio textarea auto-height */
+.bioTextArea__6a919 {
+    height: max-content;
+}
+
+/* Keep Discord's measured popup position and size. The expression picker
+   owns its glass, clipping and scrolling, not the full-screen portal. */
+.contentWrapper__08434 {
+    min-width: 0;
+    max-width: 100%;
+    max-height: 100%;
+    grid-template-rows: auto minmax(0, 1fr);
+    overflow: hidden;
+}
+.positionContainerOnlyEmoji__08434 .contentWrapper__08434 {
+    grid-template-rows: minmax(0, 1fr);
+}
+.drawerSizingWrapper__08434 {
+    min-width: 0;
+    max-width: 100%;
+    max-height: 100%;
+}
+.nav__08434 {
+    min-width: 0;
+}
+.navList__08434 {
+    min-width: 0;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+.contentWrapper__08434 #gif-transfer-buttons {
+    flex: 1 0 100%;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    box-sizing: border-box;
+    min-width: 0;
+    max-width: 100%;
+    margin-left: 0;
+    padding-right: 0;
+}
+.contentWrapper__08434 > :not(.nav__08434) {
+    min-width: 0;
+    min-height: 0;
+    max-width: 100%;
+}
+.contentWrapper__08434 :is(.container_fed6d3, .wrapper__14245, .emojiPicker_c0e32c) {
+    min-width: 0;
+    min-height: 0;
+    max-width: 100%;
+    width: 100%;
+}
+.contentWrapper__08434 .emojiPicker_c0e32c {
+    grid-template-columns: 48px minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+/* Hide voice settings menu buttons next to mute/deafen + tighten gap */
+div[class*="-micButtonParent"] button[role="switch"],
+div[class^="audioButtonParent__"] button[role="switch"] {
+    border-radius: var(--radius-sm) !important;
+    & ~ button { display: none; }
+}
+div.container__37e49 > div.buttons__37e49 {
+    gap: 1px;
+}
+
+/* Message attachment icon container styling */
+.iconContainer__2ea32 {
+    opacity: 0.6;
+    background: rgba(0, 0, 0, 0.6) !important;
+    border-radius: 100% !important;
+    width: 25px !important;
+    height: 25px !important;
+    min-width: 25px !important;
+    min-height: 25px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+}
+/* Scale the complete glyph around its center, including multi-path icons. */
+.iconContainer__2ea32 svg {
+    display: block;
+    flex-shrink: 0;
+    transform: scale(0.75) !important;
+    transform-origin: center;
+}
+
+/* ===== Custom Window Controls ===== */
+@property --custom-window-controls {
+    syntax: 'off | on';
+    inherits: false;
+    initial-value: on;
+}
+
+@container body style(--custom-window-controls: on) {
+    .winButtons_c38106 {
+        gap: 0;
+        padding-right: calc(var(--gap) - (var(--window-control-size) / 2) + 1px);
+    }
+    .winButtons_c38106::before {
+        margin-right: calc(var(--custom-app-top-bar-height) / 4);
+    }
+    .winButton_c38106 > svg {
+        display: none;
+    }
+    .winButton_c38106 {
+        background: none !important;
+        width: calc(var(--window-control-size) * 2);
+        height: var(--custom-app-top-bar-height);
+    }
+    .winButton_c38106::after {
+        display: block;
+        content: '';
+        height: var(--window-control-size);
+        width: var(--window-control-size);
+        border-radius: 50%;
+        transition: box-shadow 0.5s ease;
+    }
+
+    .winButtonClose_c38106::after { background-color: var(--dnd) !important; }
+    .winButtonClose_c38106:hover::after { box-shadow: 0 0 20px 6px var(--dnd); }
+
+    .winButtonMinMax_c38106:nth-child(1)::after { background-color: var(--idle) !important; }
+    .winButtonMinMax_c38106:nth-child(1):hover::after { box-shadow: 0 0 20px 6px var(--idle); }
+
+    .winButtonMinMax_c38106:nth-child(2)::after { background-color: var(--online) !important; }
+    .winButtonMinMax_c38106:nth-child(2):hover::after { box-shadow: 0 0 20px 6px var(--online); }
+
+    .winButton_c38106:hover::after { filter: none; }
+    .winButton_c38106:active::after { transform: scale(0.9); }
+}
+
+@container body style(--custom-window-controls: off) and style(--top-bar-button-position: titlebar) {
+    .visual-refresh .winButton_c38106 {
+        width: calc(var(--window-control-size) * 2);
+        height: calc(var(--window-control-size) * 2);
+        border-radius: 0 !important;
+    }
+    .visual-refresh .winButtons_c38106 {
+        gap: 0 !important;
+    }
+}
+
+/* ===== Notifications Button (top of server list) ===== */
+.vc-ranb-button {
+    margin: 0 var(--space-md);
+    display: flex;
+    position: relative;
+    width: var(--guildbar-avatar-size);
+    height: var(--guildbar-avatar-size);
+    min-height: 40px;
+    max-height: 40px !important;
+    max-width: 40px !important;
+    padding: 2px;
+    background-color: var(--background-mod-subtle);
+    border: none;
+    border-radius: 12px;
+    text-decoration: none !important;
+    font-size: 0;
+    transition: scale .15s ease-out, background-color .15s ease-out, color .15s ease-out;
+    left: -3px;
+
+    &::after {
+        content: "";
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        mask-position: center;
+        mask-size: 24px 24px;
+        mask-repeat: no-repeat;
+        mask-image: url("data:image/svg+xml,%3Csvg%20x%3D%220%22%20y%3D%220%22%20class%3D%22icon__9293f%22%20aria-hidden%3D%22true%22%20role%3D%22img%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22none%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23D8D8DB%22%20d%3D%22M9.7%202.89c.18-.07.32-.24.37-.43a2%202%200%200%201%203.86%200c.05.2.19.36.38.43A7%207%200%200%201%2019%209.5v2.09c0%20.12.05.24.13.33l1.1%201.22a3%203%200%200%201%20.77%202.01v.28c0%20.67-.34%201.29-.95%201.56-1.31.6-4%201.51-8.05%201.51-4.05%200-6.74-.91-8.05-1.5-.61-.28-.95-.9-.95-1.57v-.28a3%203%200%200%201%20.77-2l1.1-1.23a.5.5%200%200%200%20.13-.33V9.5a7%207%200%200%201%204.7-6.61ZM9.18%2019.84A.16.16%200%200%200%209%2020a3%203%200%201%200%206%200c0-.1-.09-.17-.18-.16a24.86%2024.86%200%200%201-5.64%200Z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E");
+        background-color: #D8D8DB;
+    }
+
+    &:hover {
+        background: var(--brand-500);
+        &::after {
+            background-color: #ffffff;
+        }
+    }
+}
+
+/* ===== Fix toggle switch bounding box (post Discord update) ===== */
+/* Scoped to real wrapper elements (was `*`): identical fix, far cheaper —
+   a universal :has() forces the browser to re-test every DOM node on each mutation. */
+:is(div, label, li, span):has(> input[type="checkbox"][role="switch"]) {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+input[type="checkbox"][role="switch"] {
+    border: none !important;
+    outline: none !important;
+}
+
+/* Shift back/forward nav arrows right to align with server list */
+.backForwardButtons__63abb {
+    margin-left: 14px;
+}
+
+/* Force namestyles (Discord Nitro + ShowMeYourName plugin) to white */
+[class*="container_dfb989"],
+[class*="innerContainer_dfb989"],
+.smyn-container,
+[class*="smyn-name"],
+.smyn-name,
+.smyn-first-name,
+.smyn-last-name {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+/* ===== VoiceButtons plugin recolor (Catppuccin Mocha) ===== */
+.vc-btn-base.vc-btn-secondary {
+    background-color: color-mix(in srgb, var(--blue-2) 90%, transparent) !important;
+}
+.vc-btn-base.vc-btn-secondary:hover {
+    background-color: var(--blue-1) !important;
+}
+.vc-btn-base.vc-btn-secondary svg path {
+    fill: var(--bg-1) !important;
+}
+
+.sidebarRegion__60457 {/*Left*/
+max-width: fit-content !important; 
+}
+.contentColumn_dc7d36 { /*Right*/
+    max-width: unset;
+}
+.standardSidebarView__1129a { /*Top*/
+top: 0px !important;
+}
+.sidebar__9e3e2 { /*Sidebar Top*/
+padding-top: 2em;
+}
+.avatar__6c108 { /*Fix Avatar*/
+top: 215px;
+}
+.bannerSVGWrapper__3e7b0>mask>circle { /*fix the background circle*/
+    r: 19.701;
+    cy: 109;
+    cx: 27;
+}
+
+/* Fix voice channel USRBG backgrounds */
+.background_fb62e2 {
+    background-color: transparent !important;
+}
+
+/* Shared acrylic for floating UI. Tooltip triggers such as overflowTooltip
+   and noTooltip are inline labels, not popup roots. Match tooltip_ only.
+   Tint the background rather than fading text.
+   Keep the blur on popup surfaces, never on portal containers or call video. */
+body {
+    --mochacord-acrylic-background: color-mix(in srgb, var(--bg-floating) 76%, transparent);
+    --mochacord-acrylic-filter: blur(24px) saturate(140%) contrast(105%);
+}
+
+:is(
+    [role="menu"],
+    [data-mana-component="popover"],
+    [data-mana-component="context-menu"],
+    [data-mana-component="select-content"],
+    [data-mana-component="tooltip"],
+    [class*="tooltip_"],
+    .popoverGradientWrapper_d6f39b,
+    .timelineTooltip__68788,
+    .errorTooltip__3b3ff,
+    .reactionTooltip_bbcccb,
+    .popoutList__92efc,
+    .keyboardShortcutsModal_f061f6,
+    .dropdown_edf232,
+    .modal_e44912,
+    .fakedm-dropdown,
+    .gc-dropdown-list,
+    .vc-testcord-tab-editor-toast,
+    .vc-more-stickers-picker-container,
+    .vc-gif-collections-modal,
+    .vc-github-repos-modal,
+    .vc-mds-modal,
+    .vc-cmdpal-panel,
+    [class*="popover_"],
+    [class*="Popover_"],
+    [class*="popoverReactionHoverBar_"],
+    [class*="autocomplete_"],
+    [class*="messagesPopoutWrap_"],
+    [class*="recentMentionsPopout_"],
+    [class*="quickSelectPopout_"],
+    [class*="user-profile-popout"]:not(.custom-theme-background),
+    [class*="popout_"]:not(.popout__0bd4a),
+    [class*="Popout_"],
+    [class*="popoutContainer_"],
+    [class*="popoutContentWrapper_"],
+    .contentWrapper__08434,
+    .container__55c99,
+    .root__49fc1:not(.custom-user-profile-theme),
+    .selectDropdown__0edde,
+    .picker__09f65,
+    .react-datepicker,
+    .customColorPicker__459fb,
+    .statusPickerModal_ce8328,
+    .recentChannelsMenu__711d3,
+    .languageSelector__4d95d,
+    .layer__95d7b,
+    .baselayer__518a0,
+    .nowPlayingNotificationAnimationWrapper__81a05,
+    [class*="popoutContent_"],
+    .vc-class-highlight-tooltip,
+    .vc-cal-modal-root, .vc-deepsearch-modal-root,
+    .vc-cal-dialog-card,
+    [class*="toast_"],
+    [class*="customToast_"],
+    [class*="errorNotificationContainer_"],
+    .vc-notification-root,
+    .vc-toast-notifications-notification-root,
+    .vc-cal-picker-popover, .vc-cal-tool-popover, .gc-popover,
+    .fakedm-popout, .vc-clickableroles-popout,
+    .vc-presets-merge-dropdown-menu, .vc-cal-search-dropdown,
+    .vc-cal-custom-select-menu, .ps-custom-select-menu,
+    .vc-cal-tools-menu
+) {
+    background: var(--mochacord-acrylic-background) !important;
+    -webkit-backdrop-filter: var(--mochacord-acrylic-filter) !important;
+    backdrop-filter: var(--mochacord-acrylic-filter) !important;
+    /* Structural headers, footers and scrollers share the outer glass. */
+    --background-base-low: transparent;
+    --background-base-lower: transparent;
+    --background-base-lowest: transparent;
+    --background-surface-high: transparent;
+    --background-surface-higher: transparent;
+    --background-surface-highest: transparent;
+    --background-primary: transparent;
+    --background-secondary: transparent;
+    --background-secondary-alt: transparent;
+    --modal-background: transparent;
+    --modal-footer-background: transparent;
+}
+
+/* A nested popup section uses the outer glass instead of another GPU blur.
+   Context submenus are independent surfaces, handled by their own skin below. */
+:is(
+    [role="menu"],
+    [data-mana-component="popover"],
+    [data-mana-component="context-menu"],
+    [data-mana-component="select-content"],
+    [data-mana-component="tooltip"],
+    [class*="tooltip_"],
+    .popoverGradientWrapper_d6f39b,
+    .timelineTooltip__68788,
+    .errorTooltip__3b3ff,
+    .reactionTooltip_bbcccb,
+    .popoutList__92efc,
+    .keyboardShortcutsModal_f061f6,
+    .dropdown_edf232,
+    .modal_e44912,
+    .fakedm-dropdown,
+    .gc-dropdown-list,
+    .vc-testcord-tab-editor-toast,
+    .vc-more-stickers-picker-container,
+    .vc-gif-collections-modal,
+    .vc-github-repos-modal,
+    .vc-mds-modal,
+    .vc-cmdpal-panel,
+    [class*="popover_"],
+    [class*="Popover_"],
+    [class*="popoverReactionHoverBar_"],
+    [class*="autocomplete_"],
+    [class*="messagesPopoutWrap_"],
+    [class*="recentMentionsPopout_"],
+    [class*="quickSelectPopout_"],
+    [class*="user-profile-popout"]:not(.custom-theme-background),
+    [class*="popout_"]:not(.popout__0bd4a),
+    [class*="Popout_"],
+    [class*="popoutContainer_"],
+    [class*="popoutContentWrapper_"],
+    .contentWrapper__08434,
+    .container__55c99,
+    .root__49fc1:not(.custom-user-profile-theme),
+    .selectDropdown__0edde,
+    .picker__09f65,
+    .react-datepicker,
+    .customColorPicker__459fb,
+    .statusPickerModal_ce8328,
+    .recentChannelsMenu__711d3,
+    .languageSelector__4d95d,
+    .layer__95d7b,
+    .baselayer__518a0,
+    .nowPlayingNotificationAnimationWrapper__81a05,
+    [class*="popoutContent_"],
+    .vc-class-highlight-tooltip,
+    .vc-cal-modal-root, .vc-deepsearch-modal-root,
+    .vc-cal-dialog-card,
+    [class*="toast_"],
+    [class*="customToast_"],
+    [class*="errorNotificationContainer_"],
+    .vc-notification-root,
+    .vc-toast-notifications-notification-root,
+    .vc-cal-picker-popover, .vc-cal-tool-popover, .gc-popover,
+    .fakedm-popout, .vc-clickableroles-popout,
+    .vc-presets-merge-dropdown-menu, .vc-cal-search-dropdown,
+    .vc-cal-custom-select-menu, .ps-custom-select-menu,
+    .vc-cal-tools-menu
+) :is(
+    [role="menu"],
+    [data-mana-component="popover"],
+    [data-mana-component="context-menu"],
+    [data-mana-component="select-content"],
+    [data-mana-component="tooltip"],
+    [class*="tooltip_"],
+    .popoverGradientWrapper_d6f39b,
+    .timelineTooltip__68788,
+    .errorTooltip__3b3ff,
+    .reactionTooltip_bbcccb,
+    .popoutList__92efc,
+    .keyboardShortcutsModal_f061f6,
+    .dropdown_edf232,
+    .modal_e44912,
+    .fakedm-dropdown,
+    .gc-dropdown-list,
+    .vc-testcord-tab-editor-toast,
+    .vc-more-stickers-picker-container,
+    .vc-gif-collections-modal,
+    .vc-github-repos-modal,
+    .vc-mds-modal,
+    .vc-cmdpal-panel,
+    [class*="popover_"],
+    [class*="Popover_"],
+    [class*="popoverReactionHoverBar_"],
+    [class*="autocomplete_"],
+    [class*="messagesPopoutWrap_"],
+    [class*="recentMentionsPopout_"],
+    [class*="quickSelectPopout_"],
+    [class*="user-profile-popout"]:not(.custom-theme-background),
+    [class*="popout_"]:not(.popout__0bd4a),
+    [class*="Popout_"],
+    [class*="popoutContainer_"],
+    [class*="popoutContentWrapper_"],
+    .contentWrapper__08434,
+    .container__55c99,
+    .root__49fc1:not(.custom-user-profile-theme),
+    .selectDropdown__0edde,
+    .picker__09f65,
+    .react-datepicker,
+    .customColorPicker__459fb,
+    .statusPickerModal_ce8328,
+    .recentChannelsMenu__711d3,
+    .languageSelector__4d95d,
+    .layer__95d7b,
+    .baselayer__518a0,
+    .nowPlayingNotificationAnimationWrapper__81a05,
+    [class*="popoutContent_"],
+    .vc-class-highlight-tooltip,
+    .vc-cal-modal-root, .vc-deepsearch-modal-root,
+    .vc-cal-dialog-card,
+    [class*="toast_"],
+    [class*="customToast_"],
+    [class*="errorNotificationContainer_"],
+    .vc-notification-root,
+    .vc-toast-notifications-notification-root,
+    .vc-cal-picker-popover, .vc-cal-tool-popover, .gc-popover,
+    .fakedm-popout, .vc-clickableroles-popout,
+    .vc-presets-merge-dropdown-menu, .vc-cal-search-dropdown,
+    .vc-cal-custom-select-menu, .ps-custom-select-menu,
+    .vc-cal-tools-menu
+):not([role="menu"], .menu_c1e9c4, .fakedm-dropdown, .gc-dropdown-list) {
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* A filtered menu root blocks a submenu from sampling pixels outside it.
+   Put the glass on a sibling ::before layer so every submenu can frost the
+   page behind it. This replaces Midnight's second, unpositioned blur layer. */
+:root .menu_c1e9c4 {
+    position: relative;
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+.menu_c1e9c4::before,
+.submenuPaddingContainer_c1e9c4 > .menu_c1e9c4::before,
+.submenuPaddingContainer_ce8328 > .menu_c1e9c4::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: auto;
+    height: auto;
+    border-radius: inherit;
+    background: var(--mochacord-acrylic-background) !important;
+    -webkit-backdrop-filter: var(--mochacord-acrylic-filter) !important;
+    backdrop-filter: var(--mochacord-acrylic-filter) !important;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Opacity promotion makes a portal a backdrop root even after a fade ends.
+   Preserve its transform animation without isolating the popup's backdrop. */
+.layer__59d0d,
+.layerContainer__59d0d,
+.animatorTop_faf9c0, .animatorBottom_faf9c0, .animatorLeft_faf9c0, .animatorRight_faf9c0 {
+    will-change: auto !important;
+}
+.tooltip_c36707 {
+    will-change: auto !important;
+}
+
+/* The expression picker's opaque inner sheets otherwise cover the glass. */
+.contentWrapper__08434 :is(.emojiPicker_c0e32c, .wrapper__14245, .container_fed6d3),
+.messagesPopoutWrap__432f4 > .header__432f4 {
+    background: transparent !important;
+}
+
+/* Keep toast text readable and match tooltip arrows to the glass. */
+:is([class*="toast_"], [class*="customToast_"], [class*="errorNotificationContainer_"]) {
+    color: var(--text-1);
+}
+.tooltipPointer_c36707 {
+    border-top-color: var(--mochacord-acrylic-background) !important;
+}
+
+:is(.vc-notification-root, .vc-toast-notifications-notification-root) {
+    border: 1px solid rgba(255, 255, 255, 0.09) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        0 12px 32px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* The persistent notification history shares its containing modal's glass. */
+.vc-notification-log-wrapper .vc-notification-root {
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Browsers without backdrop filtering retain a readable Mocha background. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    :is(
+    [role="menu"],
+    [data-mana-component="popover"],
+    [data-mana-component="context-menu"],
+    [data-mana-component="select-content"],
+    [data-mana-component="tooltip"],
+    [class*="tooltip_"],
+    .popoverGradientWrapper_d6f39b,
+    .timelineTooltip__68788,
+    .errorTooltip__3b3ff,
+    .reactionTooltip_bbcccb,
+    .popoutList__92efc,
+    .keyboardShortcutsModal_f061f6,
+    .dropdown_edf232,
+    .modal_e44912,
+    .fakedm-dropdown,
+    .gc-dropdown-list,
+    .vc-testcord-tab-editor-toast,
+    .vc-more-stickers-picker-container,
+    .vc-gif-collections-modal,
+    .vc-github-repos-modal,
+    .vc-mds-modal,
+    .vc-cmdpal-panel,
+    [class*="popover_"],
+    [class*="Popover_"],
+    [class*="popoverReactionHoverBar_"],
+    [class*="autocomplete_"],
+    [class*="messagesPopoutWrap_"],
+    [class*="recentMentionsPopout_"],
+    [class*="quickSelectPopout_"],
+    [class*="user-profile-popout"]:not(.custom-theme-background),
+    [class*="popout_"]:not(.popout__0bd4a),
+    [class*="Popout_"],
+    [class*="popoutContainer_"],
+    [class*="popoutContentWrapper_"],
+    .contentWrapper__08434,
+    .container__55c99,
+    .root__49fc1:not(.custom-user-profile-theme),
+    .selectDropdown__0edde,
+    .picker__09f65,
+    .react-datepicker,
+    .customColorPicker__459fb,
+    .statusPickerModal_ce8328,
+    .recentChannelsMenu__711d3,
+    .languageSelector__4d95d,
+    .layer__95d7b,
+    .baselayer__518a0,
+    .nowPlayingNotificationAnimationWrapper__81a05,
+    [class*="popoutContent_"],
+    .vc-class-highlight-tooltip,
+    .vc-cal-modal-root, .vc-deepsearch-modal-root,
+    .vc-cal-dialog-card,
+    [class*="toast_"],
+    [class*="customToast_"],
+    [class*="errorNotificationContainer_"],
+    .vc-notification-root,
+    .vc-toast-notifications-notification-root,
+    .vc-cal-picker-popover, .vc-cal-tool-popover, .gc-popover,
+    .fakedm-popout, .vc-clickableroles-popout,
+    .vc-presets-merge-dropdown-menu, .vc-cal-search-dropdown,
+    .vc-cal-custom-select-menu, .ps-custom-select-menu,
+    .vc-cal-tools-menu
+),
+    .menu_c1e9c4::before,
+    .fakedm-popout::before,
+    .gc-popover::before {
+        background: var(--bg-floating) !important;
+    }
+}
+
+/* ===== Voice call: seamless frosted stage, every view =====
+   Discord paints opaque near-black layers throughout the call: the base
+   behind the call view, the fullscreen wrapper, the UA ::backdrop used by
+   the fullscreen/focused camera views, and the wrappers it draws around
+   video (tile letterbox, enlarged camera, fullscreen stream frame). Clear
+   them and tint the stage with bg-4, the same tint midnight gives every
+   other panel. The frost itself comes from the window's Windows acrylic. */
+:has([class*="callContainer"]),
+:has([class*="fullScreen"][class*="wrapper"]) {
+    background: none !important;
+}
+[class*="callContainer"],
+[class*="fullScreen"][class*="wrapper"] {
+    background: none !important;
+    /* tile fallback fill around letterboxed video: let the stage show */
+    --voice-video-tile-blur-fallback: transparent;
+    --voice-video-video-tile-blur-fallback: transparent;
+}
+::backdrop {
+    background: none !important;
+}
+[class*="videoGrid"] {
+    background-color: var(--bg-4) !important;
+}
+/* No CSS backdrop blur anywhere on the stage (v3.1.1). Every layer behind it
+   is transparent down to the acrylic window, so the blur has nothing to
+   frost. Video repaints the stage constantly, and the blur, redrawn one
+   rectangle at a time, smeared tile pixels into the gaps: dark smudges with
+   hard edges that flashed around the tiles. midnight's panel rule puts the
+   same blur on the call container, so clear it there too. */
+:is(
+    [class*="callContainer"],
+    [class*="videoGrid"],
+    [class*="fullScreen"][class*="wrapper"]
+) {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+:is([class*="callContainer"], [class*="fullScreen"]) :is(
+    [class*="videoWrapper"],
+    [class*="videoContainer"],
+    [class*="videoBackground"],
+    [class*="streamPreview"],
+    [class*="streamPlayer"],
+    [class*="streamContainer"],
+    [class*="focus"],
+    [class*="Focus"]
+) {
+    background-color: transparent !important;
+}
+:is([class*="callContainer"], [class*="fullScreen"]) div:has(video) {
+    background-color: transparent !important;
+}
+
+/* MochaCord header margin repair. Midnight's #app-mount titlebar rule also
+   matches the row inside the bordered header. Keep spacing on the outer panel. */
+#app-mount .subtitleContainer_f75fb0 > .title_f75fb0.container__9293f {
+    margin-bottom: 0 !important;
+}
+
+/* Discord toast text must contrast with Midnight's dark notice backgrounds. */
+body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
+    --notice-text-critical: var(--text-1);
+}
+
+/* Restore the bottom edge of standalone thread, Friends and home headers.
+   Midnight removes it from titlebars, leaving the rounded panel open.
+   Keep the current border color so the gray and blue hover edges match. */
+#app-mount .container__01ae2 > .container__9293f,
+#app-mount .container__133bf > .container__9293f,
+#app-mount .container_f391e3 > .container__9293f,
+#app-mount .homeWrapper__0920e > .container__9293f,
+#app-mount .container_fb64c9 > .container__9293f {
+    border-bottom-width: var(--border-thickness);
+    border-bottom-style: solid;
+    border-bottom-color: var(--border-subtle);
+}
+
+#app-mount .container__01ae2 > .container__9293f:hover,
+#app-mount .container__133bf > .container__9293f:hover,
+#app-mount .container_f391e3 > .container__9293f:hover,
+#app-mount .homeWrapper__0920e > .container__9293f:hover,
+#app-mount .container_fb64c9 > .container__9293f:hover {
+    border-bottom-color: var(--border-hover);
+}
+
+/* The imported username bubble belongs only to message headers. Gradient
+   names elsewhere must not paint an absolute rectangle behind the row. */
+.convenienceGlowGradient_e5de78:not(.username_c19a55)::before {
+    content: none !important;
+}
+
+/* Profile artwork and inner sheets share the outer rounded outline. */
+.outer_c0bea0.user-profile-modal-v2 {
+    overflow: hidden;
+}
+
+/* Frost the lightbox scrim once. Keep its image and controls sharp. */
+#app-mount .scrim__40128.lightbox__40128 {
+    background: color-mix(in srgb, var(--bg-floating) 55%, transparent) !important;
+    -webkit-backdrop-filter: var(--mochacord-acrylic-filter) !important;
+    backdrop-filter: var(--mochacord-acrylic-filter) !important;
+}
+#app-mount .carouselModal_d3a6f0 {
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+}
+
+/* Compact search is local: keep its wrapper and input at the same width.
+   Intrinsic sizing follows the open state without a parent :has() query. */
+#app-mount .toolbar__9293f {
+    min-width: 0;
+    flex-shrink: 1;
+}
+#app-mount .search__49676 {
+    flex: 0 1 auto;
+    min-width: 32px;
+    max-width: 244px;
+    width: auto !important;
+    margin: 0 !important;
+}
+#app-mount .search_c322aa {
+    min-width: 0;
+    width: auto;
+}
+#app-mount .search_c322aa > .searchBar_c322aa {
+    width: 32px !important;
+    min-width: 0;
+    max-width: 100%;
+    background: none;
+    border-color: transparent;
+    transition: background .25s ease, width .25s ease, border-color .25s ease;
+}
+#app-mount .search_c322aa.open_c322aa > .searchBar_c322aa {
+    width: 244px !important;
+    background: var(--background-gradient-low, var(--input-background-default));
+    border-color: var(--input-border-default);
+}
+#app-mount .search_c322aa .DraftEditor-root {
+    padding-right: 3px !important;
+}
+#app-mount .search_c322aa > .searchBar_c322aa .icon_c322aa {
+    margin-inline-end: 7px;
+}
+
+/* Keep banner artwork inside the channel panel's rounded border. */
+#app-mount .sidebarList__5e434 {
+    overflow: hidden;
+}
+#app-mount .sidebarList__5e434 .bannerVisible_f37cb1 .header_f37cb1 {
+    border-top: none;
+}
+
+/* Reserve the typing row without a second translucent fill. Clip scrolling
+   messages above the row so their text cannot overlap the typing indicator. */
+#app-mount .chatContent_f75fb0:has(> .form_f75fb0 > .typing_b88801) .messagesWrapper__36d07::before {
+    background: transparent !important;
+}
+#app-mount .chatContent_f75fb0:has(> .form_f75fb0 > .typing_b88801) .scroller__36d07 {
+    mask: linear-gradient(to bottom, #000 calc(100% - 26px), transparent calc(100% - 26px));
+}
+#app-mount .chatContent_f75fb0:has(> .form_f75fb0 > .typing_b88801) .chatGradientBase__36d07 {
+    background: transparent !important;
+}
+
+/* Keep server palettes out of the chat and composer. Custom profile artwork
+   retains its separate profile palette. */
+#app-mount .custom-theme-background:not(.custom-user-profile-theme) {
+    --background-gradient-chat: initial !important;
+    --background-gradient-low: initial !important;
+    --background-gradient-lower: initial !important;
+    --background-gradient-lowest: initial !important;
+    --background-gradient-high: initial !important;
+    --background-gradient-higher: initial !important;
+    --background-gradient-highest: initial !important;
+    --background-base-low: var(--bg-4) !important;
+    --background-base-lower: var(--bg-4) !important;
+    --background-base-lowest: var(--bg-4) !important;
+    --input-background-default: var(--bg-3) !important;
+    --channeltextarea-background: var(--bg-3) !important;
+}
+
+/* Replace unfinished Midnight color tokens with the Mocha palette. */
+body,
+.theme-dark:not(.custom-user-profile-theme),
+.theme-light:not(.custom-user-profile-theme) {
+    --button-danger-background-disabled: var(--red-5);
+    --button-outline-brand-background-hover: var(--accent-4);
+    --button-outline-brand-border-active: var(--accent-3);
+    --card-primary-pressed-bg: var(--bg-2);
+    --card-secondary-bg: var(--bg-3);
+    --card-secondary-pressed-bg: var(--bg-2);
+    --chat-background: var(--bg-4);
+    --chat-border: var(--border);
+    --checkbox-background-active: var(--accent-3);
+    --chip-blurple-dark-background: color-mix(in srgb, var(--blue-2) 18%, var(--bg-3));
+    --chip-blurple-dark-text: var(--blue-2);
+    --chip-blurple-light-background: color-mix(in srgb, var(--blue-2) 18%, var(--bg-3));
+    --chip-blurple-light-text: var(--blue-2);
+    --chip-blurple-medium-background: color-mix(in srgb, var(--blue-2) 18%, var(--bg-3));
+    --chip-blurple-medium-text: var(--blue-2);
+    --chip-gray-dark-background: var(--bg-2);
+    --chip-gray-dark-text: var(--text-2);
+    --chip-gray-light-background: var(--bg-2);
+    --chip-gray-light-text: var(--text-2);
+    --chip-gray-medium-background: var(--bg-2);
+    --chip-gray-medium-text: var(--text-2);
+    --chip-green-dark-background: color-mix(in srgb, var(--green-2) 18%, var(--bg-3));
+    --chip-green-dark-text: var(--green-2);
+    --chip-green-light-background: color-mix(in srgb, var(--green-2) 18%, var(--bg-3));
+    --chip-green-light-text: var(--green-2);
+    --chip-green-medium-background: color-mix(in srgb, var(--green-2) 18%, var(--bg-3));
+    --chip-green-medium-text: var(--green-2);
+    --chip-orange-dark-background: color-mix(in srgb, var(--yellow-2) 18%, var(--bg-3));
+    --chip-orange-dark-text: var(--yellow-2);
+    --chip-orange-light-background: color-mix(in srgb, var(--yellow-2) 18%, var(--bg-3));
+    --chip-orange-light-text: var(--yellow-2);
+    --chip-orange-medium-background: color-mix(in srgb, var(--yellow-2) 18%, var(--bg-3));
+    --chip-orange-medium-text: var(--yellow-2);
+    --chip-pink-dark-background: color-mix(in srgb, var(--red-2) 18%, var(--bg-3));
+    --chip-pink-dark-text: var(--red-2);
+    --chip-pink-light-background: color-mix(in srgb, var(--red-2) 18%, var(--bg-3));
+    --chip-pink-light-text: var(--red-2);
+    --chip-pink-medium-background: color-mix(in srgb, var(--red-2) 18%, var(--bg-3));
+    --chip-pink-medium-text: var(--red-2);
+    --chip-purple-dark-background: color-mix(in srgb, var(--purple-2) 18%, var(--bg-3));
+    --chip-purple-dark-text: var(--purple-2);
+    --chip-purple-light-background: color-mix(in srgb, var(--purple-2) 18%, var(--bg-3));
+    --chip-purple-light-text: var(--purple-2);
+    --chip-purple-medium-background: color-mix(in srgb, var(--purple-2) 18%, var(--bg-3));
+    --chip-purple-medium-text: var(--purple-2);
+    --chip-red-dark-background: color-mix(in srgb, var(--red-2) 18%, var(--bg-3));
+    --chip-red-dark-text: var(--red-2);
+    --chip-red-light-background: color-mix(in srgb, var(--red-2) 18%, var(--bg-3));
+    --chip-red-light-text: var(--red-2);
+    --chip-red-medium-background: color-mix(in srgb, var(--red-2) 18%, var(--bg-3));
+    --chip-red-medium-text: var(--red-2);
+    --chip-yellow-dark-background: color-mix(in srgb, var(--yellow-2) 18%, var(--bg-3));
+    --chip-yellow-dark-text: var(--yellow-2);
+    --chip-yellow-light-background: color-mix(in srgb, var(--yellow-2) 18%, var(--bg-3));
+    --chip-yellow-light-text: var(--yellow-2);
+    --chip-yellow-medium-background: color-mix(in srgb, var(--yellow-2) 18%, var(--bg-3));
+    --chip-yellow-medium-text: var(--yellow-2);
+    --context-menu-backdrop-background: transparent;
+    --control-brand-foreground-new: var(--accent-2);
+    --creator-revenue-icon-gradient-end: var(--accent-2);
+    --creator-revenue-icon-gradient-start: var(--accent-2);
+    --creator-revenue-info-box-background: var(--bg-3);
+    --creator-revenue-info-box-border: var(--border);
+    --creator-revenue-locked-channel-icon: var(--accent-2);
+    --creator-revenue-progress-bar: var(--accent-2);
+    --embed-background: var(--bg-3);
+    --embed-background-alternate: var(--bg-3);
+    --experimental-avatar-embed-bg: var(--bg-3);
+    --icon-invert: var(--text-0);
+    --icon-transparent: transparent;
+    --input-border-error-hover: var(--red-3);
+    --input-border-readonly: var(--border);
+    --input-foreground-placeholder: var(--text-5);
+    --input-icon-default: var(--text-4);
+    --logo-primary: var(--text-1);
+    --message-automod-background-default: color-mix(in srgb, var(--red-2) 12%, transparent);
+    --message-automod-background-hover: color-mix(in srgb, var(--red-2) 12%, transparent);
+    --mobile-background-scrim-opaque: var(--bg-3);
+    --mobile-expression-picker-background-default: var(--bg-3);
+    --mobile-text-heading-primary: var(--text-1);
+    --navigator-header-tint: var(--bg-4);
+    --overlay-backdrop-lightbox: color-mix(in srgb, var(--bg-3) 55%, transparent);
+    --panel-bg: var(--bg-4);
+    --polls-normal-image-background: var(--bg-3);
+    --profile-gradient-note-background: var(--bg-3);
+    --profile-gradient-overlay: color-mix(in srgb, var(--bg-3) 60%, transparent);
+    --profile-gradient-overlay-synced-with-user-theme: color-mix(in srgb, var(--bg-3) 60%, transparent);
+    --profile-gradient-role-pill-background: var(--bg-3);
+    --profile-gradient-role-pill-border: var(--border);
+    --profile-gradient-section-box: var(--bg-3);
+    --radio-foreground-active: var(--accent-3);
+    --radio-foreground-default: var(--text-4);
+    --radio-foreground-hover: var(--text-2);
+    --redesign-button-active-background: var(--accent-2);
+    --redesign-button-active-pressed-background: var(--accent-3);
+    --redesign-button-active-text: var(--text-0);
+    --redesign-button-danger-background: var(--red-2);
+    --redesign-button-destructive-background: var(--red-2);
+    --redesign-button-destructive-pressed-background: var(--red-3);
+    --redesign-button-destructive-text: var(--text-0);
+    --redesign-button-positive-background: var(--green-2);
+    --redesign-button-premium-primary-pink-for-gradient: var(--red-2);
+    --redesign-button-premium-primary-pressed-background: var(--purple-2);
+    --redesign-button-premium-primary-purple-for-gradient: var(--purple-2);
+    --redesign-button-premium-primary-purple-for-gradient-2: var(--purple-2);
+    --redesign-button-primary-alt-border: var(--border);
+    --redesign-button-primary-background: var(--accent-2);
+    --redesign-button-primary-overlay-background: var(--accent-2);
+    --redesign-button-primary-overlay-pressed-background: var(--accent-3);
+    --redesign-button-primary-overlay-text: var(--text-0);
+    --redesign-button-primary-pressed-background: var(--accent-3);
+    --redesign-button-primary-text: var(--text-0);
+    --redesign-button-secondary-border: var(--border);
+    --redesign-button-secondary-overlay-background: var(--bg-2);
+    --redesign-button-secondary-overlay-pressed-background: var(--bg-1);
+    --redesign-button-secondary-overlay-text: var(--text-2);
+    --redesign-button-secondary-pressed-border: var(--border);
+    --redesign-button-selected-background: var(--accent-2);
+    --redesign-button-selected-pressed-background: var(--accent-3);
+    --redesign-button-selected-text: var(--text-0);
+    --redesign-button-tertiary-background: transparent;
+    --redesign-button-tertiary-pressed-background: var(--hover);
+    --redesign-button-tertiary-pressed-text: var(--text-2);
+    --redesign-button-tertiary-text: var(--text-2);
+    --scrollbar-auto-scrollbar-color-thumb: var(--bg-1);
+    --scrollbar-auto-scrollbar-color-track: transparent;
+    --spoiler-hidden-background: var(--bg-2);
+    --spoiler-hidden-background-hover: var(--bg-2);
+    --spoiler-revealed-background: var(--bg-2);
+    --status-positive-text: var(--text-0);
+    --status-warning-background: var(--yellow-2);
+    --status-warning-text: var(--text-0);
+    --switch-background-active: var(--accent-3);
+    --switch-thumb-icon-active: var(--text-0);
+    --switch-thumb-icon-default: var(--text-4);
+    --text-invert: var(--text-0);
+    --text-overlay-dark: var(--text-0);
+    --thread-channel-spine: var(--text-5);
+    --user-profile-activity-toolbar-background: var(--bg-3);
+}
+
+/* These plugin dropdowns stay in their parent DOM instead of using a portal.
+   Frost the parent on a sibling layer so dropdowns can sample beyond its box.
+   Keep blur on the scrolling dropdown itself so frost cannot scroll away. */
+:root .fakedm-popout,
+:root .gc-popover {
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+.gc-popover {
+    position: relative;
+    z-index: 0;
+}
+.fakedm-popout::before,
+.gc-popover::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--mochacord-acrylic-background);
+    -webkit-backdrop-filter: var(--mochacord-acrylic-filter);
+    backdrop-filter: var(--mochacord-acrylic-filter);
+    pointer-events: none;
+    z-index: -1;
+}
+#app-mount .nowPlayingNotificationAnimationWrapper__81a05 {
+    opacity: 1;
+}
+.vc-mds-modal {
+    font-family: var(--font-primary) !important;
+}
+.vc-mds-modal .vc-mds-modal-header {
+    background: transparent;
+}
+
+/* Datepicker inner sheets must not cover the outer glass with white fills. */
+.react-datepicker {
+    font-family: var(--font-primary) !important;
+    color: var(--text-2);
+}
+.react-datepicker :is(.react-datepicker__header, .react-datepicker__today-button, .react-datepicker__time-container, .react-datepicker__time) {
+    background: transparent;
+    border-color: var(--border);
+}
+.react-datepicker :is(.react-datepicker__current-month, .react-datepicker-time__header, .react-datepicker-year-header) {
+    color: var(--text-1);
+}
+.react-datepicker :is(.react-datepicker__day-name, .react-datepicker__day, .react-datepicker__time-name) {
+    color: var(--text-2);
+}
+.react-datepicker .react-datepicker__day:hover {
+    background: var(--hover);
+}
+.react-datepicker :is(.react-datepicker__day--selected, .react-datepicker__day--keyboard-selected, .react-datepicker__day--in-range) {
+    background: var(--accent-2);
+    color: var(--text-0);
+}
+.react-datepicker .react-datepicker__day--disabled {
+    color: var(--text-5);
+}
+.react-datepicker .react-datepicker__navigation-icon::before {
+    border-color: var(--text-3);
+}
+
+/* The native Windows title bar already shows the server and channel.
+   Hide Discord's duplicate title text; keep the bar, navigation and toolbar. */
+.bar_c38106 > .title_c38106 > * {
+    visibility: hidden;
+}
+
+/* Midnight maps --white and notice text to dark Mocha for coloured pills.
+   Popups here sit on dark glass, so their text stays near-white. */
+:is(
+    [class*="tooltip_"],
+    [class*="toast_"],
+    [class*="customToast_"],
+    [class*="errorNotificationContainer_"],
+    .reactionTooltip_bbcccb,
+    .timelineTooltip__68788,
+    .errorTooltip__3b3ff,
+    .vc-class-highlight-tooltip,
+    .vc-notification-root,
+    .vc-toast-notifications-notification-root,
+    .vc-testcord-tab-editor-toast
+) {
+    --white: var(--text-1);
+    --white-500: var(--text-1);
+    --text-0: var(--text-1);
+    --text-strong: var(--text-1);
+    --text-default: var(--text-1);
+    --text-subtle: var(--text-2);
+    --notice-text-default: var(--text-1);
+    --notice-text-positive: var(--text-1);
+    --notice-text-warning: var(--text-1);
+    --notice-text-critical: var(--text-1);
+    --notice-text-info: var(--text-1);
+    --vc-toast-notifications-text-color: var(--text-1);
+    --vc-toast-notifications-title-color: var(--text-1);
+    color: var(--text-1) !important;
+}

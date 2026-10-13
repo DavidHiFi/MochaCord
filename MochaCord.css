@@ -10,7 +10,6 @@
 
 /* import theme modules */
 @import url('https://refact0r.github.io/midnight-discord/build/midnight.css');
-@import url(https://raw.githubusercontent.com/amozeo/discord-css-snippets/refs/heads/main/snippets/compact-search-button.css);
 @import url(https://davart154.github.io/Themes/Snippets/Mana%20Page%20Switcher/ManaPageSwitcherSource.css);
 @import url("https://raw.githubusercontent.com/yiruzu/vencord-snippets/refs/heads/main/snippets/BubbleUsernames/import.css");
 
@@ -387,16 +386,17 @@ div.container__37e49 > div.buttons__37e49 {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background-position: center;
-        background-size: 24px 24px;
-        background-repeat: no-repeat;
-        background-image: url("data:image/svg+xml,%3Csvg%20x%3D%220%22%20y%3D%220%22%20class%3D%22icon__9293f%22%20aria-hidden%3D%22true%22%20role%3D%22img%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22none%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23D8D8DB%22%20d%3D%22M9.7%202.89c.18-.07.32-.24.37-.43a2%202%200%200%201%203.86%200c.05.2.19.36.38.43A7%207%200%200%201%2019%209.5v2.09c0%20.12.05.24.13.33l1.1%201.22a3%203%200%200%201%20.77%202.01v.28c0%20.67-.34%201.29-.95%201.56-1.31.6-4%201.51-8.05%201.51-4.05%200-6.74-.91-8.05-1.5-.61-.28-.95-.9-.95-1.57v-.28a3%203%200%200%201%20.77-2l1.1-1.23a.5.5%200%200%200%20.13-.33V9.5a7%207%200%200%201%204.7-6.61ZM9.18%2019.84A.16.16%200%200%200%209%2020a3%203%200%201%200%206%200c0-.1-.09-.17-.18-.16a24.86%2024.86%200%200%201-5.64%200Z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E");
+        mask-position: center;
+        mask-size: 24px 24px;
+        mask-repeat: no-repeat;
+        mask-image: url("data:image/svg+xml,%3Csvg%20x%3D%220%22%20y%3D%220%22%20class%3D%22icon__9293f%22%20aria-hidden%3D%22true%22%20role%3D%22img%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22none%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23D8D8DB%22%20d%3D%22M9.7%202.89c.18-.07.32-.24.37-.43a2%202%200%200%201%203.86%200c.05.2.19.36.38.43A7%207%200%200%201%2019%209.5v2.09c0%20.12.05.24.13.33l1.1%201.22a3%203%200%200%201%20.77%202.01v.28c0%20.67-.34%201.29-.95%201.56-1.31.6-4%201.51-8.05%201.51-4.05%200-6.74-.91-8.05-1.5-.61-.28-.95-.9-.95-1.57v-.28a3%203%200%200%201%20.77-2l1.1-1.23a.5.5%200%200%200%20.13-.33V9.5a7%207%200%200%201%204.7-6.61ZM9.18%2019.84A.16.16%200%200%200%209%2020a3%203%200%201%200%206%200c0-.1-.09-.17-.18-.16a24.86%2024.86%200%200%201-5.64%200Z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E");
+        background-color: #D8D8DB;
     }
 
     &:hover {
         background: var(--brand-500);
         &::after {
-            background-image: url("data:image/svg+xml,%3Csvg%20x%3D%220%22%20y%3D%220%22%20class%3D%22icon__9293f%22%20aria-hidden%3D%22true%22%20role%3D%22img%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22none%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23FFFFFF%22%20d%3D%22M9.7%202.89c.18-.07.32-.24.37-.43a2%202%200%200%201%203.86%200c.05.2.19.36.38.43A7%207%200%200%201%2019%209.5v2.09c0%20.12.05.24.13.33l1.1%201.22a3%203%200%200%201%20.77%202.01v.28c0%20.67-.34%201.29-.95%201.56-1.31.6-4%201.51-8.05%201.51-4.05%200-6.74-.91-8.05-1.5-.61-.28-.95-.9-.95-1.57v-.28a3%203%200%200%201%20.77-2l1.1-1.23a.5.5%200%200%200%20.13-.33V9.5a7%207%200%200%201%204.7-6.61ZM9.18%2019.84A.16.16%200%200%200%209%2020a3%203%200%201%200%206%200c0-.1-.09-.17-.18-.16a24.86%2024.86%200%200%201-5.64%200Z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E");
+            background-color: #ffffff;
         }
     }
 }
@@ -485,6 +485,22 @@ body {
     [data-mana-component="select-content"],
     [data-mana-component="tooltip"],
     [class*="tooltip_"],
+    .popoverGradientWrapper_d6f39b,
+    .timelineTooltip__68788,
+    .errorTooltip__3b3ff,
+    .reactionTooltip_bbcccb,
+    .popoutList__92efc,
+    .keyboardShortcutsModal_f061f6,
+    .dropdown_edf232,
+    .modal_e44912,
+    .fakedm-dropdown,
+    .gc-dropdown-list,
+    .vc-testcord-tab-editor-toast,
+    .vc-more-stickers-picker-container,
+    .vc-gif-collections-modal,
+    .vc-github-repos-modal,
+    .vc-mds-modal,
+    .vc-cmdpal-panel,
     [class*="popover_"],
     [class*="Popover_"],
     [class*="popoverReactionHoverBar_"],
@@ -551,6 +567,22 @@ body {
     [data-mana-component="select-content"],
     [data-mana-component="tooltip"],
     [class*="tooltip_"],
+    .popoverGradientWrapper_d6f39b,
+    .timelineTooltip__68788,
+    .errorTooltip__3b3ff,
+    .reactionTooltip_bbcccb,
+    .popoutList__92efc,
+    .keyboardShortcutsModal_f061f6,
+    .dropdown_edf232,
+    .modal_e44912,
+    .fakedm-dropdown,
+    .gc-dropdown-list,
+    .vc-testcord-tab-editor-toast,
+    .vc-more-stickers-picker-container,
+    .vc-gif-collections-modal,
+    .vc-github-repos-modal,
+    .vc-mds-modal,
+    .vc-cmdpal-panel,
     [class*="popover_"],
     [class*="Popover_"],
     [class*="popoverReactionHoverBar_"],
@@ -597,6 +629,22 @@ body {
     [data-mana-component="select-content"],
     [data-mana-component="tooltip"],
     [class*="tooltip_"],
+    .popoverGradientWrapper_d6f39b,
+    .timelineTooltip__68788,
+    .errorTooltip__3b3ff,
+    .reactionTooltip_bbcccb,
+    .popoutList__92efc,
+    .keyboardShortcutsModal_f061f6,
+    .dropdown_edf232,
+    .modal_e44912,
+    .fakedm-dropdown,
+    .gc-dropdown-list,
+    .vc-testcord-tab-editor-toast,
+    .vc-more-stickers-picker-container,
+    .vc-gif-collections-modal,
+    .vc-github-repos-modal,
+    .vc-mds-modal,
+    .vc-cmdpal-panel,
     [class*="popover_"],
     [class*="Popover_"],
     [class*="popoverReactionHoverBar_"],
@@ -636,7 +684,7 @@ body {
     .vc-presets-merge-dropdown-menu, .vc-cal-search-dropdown,
     .vc-cal-custom-select-menu, .ps-custom-select-menu,
     .vc-cal-tools-menu
-):not([role="menu"], .menu_c1e9c4) {
+):not([role="menu"], .menu_c1e9c4, .fakedm-dropdown, .gc-dropdown-list) {
     background: transparent !important;
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
@@ -717,6 +765,22 @@ body {
     [data-mana-component="select-content"],
     [data-mana-component="tooltip"],
     [class*="tooltip_"],
+    .popoverGradientWrapper_d6f39b,
+    .timelineTooltip__68788,
+    .errorTooltip__3b3ff,
+    .reactionTooltip_bbcccb,
+    .popoutList__92efc,
+    .keyboardShortcutsModal_f061f6,
+    .dropdown_edf232,
+    .modal_e44912,
+    .fakedm-dropdown,
+    .gc-dropdown-list,
+    .vc-testcord-tab-editor-toast,
+    .vc-more-stickers-picker-container,
+    .vc-gif-collections-modal,
+    .vc-github-repos-modal,
+    .vc-mds-modal,
+    .vc-cmdpal-panel,
     [class*="popover_"],
     [class*="Popover_"],
     [class*="popoverReactionHoverBar_"],
@@ -757,7 +821,9 @@ body {
     .vc-cal-custom-select-menu, .ps-custom-select-menu,
     .vc-cal-tools-menu
 ),
-    .menu_c1e9c4::before {
+    .menu_c1e9c4::before,
+    .fakedm-popout::before,
+    .gc-popover::before {
         background: var(--bg-floating) !important;
     }
 }
@@ -770,13 +836,11 @@ body {
    them and tint the stage with bg-4, the same tint midnight gives every
    other panel. The frost itself comes from the window's Windows acrylic. */
 :has([class*="callContainer"]),
-:has([class*="fullScreen"][class*="wrapper"]),
-:has([class*="wrapper"][class*="fullScreen"]) {
+:has([class*="fullScreen"][class*="wrapper"]) {
     background: none !important;
 }
 [class*="callContainer"],
-[class*="fullScreen"][class*="wrapper"],
-[class*="wrapper"][class*="fullScreen"] {
+[class*="fullScreen"][class*="wrapper"] {
     background: none !important;
     /* tile fallback fill around letterboxed video: let the stage show */
     --voice-video-tile-blur-fallback: transparent;
@@ -797,8 +861,7 @@ body {
 :is(
     [class*="callContainer"],
     [class*="videoGrid"],
-    [class*="fullScreen"][class*="wrapper"],
-    [class*="wrapper"][class*="fullScreen"]
+    [class*="fullScreen"][class*="wrapper"]
 ) {
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
@@ -875,31 +938,41 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
     box-shadow: none !important;
 }
 
-/* The compact search import leaves Discord's 244px flex basis in place.
-   Size its wrapper too, and let the expanded input shrink with the header. */
+/* Compact search is local: keep its wrapper and input at the same width.
+   Intrinsic sizing follows the open state without a parent :has() query. */
 #app-mount .toolbar__9293f {
     min-width: 0;
     flex-shrink: 1;
 }
 #app-mount .search__49676 {
-    flex: 0 1 32px;
+    flex: 0 1 auto;
     min-width: 32px;
     max-width: 244px;
-    width: 32px !important;
-}
-#app-mount .search__49676:has(.open_c322aa) {
-    flex-basis: 244px;
-    width: 244px !important;
+    width: auto !important;
+    margin: 0 !important;
 }
 #app-mount .search_c322aa {
     min-width: 0;
-    width: 100%;
+    width: auto;
 }
-#app-mount .search_c322aa > .searchBar_c322aa,
-#app-mount .search_c322aa.open_c322aa > .searchBar_c322aa {
-    width: 100% !important;
+#app-mount .search_c322aa > .searchBar_c322aa {
+    width: 32px !important;
     min-width: 0;
     max-width: 100%;
+    background: none;
+    border-color: transparent;
+    transition: background .25s ease, width .25s ease, border-color .25s ease;
+}
+#app-mount .search_c322aa.open_c322aa > .searchBar_c322aa {
+    width: 244px !important;
+    background: var(--background-gradient-low, var(--input-background-default));
+    border-color: var(--input-border-default);
+}
+#app-mount .search_c322aa .DraftEditor-root {
+    padding-right: 3px !important;
+}
+#app-mount .search_c322aa > .searchBar_c322aa .icon_c322aa {
+    margin-inline-end: 7px;
 }
 
 /* Keep banner artwork inside the channel panel's rounded border. */
@@ -1082,6 +1155,70 @@ body,
     --text-overlay-dark: var(--text-0);
     --thread-channel-spine: var(--text-5);
     --user-profile-activity-toolbar-background: var(--bg-3);
+}
+
+/* These plugin dropdowns stay in their parent DOM instead of using a portal.
+   Frost the parent on a sibling layer so dropdowns can sample beyond its box.
+   Keep blur on the scrolling dropdown itself so frost cannot scroll away. */
+:root .fakedm-popout,
+:root .gc-popover {
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+.gc-popover {
+    position: relative;
+    z-index: 0;
+}
+.fakedm-popout::before,
+.gc-popover::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--mochacord-acrylic-background);
+    -webkit-backdrop-filter: var(--mochacord-acrylic-filter);
+    backdrop-filter: var(--mochacord-acrylic-filter);
+    pointer-events: none;
+    z-index: -1;
+}
+#app-mount .nowPlayingNotificationAnimationWrapper__81a05 {
+    opacity: 1;
+}
+.vc-mds-modal {
+    font-family: var(--font-primary) !important;
+}
+.vc-mds-modal .vc-mds-modal-header {
+    background: transparent;
+}
+
+/* Datepicker inner sheets must not cover the outer glass with white fills. */
+.react-datepicker {
+    font-family: var(--font-primary) !important;
+    color: var(--text-2);
+}
+.react-datepicker :is(.react-datepicker__header, .react-datepicker__today-button, .react-datepicker__time-container, .react-datepicker__time) {
+    background: transparent;
+    border-color: var(--border);
+}
+.react-datepicker :is(.react-datepicker__current-month, .react-datepicker-time__header, .react-datepicker-year-header) {
+    color: var(--text-1);
+}
+.react-datepicker :is(.react-datepicker__day-name, .react-datepicker__day, .react-datepicker__time-name) {
+    color: var(--text-2);
+}
+.react-datepicker .react-datepicker__day:hover {
+    background: var(--hover);
+}
+.react-datepicker :is(.react-datepicker__day--selected, .react-datepicker__day--keyboard-selected, .react-datepicker__day--in-range) {
+    background: var(--accent-2);
+    color: var(--text-0);
+}
+.react-datepicker .react-datepicker__day--disabled {
+    color: var(--text-5);
+}
+.react-datepicker .react-datepicker__navigation-icon::before {
+    border-color: var(--text-3);
 }
 
 /* The native Windows title bar already shows the server and channel.

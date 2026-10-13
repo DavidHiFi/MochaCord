@@ -1,0 +1,1 @@
+(()=>{const out=[];function scan(rs){for(const r of rs){if(r.selectorText&&/c322aa|49676|9293f|f37cb1|40128|d3a6f0|36d07|b88801/.test(r.selectorText))out.push({selector:r.selectorText,css:r.style.cssText});if(r.cssRules)scan(r.cssRules)}}for(const s of document.styleSheets)try{scan(s.cssRules)}catch{}return out})()

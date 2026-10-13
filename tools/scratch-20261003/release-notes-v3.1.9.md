@@ -1,0 +1,2 @@
+- Hides Discord's centred title bar text when the native Windows title bar already shows the server and channel. Navigation and toolbar buttons stay.
+- Tooltips, toasts and plugin notifications keep near-white text on the dark glass. Coloured tooltips such as "You are currently muted!" and success or error toasts no longer render dark text on a dark background.

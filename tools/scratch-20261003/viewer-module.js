@@ -1,0 +1,1 @@
+(()=>{const w=Vencord.Webpack.wreq;const out=[];for(const [id,f] of Object.entries(w.m)){const s=f.toString();if(/carouselModal|imageModal|mediaViewer/.test(s))out.push({id,code:s.slice(0,12000)})}return out})()
