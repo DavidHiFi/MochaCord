@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.57
+ * @version 3.1.58
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -2118,6 +2118,18 @@ li.containerDefault_c69b6d > .list_c3cd7d {
 }
 .listDefault__07f91 .content__07f91 > [data-vu-meter] {
     transform: translateY(-3.5px);
+}
+
+/* 3.1.58 (2026-10-13): the server-tag chip sits right after the name. The
+   username block ships flex 1 1 0%, so it takes all the free width in a voice
+   row and the chip, the last flex child, lands at the container's far edge.
+   Measured live (Davey Jones' Locker voice list, CDP 9334): on the "kurtkurt"
+   row the name ends at 254.3 while the chip starts at 317.5, so the chip sat
+   63px away from the name. flex 0 1 auto sizes the block to its name; the
+   chip then seats at the name's end on all three tagged rows (gap 0).
+   Voice rows only. */
+.listDefault__07f91 .container__394db > .usernameContainer__394db {
+    flex: 0 1 auto !important;
 }
 
 /* 3.1.46 (2026-10-09): gradient-popover chassis at ANY hash. The server
