@@ -2,14 +2,14 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.60
+ * @version 3.1.62
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
 */
 
 /* import theme modules */
-@import url('./MochaCord-assets/midnight.css');
+@import url('./MochaCord-assets/midnight.css?v=20261013');
 @import url(https://raw.githubusercontent.com/amozeo/discord-css-snippets/refs/heads/main/snippets/compact-search-button.css);
 @import url(https://davart154.github.io/Themes/Snippets/Mana%20Page%20Switcher/ManaPageSwitcherSource.css);
 @import url("https://raw.githubusercontent.com/yiruzu/vencord-snippets/refs/heads/main/snippets/BubbleUsernames/import.css");
@@ -2274,4 +2274,40 @@ li.containerDefault_c69b6d > .list_c3cd7d {
 }
 #app-mount .user-profile-modal-v2 [role="tablist"] [role="tab"] + [role="tab"] {
     margin-left: 0;
+}
+
+/* 3.1.62 (2026-10-14): mana popover chassis fill moved onto the rounded
+   chassis. The chassis component (module 273875) renders a classless animated
+   positioner div[data-mana-component="popover"] AROUND the role=dialog popover
+   chassis. The glass list paints the wrapper via
+   [data-mana-component="popover"] while the chassis inside is nested-stripped
+   (glass-in-glass) to background:transparent and keeps only its rounded
+   var(--radius-md) inset ring and drop shadow - measured live on 9334
+   (2026-10-14): wrapper background color(srgb 0.1176 0.1176 0.1804 / 0.76)
+   with the frost at border-radius 0px, chassis rgba(0, 0, 0, 0) at 12px. The
+   ORB_WALLET_PROFILE_INTRODUCTION_COACHMARK above the account panel (and the
+   guild-tag and shop-promo coachmarks on the same chassis) therefore showed
+   the wrapper's SQUARE acrylic corners poking past the chassis' rounded ring
+   at the corners (owner report with red arrows at TL/TR/BR). The 3.1.41
+   stand-in never reproduced it because the replica rig mounted the chassis
+   without the real wrapper. Fix: strip the wrapper - it is a positioner and
+   this chassis family always renders a glass-eligible child (writers are
+   modules 43105/273875/642481, all the same component) - and repaint the
+   wrapper's direct chassis child so fill, ring and frost share one rounded
+   box. The gradient variant keeps a single paint layer: the wrapper's direct
+   popoverGradientWrapper_ child takes the acrylic and the
+   popoverContentWithGradient_ grandchild stays stock-transparent, so no
+   nested double frost and no interior layer change beyond the direct child.
+   :not() ids only add specificity; the repaint guard (1,2,0) outranks the
+   nested strip (0,2,0) and the wrap-clear outranks the glass block (0,1,0).
+   No :has(). */
+[data-mana-component="popover"]:not(#mochacord-popover-wrap-clear) {
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+[data-mana-component="popover"] > :is([class*="popover_"], .popoverGradientWrapper_d6f39b):not(#mochacord-popover-body-guard) {
+    background: var(--mochacord-acrylic-background) !important;
+    -webkit-backdrop-filter: var(--mochacord-acrylic-filter) !important;
+    backdrop-filter: var(--mochacord-acrylic-filter) !important;
 }
