@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.58
+ * @version 3.1.59
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -1317,6 +1317,22 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
 #app-mount .headerBar__1a9ce.container__9293f:hover,
 #app-mount .toolbar__89463.container__9293f:hover {
     border-bottom-color: var(--border-hover);
+}
+
+/* Restore the left edge of the Message Requests content panel. Midnight's
+   panel list frames .container_f391e3 > .content_f75fb0 on all four edges,
+   but its chat-outer rule (.page__5e434 > div > .chat_f75fb0 >
+   .content_f75fb0) strips border-left, and it also matches Message Requests
+   because that container carries chat_f75fb0. The corner arc still painted,
+   so the edge read as cut off partway down, gray at rest and blue on hover
+   elsewhere. Scoped to container_f391e3 so normal chat keeps its flush edge. */
+#app-mount .container_f391e3 > .content_f75fb0 {
+    border-left-width: var(--border-thickness);
+    border-left-style: solid;
+    border-left-color: var(--border-subtle);
+}
+#app-mount .container_f391e3 > .content_f75fb0:hover {
+    border-left-color: var(--border-hover);
 }
 
 /* The imported username bubble belongs only to message headers. Gradient
