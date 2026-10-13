@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.59
+ * @version 3.1.60
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -2214,22 +2214,16 @@ li.containerDefault_c69b6d > .list_c3cd7d {
     padding-top: 2.5px !important;
 }
 
-/* 3.1.57 (2026-10-13): Plugin Health nav rescaled after user feedback that the
-   3.1.52 11px fit reads too small, using the 3.1.55 profile-modal treatment
-   (space-between spread, stock adjacent spacing zeroed, end clearance). The
-   7 labels are 88 chars, twice the profile modal's 47, so the ceiling is
-   lower: at the measured 0.6155em FiraCode 600 advance the set is 595.8px
-   at 11px and 650.0px at 12px against the 696px live column (nav 738.5 to
-   1434.5 at 1920/dpr 1). 12px + 2px side padding + 10px row end clearance
-   needs 678px of the 686px content box, so space-between distributes the
-   last 8px (1.3px gaps) and the last label ends ~10px above the hairline's
-   end, the same ~93% text fill as the approved profile bar. 12.5px misses
-   the content box by 1px even at zero padding (677 + 0 + 10 = 687 > 686)
-   and 13px needs 727px, so 12px is the largest one-line size. The 2px side
-   padding is required for the same reason (4px sides would need 716px).
-   overflow-x:auto stays as the safety net for narrower windows; wider
-   windows just grow the gaps. Replaces the 3.1.52 block (same selectors,
-   see git history). No :has(). */
+/* 3.1.60 (2026-10-13): Plugin Health nav gap restore after user feedback that
+   the 3.1.57 12px row spreads only ~1.3px per gap (678px of item boxes in the
+   686px content box), so adjacent hover/active boxes fuse into one blob.
+   Half-step to 11.5px: the 88-char set is 622.8px at the measured 0.6155em
+   FiraCode 600 advance, +28px of 2px side padding = 650.8px of item boxes,
+   so space-between distributes the remaining 35.2px as ~5.9px gaps and the
+   fill lands at 94.9%, close to the approved profile-bar ~93%. One line
+   still holds with the 10px end clearance; overflow-x:auto stays as the
+   safety net for narrower windows; wider windows just grow the gaps.
+   Replaces the 3.1.57 block (same selectors, see git history). No :has(). */
 #app-mount .vc-health-nav {
     justify-content: space-between;
     gap: 0;
@@ -2239,7 +2233,7 @@ li.containerDefault_c69b6d > .list_c3cd7d {
 #app-mount .vc-health-nav .vc-health-nav-item {
     flex-shrink: 0;
     padding: 6px 2px;
-    font-size: 12px;
+    font-size: 11.5px;
     white-space: nowrap;
 }
 
