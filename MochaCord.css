@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.55
+ * @version 3.1.56
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -1383,6 +1383,62 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
     width: 100% !important;
     min-width: 0;
     max-width: 100%;
+}
+
+/* Collapsed compact search icon (3.1.56, user report: magnifier oversized and
+   pushed past the toolbar's right edge). Stock seats its [data-size=sm] slot
+   at 16x24 with the imported snippet's 7px inline-end margin, and the
+   collapsed editor keeps a 12px min-content, so in the 32px bar the glyph
+   rendered 14x14 at ~9px right of centre and clipped at overflow hidden -
+   while every sibling toolbar button draws a 20px glyph centred in its 32px
+   box. Stretch the icon layer over the bar and centre a 20px slot instead;
+   the editor stays in flow underneath it, and the icon layer keeps its own
+   onClick, so focus/click-to-open is unchanged. */
+#app-mount .search__49676 .searchBar_c322aa .icon_c322aa {
+    position: absolute;
+    inset: 0;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+#app-mount .search__49676 .searchBar_c322aa .iconContainer__0c4c4 {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+/* The editor keeps focus but must not paint under the centred icon: its
+   placeholder bled through the magnifier's open ring. Zero its footprint;
+   the icon layer's own onClick still opens the search. */
+#app-mount .search__49676 .searchBar_c322aa .editor__25bec {
+    flex: 0 0 0 !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+}
+
+/* Open search (search_c322aa carries open_c322aa, no :has() so the rule
+   survives any managed-sheet composer): return the icon to its measured
+   stock in-input seat - static 24px box, 4px padding, 7px inline-end margin,
+   16x24 glyph slot - so the expanded input is untouched. */
+#app-mount .search__49676 .search_c322aa.open_c322aa .icon_c322aa {
+    position: static;
+    width: 24px !important;
+    height: 24px !important;
+    margin: 0 7px 0 0 !important;
+    padding: 4px !important;
+}
+#app-mount .search__49676 .search_c322aa.open_c322aa .iconContainer__0c4c4 {
+    width: 16px !important;
+    height: 24px !important;
+}
+/* ...and give the editor its stock metrics back (measured stock: flex 1 1 0,
+   min-width 0, 6px inline padding, ~211px wide in the 244px bar). */
+#app-mount .search__49676 .search_c322aa.open_c322aa .editor__25bec {
+    flex: 1 1 0% !important;
+    width: auto !important;
+    min-width: 0 !important;
+    padding: 0 calc(var(--space-4, 4px) + 2px) !important;
 }
 
 /* ===== Questify account-panel quest bar =====
