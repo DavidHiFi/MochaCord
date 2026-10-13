@@ -19,7 +19,10 @@ works on Vencord and Equicord too.
   Export, Import, and Verify controls, reordered
   expression picker (GIF | Sticker | Emoji), bubble usernames, centered
   notification bell, auto-height bio textarea.
-- Search expands within narrow headers. Server banners stay inside rounded
+- Search expands within narrow headers. The collapsed compact-search
+  magnifier is seated like its sibling toolbar buttons: a 20px glyph centred
+  in the 32px bar, with the expanded input kept at stock metrics.
+  Server banners stay inside rounded
   outlines, typing rows share the chat background, and server palettes do not
   override Mocha colors in chat or the composer.
 
