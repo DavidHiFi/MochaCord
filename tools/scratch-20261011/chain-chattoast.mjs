@@ -1,0 +1,22 @@
+import { writeFileSync } from "node:fs";
+const OUT = "H:/Discord Configuration/work/mochacord-toast-audit-20261011";
+const list = await (await fetch("http://127.0.0.1:9334/json/list")).json();
+const page = list.find(t => t.type === "page" && /discord\.com/.test(t.url)) || list.find(t => t.type === "page");
+const ws = new WebSocket(page.webSocketDebuggerUrl);
+await new Promise((ok, bad) => { ws.onopen = ok; ws.onerror = () => bad(new Error("ws")); });
+let n = 0; const pending = new Map();
+const call = (method, params = {}) => new Promise(r => { const id = ++n; pending.set(id, r); ws.send(JSON.stringify({ id, method, params })); });
+ws.addEventListener("message", e => { const m = JSON.parse(typeof e.data === "string" ? e.data : e.data.toString()); if (m.id && pending.has(m.id)) { const r = pending.get(m.id); pending.delete(m.id); r(m.result ?? { error: m.error }); } });
+const evalExpr = async expr => { const v = await call("Runtime.evaluate", { expression: expr, returnByValue: true, awaitPromise: true }); if (v.error) return { EXC: JSON.stringify(v.error).slice(0, 300) }; if (v.exceptionDetails) return { EXC: JSON.stringify(v.exceptionDetails).slice(0, 300) }; return v.result?.value; };
+const result = await evalExpr(`(() => {
+  const info = e => { const cs = getComputedStyle(e); const r = e.getBoundingClientRect(); return { tag: e.tagName, cls: [...e.classList].join(" ").slice(0, 100), rect: [r.x, r.y, r.width, r.height].map(v => +v.toFixed(1)), radius: cs.borderRadius, bg: cs.backgroundColor, bf: cs.backdropFilter === "none" ? "no" : cs.backdropFilter.slice(0, 14), border: cs.borderTopWidth + " " + cs.borderTopColor, shadow: cs.boxShadow === "none" ? "none" : cs.boxShadow.slice(0, 60), display: cs.display, overflow: cs.overflow, pad: cs.padding }; };
+  const hits = [...document.querySelectorAll("body *")].filter(e => e.children.length === 0 && /Do you want to suck on/.test(e.textContent || ""));
+  if (!hits.length) return { ERR: "text not on screen" };
+  const leaf = hits[0];
+  const chain = []; let e = leaf;
+  for (let i = 0; i < 9 && e && e !== document.body; i++, e = e.parentElement) chain.push(info(e));
+  return chain;
+})()`);
+writeFileSync(OUT + "/chattoast-chain.json", JSON.stringify(result, null, 1));
+console.log(JSON.stringify(result, null, 1).slice(0, 6000));
+ws.close(); process.exit(0);
