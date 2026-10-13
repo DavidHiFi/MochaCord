@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.54
+ * @version 3.1.55
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -2155,23 +2155,29 @@ li.containerDefault_c69b6d > .list_c3cd7d {
     white-space: nowrap;
 }
 
-/* 3.1.54 (2026-10-13, user follow-up on 3.1.53: "a little bit too small now,
-   they're too close together - get that sweet spot so it's perfectly fitting
-   with that gray line underneath"): stock-size labels, spread to the
-   hairline. 3.1.53's 13px/12px fit but read cramped and left the line
-   trailing empty; the bar has a fixed 432px content box (456px scroller less
-   its 4px/20px padding) and the widest real label set (Board + Activity +
-   two 17-char mutual labels = 47 chars) is 405.0px at the stock 14px
-   text-sm/semibold FiraCode advance of 8.62px/char, so the row always fits
-   without shrinking the text at all. justify-content: space-between
-   distributes the leftover 0-27px as even gaps (the stock 24px adjacent
-   margin is zeroed so only distributed space separates tabs): 14.8px gaps on
-   the reported profile (last tab right == hairline end x 1392), 9px on the
-   47-char worst case, and the row cannot overflow into the scroller clip
-   again. Same scoping as 3.1.53 (.user-profile-modal-v2 semantic root, role
-   selectors, no :has(), (1,2,0)/(1,3,0) beats stock (0,1,0)/(0,3,0)). */
+/* 3.1.55 (2026-10-13, user sign-off round on the 3.1.54 spread: "now it's a
+   tiny bit too big again, make it fit above the grey underline"): the 14px
+   space-between fill ends the last label exactly on the hairline's end
+   (x 1392 live), which reads as riding the line. Half-step to 13.5px
+   (8.31px/char advance; 13px was judged too small, 14px too big) plus a
+   10px padding-right on the row: the labels distribute inside the 422px
+   content box while the border-bottom hairline keeps spanning the full
+   432px border box, so the last label ends 10px above the line's end and
+   the line keeps a short visible tail. Measured on the reported profile:
+   gaps 16.0/16.0/16.1, last tab right 1382 vs line 1392, row scrollWidth
+   432 == clientWidth 432. The widest real label set (Board + Activity +
+   two 17-char mutual labels = 47 chars) is 390.7px of text and lands
+   ~10.4px gaps, still inside the box; reaching the scroller clip would
+   need 52+ chars, which Discord's labels cannot produce. Same scoping and
+   cascade story as 3.1.53/3.1.54: .user-profile-modal-v2 semantic root,
+   role selectors, itemText_ substring, no :has(), (1,2,0)/(1,3,0)/(1,4,0)
+   beats stock regardless of lazy style-injection order. */
 #app-mount .user-profile-modal-v2 [role="tablist"] {
     justify-content: space-between;
+    padding-right: 10px;
+}
+#app-mount .user-profile-modal-v2 [role="tablist"] [role="tab"] [class*="itemText_"] {
+    font-size: 13.5px;
 }
 #app-mount .user-profile-modal-v2 [role="tablist"] [role="tab"] + [role="tab"] {
     margin-left: 0;
