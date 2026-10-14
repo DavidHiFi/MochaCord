@@ -28,12 +28,16 @@ works on Vencord and Equicord too.
 
 ## Install
 
-1. Download `MochaCord.css` (or grab the latest release).
-2. Drop it into your client's themes folder:
+1. Download `MochaCord.css` and `MochaCord-assets.zip` from the latest
+   release.
+2. Drop `MochaCord.css` into your client's themes folder:
    - **TestCord**: `%APPDATA%\TestCord\themes`
    - **Vencord / Equicord**: Settings -> Themes -> "Open Themes Folder"
    - **BetterDiscord**: `%APPDATA%\BetterDiscord\themes`
-3. Enable it in Settings -> Themes.
+3. Extract `MochaCord-assets.zip` in the same folder. The themes folder then
+   holds `MochaCord.css` and a `MochaCord-assets` folder with `midnight.css`
+   and `LICENSE.midnight`.
+4. Enable it in Settings -> Themes.
 
 If the theme is already installed, replace the old file and re-enable it, or
 restart the client - a loaded theme stays cached until it is reloaded.
@@ -43,8 +47,10 @@ to `acrylic` (TestCord settings -> Windows material).
 
 ## Notes
 
-- The theme imports Midnight's stylesheet from GitHub Pages, so keep the
-  `@import` lines intact.
+- The theme imports its Midnight base from a local `MochaCord-assets`
+  folder next to the sheet (a vendored copy of refact0r's build with one
+  local change), plus snippets from GitHub. Keep the `@import` lines and
+  the folder in place.
 - FiraCode Nerd Font must be installed locally for the font section to apply;
   otherwise Discord falls back to Fira Code / monospace.
 
