@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.62
+ * @version 3.1.63
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -1546,6 +1546,23 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
    3.1.30 hover rules above are scoped with :not(...) so video-quest promo bars
    keep their hover swap, flow growth and preview opening untouched. */
 #app-mount [data-testid="quest-bar-container"] [class*="contentExpandedAccepted"] {
+    display: none !important;
+}
+
+/* 3.1.63: this client build moved the completed marker off the phase rows.
+   The rows are plain contentCollapsed/contentExpanded now and accepted-ness
+   lives on their wrapper (contentWrapperAccepted), so the :not([class*="Accepted"])
+   guards above stopped recognizing completed bars and the 3.1.30 hover swap
+   fired for them: the collapsed row hid, the shorter expanded row dropped the
+   Claim Reward CTA below the bar box under the account panel buttons, and the
+   click landed on the voice buttons row instead of the button (measured live
+   on TestCord 2.3.0/9334: elementFromPoint at the hovered CTA returned
+   .buttons__37e49). Key the completed-bar guard on the wrapper too; placed
+   after the hover rules so it wins their equal-specificity tie. */
+#app-mount [data-testid="quest-bar-container"] [class*="contentWrapperAccepted"] [class*="contentCollapsed"] {
+    display: flex !important;
+}
+#app-mount [data-testid="quest-bar-container"] [class*="contentWrapperAccepted"] [class*="contentExpanded"] {
     display: none !important;
 }
 
