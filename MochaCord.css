@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.63
+ * @version 3.1.64
  * @website https://github.com/refact0r/midnight-discord
  * @source https://github.com/refact0r/midnight-discord/blob/master/themes/flavors/midnight-catppuccin-mocha.theme.css
  * @authorId 1553713171938938891
@@ -2265,29 +2265,38 @@ li.containerDefault_c69b6d > .list_c3cd7d {
     overflow-wrap: anywhere;
 }
 
-/* 3.1.55 (2026-10-13, user sign-off round on the 3.1.54 spread: "now it's a
-   tiny bit too big again, make it fit above the grey underline"): the 14px
-   space-between fill ends the last label exactly on the hairline's end
-   (x 1392 live), which reads as riding the line. Half-step to 13.5px
-   (8.31px/char advance; 13px was judged too small, 14px too big) plus a
-   10px padding-right on the row: the labels distribute inside the 422px
-   content box while the border-bottom hairline keeps spanning the full
-   432px border box, so the last label ends 10px above the line's end and
-   the line keeps a short visible tail. Measured on the reported profile:
-   gaps 16.0/16.0/16.1, last tab right 1382 vs line 1392, row scrollWidth
-   432 == clientWidth 432. The widest real label set (Board + Activity +
-   two 17-char mutual labels = 47 chars) is 390.7px of text and lands
-   ~10.4px gaps, still inside the box; reaching the scroller clip would
-   need 52+ chars, which Discord's labels cannot produce. Same scoping and
-   cascade story as 3.1.53/3.1.54: .user-profile-modal-v2 semantic root,
-   role selectors, itemText_ substring, no :has(), (1,2,0)/(1,3,0)/(1,4,0)
-   beats stock regardless of lazy style-injection order. */
+/* 3.1.64 (2026-10-15): profile modal tab bar jam from Discord's new Wishlist tab. The 3.1.55
+   spread was sized for the widest 4-tab set (47 chars). The Wishlist era adds a fifth tab
+   (Board + Activity + Wishlist + No Mutual Friends + 1 Mutual Server = 53 chars), whose text
+   alone measures 440.3px at 13.5px against the 422px content box: space-between collapses
+   the gaps to 0 (tabs collide) and the last label paints 9.3px past the hairline's end into
+   the scroller's 20px right padding (user report: tabs "almost colliding", underline not
+   matching the text). Measured live on the real modal over CDP 9334 (own-profile modal plus
+   a cloned-tab rig for the exact 53-char set). Fix, replacing the 3.1.55 block (same
+   selectors, see git history):
+   - the scroller's right padding drops 20px -> 4px, so the bar and its hairline widen
+     432px -> 448px and now end 4px above the pane's content edge;
+   - the row's padding-right drops 10px -> 8px; the tab box adds ~2px, so the visible tail
+     stays the approved ~10px;
+   - labels step 13.5px -> 12.25px. At the FiraCode 0.6154em advance, 13.5px cannot fit a
+     53-char set with any gaps even in a fully reclaimed box; 12.25px is a half-step and
+     lands the jam set at 9.4px gaps, matching the ~10.4px worst case the user approved in
+     3.1.55. Verified live at 12.25px: 53-char jam set gaps 9.4/9.4/9.4/9.4 with
+     scrollWidth == clientWidth == 447 and a 10px tail; 4-tab set gaps 32.9; 3-tab set
+     gaps 137.7 - no overflow and the label row ends on the line everywhere. Longer future
+     label sets fall back to the stock scroller scrolling instead of colliding or clipping.
+   Same scoping and cascade story as 3.1.53-3.1.55: .user-profile-modal-v2 semantic root,
+   role selectors, itemText_ substring, no :has(), so TestCord's managed-sheet composer
+   keeps these rules at boot. */
+#app-mount .user-profile-modal-v2 [class*="tabListScroller"] {
+    padding-right: 4px;
+}
 #app-mount .user-profile-modal-v2 [role="tablist"] {
     justify-content: space-between;
-    padding-right: 10px;
+    padding-right: 8px;
 }
 #app-mount .user-profile-modal-v2 [role="tablist"] [role="tab"] [class*="itemText_"] {
-    font-size: 13.5px;
+    font-size: 12.25px;
 }
 #app-mount .user-profile-modal-v2 [role="tablist"] [role="tab"] + [role="tab"] {
     margin-left: 0;
