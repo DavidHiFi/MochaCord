@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.65
+ * @version 3.1.66
  * @website https://github.com/DavidHiFi/MochaCord
  * @source https://github.com/DavidHiFi/MochaCord/blob/main/MochaCord.css
  * @authorId 1553713171938938891
@@ -1564,6 +1564,42 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
 }
 #app-mount [data-testid="quest-bar-container"] [class*="contentWrapperAccepted"] [class*="contentExpanded"] {
     display: none !important;
+}
+
+/* 3.1.66: a completed bar's collapsed row (Questify's forced post-task state) could
+   not fit its four flex children into the 356px panel row. The "Available until"
+   eyebrow, the reward ring, Questify's long title/subtitle copy and the full-width
+   CTA all shrank together, wrapping every text into one-word columns (measured
+   live on TestCord 2.3.0/9334 with the real QuestBar: "Complete Now for 840
+   Orbs." stacked five lines in a 59px column, the eyebrow three lines in 62px,
+   row 100-184px tall depending on the quest). 3.1.20's height:auto let that wrap
+   grow the bar where stock's fixed 70px would have clipped it; 3.1.63 made the
+   row clickable but the columns stayed. There is no width at which all four fit,
+   so on completed bars the eyebrow and its hairline step aside — Questify's own
+   subtitle already carries the actionable copy — and the copy takes the free
+   width: the title holds one ellipsised line and the subtitle clamps to two, so
+   the row returns to a compact single card at any quest text length. Scoped to
+   the accepted wrapper's collapsed row, so video-quest promos keep their hover
+   layout and non-completed bars are untouched. */
+#app-mount [data-testid="quest-bar-container"] [class*="contentWrapperAccepted"] [class*="contentCollapsed"] [class*="questAcceptedHeader"],
+#app-mount [data-testid="quest-bar-container"] [class*="contentWrapperAccepted"] [class*="contentCollapsedWrapper"] > [class*="divider"] {
+    display: none !important;
+}
+#app-mount [data-testid="quest-bar-container"] [class*="contentWrapperAccepted"] [class*="contentCollapsed"] [class*="questProgressWrapper"],
+#app-mount [data-testid="quest-bar-container"] [class*="contentWrapperAccepted"] [class*="contentCollapsed"] [class*="questProgressCopy"] {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+}
+#app-mount [data-testid="quest-bar-container"] [class*="contentWrapperAccepted"] [class*="contentCollapsed"] [class*="questProgressHint"][class*="semibold"] {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+#app-mount [data-testid="quest-bar-container"] [class*="contentWrapperAccepted"] [class*="contentCollapsed"] [class*="questProgressHint"][class*="text-xs/normal"] {
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-line-clamp: 2 !important;
+    overflow: hidden !important;
 }
 
 /* The promo's video preview and its CTA live in a nested spring-height
