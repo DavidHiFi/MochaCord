@@ -56,6 +56,22 @@ to `acrylic` (TestCord settings -> Windows material).
 - FiraCode Nerd Font must be installed locally for the font section to apply;
   otherwise Discord falls back to Fira Code / monospace.
 
+## Contributing
+
+Bug reports, feature ideas and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, checks and what to include.
+
+## Star history
+
+⭐ Thanks for the stars, screenshots and theme fixes.
+
+<a href="https://www.star-history.com/?repos=DavidHiFi%2FMochaCord&amp;type=date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=DavidHiFi/MochaCord&amp;type=date&amp;theme=dark&amp;legend=top-left" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=DavidHiFi/MochaCord&amp;type=date" />
+    <img alt="DavidHiFi/MochaCord GitHub star history" src="https://api.star-history.com/chart?repos=DavidHiFi/MochaCord&amp;type=date" />
+  </picture>
+</a>
+
 ## Credits
 
 - Base: [Midnight](https://github.com/refact0r/midnight-discord) by refact0r
