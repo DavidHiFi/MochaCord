@@ -26,6 +26,8 @@ works on Vencord and Equicord too.
   outlines, typing rows share the chat background, and server palettes do not
   override Mocha colors in chat or the composer.
 
+![MochaCord preview](preview.png)
+
 ## Install
 
 1. Download `MochaCord.css` and `MochaCord-assets.zip` from the latest
