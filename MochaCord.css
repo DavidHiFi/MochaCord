@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.68
+ * @version 3.1.69
  * @website https://github.com/DavidHiFi/MochaCord
  * @source https://github.com/DavidHiFi/MochaCord/blob/main/MochaCord.css
  * @authorId 1553713171938938891
@@ -1640,9 +1640,18 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
 
 /* The promo's video preview and its CTA live in a nested spring-height
    wrapper that parks at 0px on the same forced mount. Open it on the same
-   terms; the wrapper has no class, so match it by the preview it wraps. */
+   terms; the wrapper has no class, so match it by the preview it wraps.
+   3.1.69 (2026-10-18) fix: the second selector was written as :has() inside
+   :has(), which Selectors Level 4 forbids; Chromium reports it as "not a
+   valid selector", and one invalid selector drops the entire comma-separated
+   rule, so nothing here ever applied. Measured on the live client (9334): the
+   nested form throws, and a valid selector sharing a comma list with it
+   computes no effect while the same selector alone applies (outline-width 9px
+   alone, "none" in the list). Rewritten as `> div >`, which is valid, drops no
+   specificity, and matches the same grandchild shape the original meant
+   (outer div -> child div -> preview). No nested :has(). */
 #app-mount [data-testid="quest-bar-container"] div:has(> [class*="videoQuestPreviewCont"]),
-#app-mount [data-testid="quest-bar-container"] div:has(> div:has(> [class*="videoQuestPreviewCont"])) {
+#app-mount [data-testid="quest-bar-container"] div:has(> div > [class*="videoQuestPreviewCont"]) {
     height: auto !important;
     overflow: visible !important;
 }
@@ -2113,7 +2122,14 @@ li.containerDefault_c69b6d > .list_c3cd7d {
    (Stable 9334 and PTB 9223, TestCord 2.2.9). TestCord's managed-sheet
    composer drops :has()-bearing rules from the theme at boot (the glow
    thread's 21:42 relaunch finding: 149 of 155 rules in the cascade vs the
-   same bytes parsed standalone), so the timer-presence gate has to go, and
+   same bytes parsed standalone). Corrected 2026-10-18 on TestCord 2.3.0 /
+   9334: the general claim does not hold. Theme :has() rules do reach the
+   cascade and apply - a :has() row selector returns order 3 and its nested
+   sibling rule order 2, with a no-:has() control at 0, and :has(> :is(...))
+   resolves background and backdrop-filter. The only rule that was really dead
+   was a nested :has() selector at line 1645 (see the quest-bar rule above): an
+   invalid selector, not a dropped category. The timer-presence gate is dropped
+   regardless, and
    with it the transform: the chip's seat has to track the name line in both
    callTimer modes (text band when show-without-hover is on, bare 18px name
    line when it is off). Pinning does that without conditioning on the
@@ -2335,6 +2351,35 @@ li.containerDefault_c69b6d > .list_c3cd7d {
    styles.css; this copy covers the running client until its next build. */
 #app-mount .vc-health-stat-label {
     overflow-wrap: anywhere;
+}
+
+/* 3.1.69 (2026-10-18): Plugin Health monitor header jam (dx issue #108, closed
+   upstream as a theme problem). The monitor detail header is a space-between
+   flex row with no gap of its own and no shrink guard on the plugin name, so it
+   has no gutter and no way to give one back. FiraCode widens both sides past
+   stock: measured live on client 1.0.9262 over CDP 9334, a 22 character plugin
+   name is 206.8px at the header's 16px h2, the "Impact Score: 24.7" pill is
+   150.9px and the "Copy report" button is 118.8px. One line needs 485px, and a
+   12px gutter brings that to 497px. At the 457px column in the report the name
+   and the pill touch (gap 0) and the button paints past the row edge. Fix: when
+   the controls leave less than the 12px gutter, they wrap onto their own
+   right-aligned line (8px row gap), and the name ellipsises if it alone
+   outgrows the row. Checked on the live sheet with a rig at 457, 499, 620 and
+   780px: 457 and 499 wrap with nothing past the edge, 620 and 780 keep one
+   line. The exact wrap width depends on the real name width, so it is not
+   pinned here. Scoped to the detail column's header row. No :has(). */
+#app-mount .vc-health-detail-column > div:first-child {
+    flex-wrap: wrap;
+    gap: 8px 12px;
+}
+#app-mount .vc-health-detail-column > div:first-child > div {
+    margin-left: auto;
+}
+#app-mount .vc-health-detail-column > div:first-child > h2 {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* 3.1.64 (2026-10-15): profile modal tab bar jam from Discord's new Wishlist tab. The 3.1.55
