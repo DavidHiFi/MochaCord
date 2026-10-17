@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.67
+ * @version 3.1.68
  * @website https://github.com/DavidHiFi/MochaCord
  * @source https://github.com/DavidHiFi/MochaCord/blob/main/MochaCord.css
  * @authorId 1553713171938938891
@@ -1563,6 +1563,27 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
     display: flex !important;
 }
 #app-mount [data-testid="quest-bar-container"] [class*="contentWrapperAccepted"] [class*="contentExpanded"] {
+    display: none !important;
+}
+
+/* 3.1.68: hovering a completed bar still fired the 3.1.30 collapse/expand swap and broke its
+   Claim Reward CTA. Accepted-ness lives on the wrapper (since 3.1.63), so the swap's
+   :not([class*="Accepted"]) row guard always passes, and the swap's container:hover rule sits
+   one class level above the 3.1.63 pins, so on hover it wins the display tie — measured live on
+   TestCord 2.3.0/9334 with the real QuestBar: on hover the collapsed row goes display: none,
+   the expanded promo row renders in flow (bar 78 -> 155px) under the wrapper's overlay__0d616
+   layer (absolute inset-0, pointer-events: all on this build, no inline style for the 3.1.47
+   rule to match), so elementFromPoint at the full-width CTA returns the overlay and the click
+   never reaches the button; the promo's copy also renders washed-out under the wrapper's
+   translucent panel fill, which is the gray the user reported. Pin the completed bar to its
+   collapsed row on hover as well: the same guard with container:hover AND wrapper:hover, one
+   class level above the swap rules, so it wins regardless of cascade position (injected test
+   styles were observed losing equal-specificity ties to the theme sheet). Non-completed promo
+   bars keep their hover swap: the guard requires the accepted wrapper. */
+#app-mount [data-testid="quest-bar-container"]:hover [class*="contentWrapperAccepted"]:hover [class*="contentCollapsed"] {
+    display: flex !important;
+}
+#app-mount [data-testid="quest-bar-container"]:hover [class*="contentWrapperAccepted"]:hover [class*="contentExpanded"] {
     display: none !important;
 }
 
