@@ -1,84 +1,45 @@
 # MochaCord
 
-A smooth, fluent and comfortable Catppuccin Mocha theme for Discord, built on
-[Midnight](https://github.com/refact0r/midnight-discord). Made for TestCord;
-works on Vencord and Equicord too.
-
-## What it does
-
-- Catppuccin Mocha palette over Midnight's layout: rounded panels, custom
-  window controls, separated chatbar, compact search.
-- Frosted glass on context menus and submenus, dropdowns, notifications,
-  tooltips, pickers, profile popouts, dialogs, and the image viewer backdrop.
-  Popup text and images stay sharp.
-  The voice call stage uses the window's acrylic material in every view,
-  including tile grids, focused cameras, and fullscreen streams.
-- FiraCode Nerd Font loaded from your local Windows install, with no webfont
-  download.
-- Small fixes kept from the live setup: bounded GIF picker with wrapping
-  Export, Import, and Verify controls, reordered
-  expression picker (GIF | Sticker | Emoji), bubble usernames, centered
-  notification bell, auto-height bio textarea.
-- Search expands within narrow headers. The collapsed compact-search
-  magnifier is seated like its sibling toolbar buttons: a 20px glyph centred
-  in the 32px bar, with the expanded input kept at stock metrics.
-  Server banners stay inside rounded
-  outlines, typing rows share the chat background, and server palettes do not
-  override Mocha colors in chat or the composer.
+A Catppuccin Mocha theme for Discord, built on [Midnight](https://github.com/refact0r/midnight-discord). It was made for TestCord and also works on Vencord and Equicord.
 
 ![MochaCord preview](preview.png)
 
+## What it changes
+
+- Catppuccin Mocha colors on Midnight's layout, with rounded panels and a separate chatbar.
+- Frosted-glass menus, tooltips, dialogs, and popouts. Text and images stay sharp.
+- The voice call stage uses the window's acrylic material in every view.
+- The font is FiraCode Nerd Font from your Windows install. Nothing is downloaded.
+
 ## Install
 
-1. Download `MochaCord.css` and `MochaCord-assets.zip` from the latest
-   release.
-2. Drop `MochaCord.css` into your client's themes folder:
-   - **TestCord**: `%APPDATA%\TestCord\themes`
-   - **Vencord / Equicord**: Settings -> Themes -> "Open Themes Folder"
-   - **BetterDiscord**: `%APPDATA%\BetterDiscord\themes`
-3. Extract `MochaCord-assets.zip` in the same folder. The themes folder then
-   holds `MochaCord.css` and a `MochaCord-assets` folder with `midnight.css`
-   and `LICENSE.midnight`.
-4. Enable it in Settings -> Themes.
+1. Download `MochaCord.css` and `MochaCord-assets.zip` from the [latest release](https://github.com/DavidHiFi/MochaCord/releases/latest).
+2. Copy `MochaCord.css` into your client's themes folder.
+   - TestCord: `%APPDATA%\TestCord\themes`
+   - Vencord or Equicord: Settings, then Themes, then "Open Themes Folder"
+   - BetterDiscord: `%APPDATA%\BetterDiscord\themes`
+3. Extract `MochaCord-assets.zip` into the same folder. The folder should then hold `MochaCord.css` and a `MochaCord-assets` folder with `midnight.css` and `LICENSE.midnight`.
+4. Turn the theme on in Settings, then Themes.
 
-If the theme is already installed, replace the old file and re-enable it, or
-restart the client - a loaded theme stays cached until it is reloaded.
+If you already have the theme, replace the old file and turn it on again. A loaded theme stays cached until the client reloads it, so restart the client if the change does not show.
 
-For the frosted window transparency on Windows, set TestCord's window material
-to `acrylic` (TestCord settings -> Windows material).
+For the frosted window background on Windows, set TestCord's window material to `acrylic` in its settings.
 
 ## Notes
 
-- The theme imports its Midnight base from a local `MochaCord-assets`
-  folder next to the sheet (a vendored copy of refact0r's build with one
-  local change), plus snippets from GitHub. Keep the `@import` lines and
-  the folder in place.
-- FiraCode Nerd Font must be installed locally for the font section to apply;
-  otherwise Discord falls back to Fira Code / monospace.
+- The theme imports Midnight from the `MochaCord-assets` folder next to it. That folder is a vendored copy of refact0r's build with one local change. Keep the `@import` lines and the folder where they are.
+- FiraCode Nerd Font has to be installed for the font to apply. Otherwise Discord falls back to Fira Code or monospace.
 
 ## Contributing
 
-Bug reports, feature ideas and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, checks and what to include.
-
-## Star history
-
-⭐ Thanks for the stars, screenshots and theme fixes.
-
-<a href="https://www.star-history.com/?repos=DavidHiFi%2FMochaCord&amp;type=date">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=DavidHiFi/MochaCord&amp;type=date&amp;theme=dark&amp;legend=top-left" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=DavidHiFi/MochaCord&amp;type=date" />
-    <img alt="DavidHiFi/MochaCord GitHub star history" src="https://api.star-history.com/chart?repos=DavidHiFi/MochaCord&amp;type=date" />
-  </picture>
-</a>
+Bug reports, ideas, and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, checks, and what to include.
 
 ## Credits
 
-- Base: [Midnight](https://github.com/refact0r/midnight-discord) by refact0r
-  (Catppuccin Mocha flavor)
+- Base: [Midnight](https://github.com/refact0r/midnight-discord) by refact0r (Catppuccin Mocha flavor)
 - Palette: [Catppuccin](https://github.com/catppuccin/catppuccin)
 - Theme maintained by david_hifi
 
 ## License
 
-MIT - see [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE).
