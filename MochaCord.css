@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.66
+ * @version 3.1.67
  * @website https://github.com/DavidHiFi/MochaCord
  * @source https://github.com/DavidHiFi/MochaCord/blob/main/MochaCord.css
  * @authorId 1553713171938938891
@@ -1600,6 +1600,21 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
     -webkit-box-orient: vertical !important;
     -webkit-line-clamp: 2 !important;
     overflow: hidden !important;
+}
+
+/* 3.1.67: the completed bar's Claim Reward CTA clipped at the card's right edge (measured
+   live on TestCord 2.3.0/9334 with the real QuestBar: card 355px wide but the collapsed
+   row 435.9px, the 127.4px CTA ending 92.9px past the card edge, only "Cla" visible).
+   3.1.66 gave the copy block min-width: 0, but the row itself keeps stock min-width: auto,
+   and a nowrap ellipsised title's min-content is its full text width, so the row's
+   automatic minimum sized to its children's content (42px ring + 8px gap + 258.5px title
+   + 127.4px CTA) and refused to shrink; the row overflowed and pushed the CTA out.
+   Let the row shrink too: min-width: 0 on the collapsed row under the accepted wrapper.
+   Measured after: row 331px, copy 153.6px (title one ellipsised line, subtitle clamped to
+   two), CTA 127.4x32px on one line ending 12px inside the card, bar height 78px.
+   Non-completed bars keep stock min-width: auto (validated in the same probe rig). */
+#app-mount [data-testid="quest-bar-container"] [class*="contentWrapperAccepted"] [class*="contentCollapsedWrapper"] {
+    min-width: 0 !important;
 }
 
 /* The promo's video preview and its CTA live in a nested spring-height
