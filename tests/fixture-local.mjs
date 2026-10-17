@@ -3,20 +3,18 @@
 import { readFileSync, rmSync, mkdirSync, writeFileSync } from 'node:fs';
 import { spawn } from 'node:child_process';
 
-const repo = 'H:/Discord Configuration/repos/MochaCord';
-const themePath = repo + '/MochaCord.css';
-const fixturePath = repo + '/tests/acrylic.js';
-const midnightPath = 'C:/Users/localuser/AppData/Roaming/TestCord/themes/MochaCord-assets/midnight.css';
+const repo = new URL('..', import.meta.url);
+const themePath = new URL('MochaCord.css', repo);
+const fixturePath = new URL('tests/acrylic.js', repo);
 const browser = 'C:/Users/localuser/AppData/Local/BraveSoftware/Brave-Browser/Application/brave.exe';
 const port = '9555';
 const profileDir = process.env.TEMP + '\\opencode\\mochacord-fixture-profile';
 const htmlPath = process.env.TEMP + '\\opencode\\mochacord-fixture-page.html';
 
 const stripImports = (s) => s.replace(/@import[^;]+;/g, '');
-const midnight = readFileSync(midnightPath, 'utf8');
 const theme = stripImports(readFileSync(themePath, 'utf8'));
 const fixture = readFileSync(fixturePath, 'utf8');
-const html = '<!doctype html><html><head><meta charset="utf-8"><style>' + midnight + '</style><style>' + theme + '</style></head><body class="theme-dark"><div id="app-mount"></div></body></html>';
+const html = '<!doctype html><html><head><meta charset="utf-8"><style>' + theme + '</style></head><body class="theme-dark"><div id="app-mount"></div></body></html>';
 mkdirSync(process.env.TEMP + '\\opencode', { recursive: true });
 writeFileSync(htmlPath, html);
 
