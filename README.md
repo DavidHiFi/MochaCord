@@ -64,14 +64,6 @@ Coming from v3.1.68 or older? Delete the `MochaCord-assets` folder in the themes
 > [!IMPORTANT]
 > **Some parts load from the internet.** Midnight still fetches its [Figtree](https://fonts.google.com/specimen/Figtree) font from Google Fonts, and the three snippets load from their authors' repos each time Discord starts. If an author changes a snippet, the theme changes with it.
 
----
-
-## Support development
-
-MochaCord is free and always will be. If you enjoy it, a coffee keeps it going.
-
-[![Support DavidHiFi on Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/davidhifi)
-
 ## Contributing
 
 Screenshots of anything that looks wrong after a Discord update help the most, and CSS fixes are welcome.
