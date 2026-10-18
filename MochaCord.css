@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.69
+ * @version 3.1.70
  * @website https://github.com/DavidHiFi/MochaCord
  * @source https://github.com/DavidHiFi/MochaCord/blob/main/MochaCord.css
  * @authorId 1553713171938938891
@@ -4864,4 +4864,33 @@ li.containerDefault_c69b6d > .list_c3cd7d {
     background: var(--mochacord-acrylic-background) !important;
     -webkit-backdrop-filter: var(--mochacord-acrylic-filter) !important;
     backdrop-filter: var(--mochacord-acrylic-filter) !important;
+}
+/* 3.1.70: member list server tags. When the name column ran out of room, the
+   tag spilled out of its squeezed name box and over the decorator icons
+   (platform indicator first). The grid lets the name truncate cleanly
+   (ellipsis) while the tag stays whole, and tagged rows space their icons a
+   little tighter so the reserved tag still fits beside them.
+   A name squeezed below one glyph paints nothing instead of a fragment. */
+.name__91a9d:has(> .username__5d473 > .clanTag__5d473),
+.username__5d473:has(> .clanTag__5d473) {
+    min-width: auto;
+}
+
+.username__5d473:has(> .clanTag__5d473) {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: minmax(0, auto);
+    align-items: center;
+}
+
+.username__5d473:has(> .clanTag__5d473) > .name__5d473 {
+    max-width: round(nearest, 100%, 0.75ch);
+}
+
+.nameAndDecorators__91a9d:has(.clanTag__5d473) .vc-member-list-decorators-wrapper {
+    gap: 2px !important;
+}
+
+.nameAndDecorators__91a9d:has(.clanTag__5d473) .vc-member-list-decorators-wrapper > * {
+    margin-left: 0 !important;
 }
