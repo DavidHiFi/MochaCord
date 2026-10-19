@@ -24,14 +24,11 @@ Mocha colours, rounded panels and frosted popups in one CSS file.
 
 ## Installation
 
-1. Download `MochaCord.css` from the [latest release](https://github.com/DavidHiFi/MochaCord/releases/latest).
-2. Copy it into `%APPDATA%\TestCord\themes`.
-3. In TestCord, open **Settings**, then **Themes**, and turn MochaCord on.
-4. Install [FiraCode Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/latest) on Windows if you don't have it. The theme reads it from your system.
+**Online (no download):** Go to TestCord's **Online Themes**, find MochaCord, click copy, paste into themes URL. No file needed.
 
-To update, replace the old file and restart Discord. TestCord caches a loaded theme, so the change may not show until you do.
+**File:** 1. Download `MochaCord.css` from [latest release](https://github.com/DavidHiFi/MochaCord/releases/latest). 2. Copy to `%APPDATA%\TestCord\themes`. 3. Settings ▶ Themes ▶ turn on. 4. Install [FiraCode Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/latest) if missing. Theme reads from system.
 
-Coming from v3.1.68 or older? Delete the `MochaCord-assets` folder in the themes folder. Nothing uses it any more.
+To update, replace file and restart Discord. TestCord caches themes — may need restart.
 
 ## Features
 
@@ -102,8 +99,6 @@ Built on [Discord](https://discord.com) and [TestCord](https://github.com/Testco
 > Missing or wrong credit? [Open an issue](https://github.com/DavidHiFi/MochaCord/issues/new) and I'll fix it.
 
 ## Disclaimers
-
-Most of this project's code was developed with AI coding agents, including Claude Code, Codex and OpenCode. No single AI agent made the project.
 
 Client mods such as TestCord, Vencord and Equicord are against Discord's Terms of Service. A theme needs one to load, so use them at your own risk.
 
