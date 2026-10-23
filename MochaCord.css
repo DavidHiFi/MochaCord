@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.71
+ * @version 3.1.72
  * @website https://github.com/DavidHiFi/MochaCord
  * @source https://github.com/DavidHiFi/MochaCord/blob/main/MochaCord.css
  * @authorId 1553713171938938891
@@ -2080,7 +2080,7 @@ body {
     }
     /* Move window controls when mod view is open */
     /* No [style] test inside :has(): see the switch "Clicked state" note */
-    .base__5e434:has(> .content__5e434 > .page__5e434 > div > :is(.guildSidebar_f75fb0, .sidebarContainer__656be)) .trailing_c38106 {
+    .base__5e434 > .bar_c38106:has(~ .content__5e434 > .page__5e434 > div > :is(.guildSidebar_f75fb0, .sidebarContainer__656be)) .trailing_c38106 {
         right: calc(var(--gap) + var(--border-thickness) + 480px);
     }
     .page__5e434 div[style='width: 480px;'] {
@@ -2136,11 +2136,13 @@ body {
         padding-top: 0;
         padding-bottom: 0;
     }
-    .base__5e434:has(> .notice__6e2b9) > .bar_c38106 > .trailing_c38106 {
+    .base__5e434 > .notice__6e2b9 ~ .bar_c38106 > .trailing_c38106,
+    .base__5e434 > .bar_c38106:has(~ .notice__6e2b9) > .trailing_c38106 {
         top: calc(var(--top-bar-height) + 8px + 40px + var(--gap) + var(--border-thickness));
     }
 
-    .base__5e434:has(> .notice__29487) > .bar_c38106 > .trailing_c38106 {
+    .base__5e434 > .notice__29487 ~ .bar_c38106 > .trailing_c38106,
+    .base__5e434 > .bar_c38106:has(~ .notice__29487) > .trailing_c38106 {
         top: calc(var(--top-bar-height) + 8px + 40px + var(--gap) + var(--border-thickness));
     }
 
@@ -2621,12 +2623,14 @@ body {
     --purple-5: hsl(267deg, 84%, 71%);
 }
 
-/* Reorder expression picker buttons (GIF | Sticker | Emoji) */
-.expression-picker-chat-input-button:has(> [aria-label="Add Emoji"]) {
+/* Reorder expression picker buttons (GIF | Sticker | Emoji). Keyed on the
+   button classes, not aria-label: an attribute inside :has() makes every
+   aria-label write in the app re-check the whole tree (3.1.72). */
+.expression-picker-chat-input-button:has(> .emojiButton__74017) {
     order: 3 !important;
     ~ div { order: 2; }
 }
-.expression-picker-chat-input-button:has(> [aria-label="Open GIF picker"]) {
+.buttons__74017 > .expression-picker-chat-input-button:has(> .button__74017:not(.emojiButton__74017, .stickerButton__74017)) {
     order: 1 !important;
     ~ div { order: 3; }
 }
@@ -3939,11 +3943,16 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
    CTA landed under overlay__0d616, gray and unclickable (measured live on 9334,
    elementFromPoint at the CTA returned the overlay). A completed bar is the one
    whose resting row carries the CTA, so the swap now skips any bar that has one.
-   In-progress and video-quest bars have no CTA in that row and keep their swap. */
-#app-mount [data-testid="quest-bar-container"]:hover > [class*="contentWrapper"]:not(:has(> [class*="contentCollapsed"] [class*="cta_"])) [class*="contentCollapsed"]:not([class*="Accepted"]) {
+   In-progress and video-quest bars have no CTA in that row and keep their swap.
+   3.1.72: exact class names instead of [class*=] substrings, inside :has() and
+   after it. Substring classes there made every class change anywhere in the
+   app cost a full restyle (75-140 ms, measured on 9334); exact classes 0.4 ms.
+   Classes from the live QuestBar modules: cta_cc03e1 (progress/claim row),
+   cta__1699b (promo), contentCollapsed* (7004f/1699b), contentExpanded__24e2c. */
+#app-mount [data-testid="quest-bar-container"]:hover > [class*="contentWrapper"]:not(:has(> :is(.contentCollapsed__7004f, .contentCollapsedWrapper__7004f, .contentCollapsedBackgroundWrapper__1699b) :is(.cta_cc03e1, .cta__1699b))) :is(.contentCollapsed__7004f, .contentCollapsedWrapper__7004f, .contentCollapsedBackgroundWrapper__1699b, .contentCollapsedBackground__1699b):not([class*="Accepted"]) {
     display: none !important;
 }
-#app-mount [data-testid="quest-bar-container"]:hover > [class*="contentWrapper"]:not(:has(> [class*="contentCollapsed"] [class*="cta_"])) [class*="contentExpanded"]:not([class*="Accepted"]) {
+#app-mount [data-testid="quest-bar-container"]:hover > [class*="contentWrapper"]:not(:has(> :is(.contentCollapsed__7004f, .contentCollapsedWrapper__7004f, .contentCollapsedBackgroundWrapper__1699b) :is(.cta_cc03e1, .cta__1699b))) .contentExpanded__24e2c:not([class*="Accepted"]) {
     display: block !important;
     position: static !important;
     /* Stock's crossfade slide is written for the absolute model; with the row
@@ -4072,8 +4081,8 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
    alone, "none" in the list). Rewritten as `> div >`, which is valid, drops no
    specificity, and matches the same grandchild shape the original meant
    (outer div -> child div -> preview). No nested :has(). */
-#app-mount [data-testid="quest-bar-container"] div:has(> [class*="videoQuestPreviewCont"]),
-#app-mount [data-testid="quest-bar-container"] div:has(> div > [class*="videoQuestPreviewCont"]) {
+#app-mount [data-testid="quest-bar-container"] div:has(> .videoQuestPreviewCont__1699b),
+#app-mount [data-testid="quest-bar-container"] div:has(> div > .videoQuestPreviewCont__1699b) {
     height: auto !important;
     overflow: visible !important;
 }
@@ -4435,14 +4444,17 @@ body,
    2. The staged clip release: both the tile root and its content layer clip
       paint to the old box edges, which cut the halo into a hard straight
       line once the box is gone. Releasing both here keeps the fade whole
-      from before this plugin version carries it. */
-#app-mount div[data-selenium-video-tile][style*="--vc-pfp-hide-bg"]:has(div[role="img"]) {
+      from before this plugin version carries it.
+   3.1.72: exact paths (tileChild > content > background > avatar), measured on
+   live tiles; the old descendant :has() and [class*=] targets made every DOM
+   insert in the app restyle the whole tree. */
+#app-mount div[data-selenium-video-tile][style*="--vc-pfp-hide-bg"]:has(> .tileChild__2f4f7 > .content__2f4f7 > .background_fb62e2 > div[role="img"]) {
     overflow: visible !important; /* halo must leave the old box edges */
 }
-#app-mount div[data-selenium-video-tile][style*="--vc-pfp-hide-bg"]:has(div[role="img"]) [class*="content"] {
+#app-mount div[data-selenium-video-tile][style*="--vc-pfp-hide-bg"]:has(> .tileChild__2f4f7 > .content__2f4f7 > .background_fb62e2 > div[role="img"]) > .tileChild__2f4f7 > .content__2f4f7 {
     overflow: visible !important; /* one more clip level above the wrapper */
 }
-#app-mount div[data-selenium-video-tile]:not([style*="--vc-pfp-glow-slot"])[style*="--vc-pfp-hide-bg"]:has(div[role="img"]) div[class*="background"] {
+#app-mount div[data-selenium-video-tile]:not([style*="--vc-pfp-glow-slot"])[style*="--vc-pfp-hide-bg"]:has(> .tileChild__2f4f7 > .content__2f4f7 > .background_fb62e2 > div[role="img"]) > .tileChild__2f4f7 > .content__2f4f7 > .background_fb62e2 {
     filter:
         drop-shadow(0 0 14px color-mix(in srgb, var(--bg-1) 40%, transparent))
         drop-shadow(0 0 3px color-mix(in srgb, var(--bg-1) 60%, transparent))
@@ -4898,10 +4910,17 @@ li.containerDefault_c69b6d > .list_c3cd7d {
     max-width: round(nearest, 100%, 0.75ch);
 }
 
-.nameAndDecorators__91a9d:has(.clanTag__5d473) .vc-member-list-decorators-wrapper {
+/* 3.1.72: the tag check sits on the name box (a sibling of the decorators)
+   and the icon margin reset rides a style query, because a :has() followed
+   by "> *" made every DOM insert in the app restyle the whole tree. */
+.nameAndDecorators__91a9d > .name__91a9d:has(> .username__5d473 > .clanTag__5d473) ~ .vc-member-list-decorators-wrapper,
+.nameAndDecorators__91a9d > .name__91a9d:has(> .username__5d473 > .clanTag__5d473) ~ * .vc-member-list-decorators-wrapper {
     gap: 2px !important;
+    --mochacord-clan-tag-row: 1;
 }
 
-.nameAndDecorators__91a9d:has(.clanTag__5d473) .vc-member-list-decorators-wrapper > * {
-    margin-left: 0 !important;
+@container style(--mochacord-clan-tag-row: 1) {
+    .vc-member-list-decorators-wrapper > * {
+        margin-left: 0 !important;
+    }
 }
