@@ -2,7 +2,7 @@
  * @name MochaCord
  * @description A smooth, fluent and comfortable Catppuccin Mocha-style theme for Discord.
  * @author david_hifi
- * @version 3.1.70
+ * @version 3.1.71
  * @website https://github.com/DavidHiFi/MochaCord
  * @source https://github.com/DavidHiFi/MochaCord/blob/main/MochaCord.css
  * @authorId 1553713171938938891
@@ -140,6 +140,10 @@ body {
 .scroller_ef3116 /* server list inner scroller */ {
     padding-top: var(--custom-guild-list-padding) !important;
     padding-bottom: var(--custom-guild-list-padding);
+    /* 3.1.71: Discord's scrollbarGutterStable reserves an 8px gutter here, which
+       centered every server icon 4px left of the panel (measured on 9334). */
+    scrollbar-gutter: auto !important;
+    scrollbar-width: none !important;
 }
 .folderGroup__48112 {
     width: 100%;
@@ -3929,10 +3933,17 @@ body, #app-mount, .theme-dark:not(.custom-user-profile-theme) {
    joins the flow instead, the collapsed row steps aside, and the
    content-sized bar from 3.1.20 grows to fit it, so the promo renders in full
    instead of overflowing over the voice panel below. */
-#app-mount [data-testid="quest-bar-container"]:hover [class*="contentCollapsed"]:not([class*="Accepted"]) {
+/* 3.1.71: client 1.0.9265 dropped every "Accepted" class from completed bars, so
+   the 3.1.44/3.1.63/3.1.68 guards below never match and this swap fired on
+   completed bars again: the card blinked (151 -> 103px) and the Claim Reward
+   CTA landed under overlay__0d616, gray and unclickable (measured live on 9334,
+   elementFromPoint at the CTA returned the overlay). A completed bar is the one
+   whose resting row carries the CTA, so the swap now skips any bar that has one.
+   In-progress and video-quest bars have no CTA in that row and keep their swap. */
+#app-mount [data-testid="quest-bar-container"]:hover > [class*="contentWrapper"]:not(:has(> [class*="contentCollapsed"] [class*="cta_"])) [class*="contentCollapsed"]:not([class*="Accepted"]) {
     display: none !important;
 }
-#app-mount [data-testid="quest-bar-container"]:hover [class*="contentExpanded"]:not([class*="Accepted"]) {
+#app-mount [data-testid="quest-bar-container"]:hover > [class*="contentWrapper"]:not(:has(> [class*="contentCollapsed"] [class*="cta_"])) [class*="contentExpanded"]:not([class*="Accepted"]) {
     display: block !important;
     position: static !important;
     /* Stock's crossfade slide is written for the absolute model; with the row
