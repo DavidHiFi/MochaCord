@@ -24,11 +24,30 @@ Mocha colours, rounded panels and frosted popups in one CSS file.
 
 ## Installation
 
-**Online (no download):** Go to TestCord's **Online Themes**, find MochaCord, click copy, paste into themes URL. No file needed.
+There are two ways to install MochaCord. Pick the one that suits you.
 
-**File:** 1. Download `MochaCord.css` from [latest release](https://github.com/DavidHiFi/MochaCord/releases/latest). 2. Copy to `%APPDATA%\TestCord\themes`. 3. Settings ▶ Themes ▶ turn on. 4. Install [FiraCode Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/latest) if missing. Theme reads from system.
+**Method 1: Paste a link (nothing to download)**
 
-To update, replace file and restart Discord. TestCord caches themes — may need restart.
+1. Open Settings ▶ Themes and turn on **Enable Online Themes**.
+2. Copy this link and paste it into the box under **Online Themes**, then click **Add**:
+
+   ```
+   https://raw.githubusercontent.com/DavidHiFi/MochaCord/main/MochaCord.css
+   ```
+
+3. Turn MochaCord on in the list.
+
+Online themes update themselves when the source changes, so you get new versions without downloading anything again.
+
+**Method 2: Download the file**
+
+1. Download `MochaCord.css` from the [latest release](https://github.com/DavidHiFi/MochaCord/releases/latest).
+2. Copy it to `%APPDATA%\TestCord\themes`.
+3. Open Settings ▶ Themes and turn MochaCord on.
+
+To update a file, replace it and restart Discord. TestCord caches themes, so a restart may be needed.
+
+**Both methods need the font.** Install [FiraCode Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/latest) if it's missing. The theme reads it from your system.
 
 ## Features
 
@@ -101,6 +120,8 @@ Built on [Discord](https://discord.com) and [TestCord](https://github.com/Testco
 ## Disclaimers
 
 Client mods such as TestCord, Vencord and Equicord are against Discord's Terms of Service. A theme needs one to load, so use them at your own risk.
+
+MochaCord was built with AI coding agents. The commit history lists Claude Code, arena-agent and halo-sparks as co-authors.
 
 <div align="center">
 <br>
